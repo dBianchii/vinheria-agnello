@@ -3,8 +3,8 @@ import { Search, ShoppingCart, User } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="bg-white shadow">
-      <div className="container mx-auto flex flex-col items-center justify-between px-4 py-4 md:flex-row">
+    <header className="bg-white shadow fixed w-full">
+      <div className="h-20 container mx-auto flex flex-col items-center justify-between px-4 py-4 md:flex-row">
         <div className="mb-4 flex items-center md:mb-0">
           <Image
             src="https://placehold.co/150x50"

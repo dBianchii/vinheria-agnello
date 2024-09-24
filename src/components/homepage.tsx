@@ -7,60 +7,18 @@ import Footer from "./footer";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { vinhos } from "data/vinhos";
+import Stats from "./stats";
+import { useRouter } from "next/navigation";
 
 export function Homepage() {
-  const [counterViniculas, setCounterViniculas] = useState(0);
-  const [counterRotulos, setCounterRotulos] = useState(0);
-  const [counterClientes, setCounterClientes] = useState(0);
+  const router = useRouter();
 
-  const limits = {
-    viniculas: 50,
-    rotulos: 1000,
-    clientes: 10000,
+  const goToProductPage = (id: string) => {
+    router.push(`/product/${id}`);
   };
 
-  useEffect(() => {
-    const updateCounters = () => {
-      setCounterViniculas((prevViniculas) => {
-        if (prevViniculas < limits.viniculas) {
-          return Math.min(prevViniculas + 1, limits.viniculas);
-        }
-        return prevViniculas;
-      });
-
-      setCounterRotulos((prevRotulos) => {
-        if (prevRotulos < limits.rotulos) {
-          return Math.min(prevRotulos + 20, limits.rotulos);
-        }
-        return prevRotulos;
-      });
-
-      setCounterClientes((prevClientes) => {
-        if (prevClientes < limits.clientes) {
-          return Math.min(prevClientes + 200, limits.clientes);
-        }
-        return prevClientes;
-      });
-    };
-
-    const calculateInterval = () => {
-      const viniculasProximity = (counterViniculas - limits.viniculas);
-    
-      // As viniculasProximity decreases (closer to the limit), the interval decreases
-      return 100 + (2 * viniculasProximity); // Starts faster and slows down near the limit
-    };
-    
-
-    const interval = setInterval(updateCounters, calculateInterval());
-
-    return () => clearInterval(interval);
-  }, [counterViniculas, counterRotulos, counterClientes]);
-
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <Header />
-
+    <>
       {/* Hero Section */}
       <section className="bg-gray-200 py-12 md:py-24">
         <div className="container mx-auto flex flex-col items-center px-4 md:flex-row">
@@ -92,22 +50,8 @@ export function Homepage() {
         </div>
       </section>
 
-      {/* Stats */}
       <section className="bg-white py-12">
-        <div className="container mx-auto flex justify-center space-x-8 px-4 md:space-x-16">
-          <div className="text-center">
-            <h3 className="text-3xl font-bold">{counterViniculas}+</h3>
-            <p className="text-gray-600">Vinícolas Selecionadas</p>
-          </div>
-          <div className="text-center">
-            <h3 className="text-3xl font-bold">{counterRotulos}+</h3>
-            <p className="text-gray-600">Rótulos exclusivos</p>
-          </div>
-          <div className="text-center">
-            <h3 className="text-3xl font-bold">{counterClientes}+</h3>
-            <p className="text-gray-600">Clientes Satisfeitos</p>
-          </div>
-        </div>
+        <Stats />
       </section>
 
       {/* Kits Section */}
@@ -115,30 +59,18 @@ export function Homepage() {
         <div className="container mx-auto px-4">
           <h2 className="mb-8 text-3xl font-bold">KITS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <CardHomePage
-              name="Kit 1 Wine Selection"
-              stars={3.8}
-              price={239.9}
-              oldPrice={299.9}
-            />
-            <CardHomePage
-              name="Kit 1 Wine Selection"
-              stars={2.5}
-              price={239.9}
-              oldPrice={299.9}
-            />
-            <CardHomePage
-              name="Kit 1 Wine Selection"
-              stars={3.5}
-              price={239.9}
-              oldPrice={299.9}
-            />
-            <CardHomePage
-              name="Kit 1 Wine Selection"
-              stars={3.5}
-              price={239.9}
-              oldPrice={299.9}
-            />
+            {vinhos.map((vinho) => (
+              <CardHomePage
+                key={vinho.name}
+                name={vinho.name}
+                stars={vinho.stars} // Coloque a avaliação que desejar
+                price={vinho.preco}
+                oldPrice={vinho.preco + 50} // Exemplo de preço anterior
+                imgUrl={vinho.img}
+                id={vinho.id}
+                handleClick={goToProductPage}
+              />
+            ))}
           </div>
           <div className="mt-8 text-center">
             <Button
@@ -152,7 +84,7 @@ export function Homepage() {
         </div>
       </section>
 
-{/* Best Sellers Section */}
+      {/* Best Sellers Section */}
       <section className="bg-white py-12">
         <div className="container mx-auto px-4">
           <h2 className="mb-8 text-3xl font-bold">MAIS VENDIDOS</h2>
@@ -165,6 +97,8 @@ export function Homepage() {
                 price={vinho.preco}
                 oldPrice={vinho.preco + 50} // Exemplo de preço anterior
                 imgUrl={vinho.img}
+                id={vinho.id}
+                handleClick={goToProductPage}
               />
             ))}
           </div>
@@ -190,7 +124,7 @@ export function Homepage() {
             {["R$29,90", "R$49,90", "R$99,90"].map((price) => (
               <div
                 key={price}
-                className="rounded-lg bg-[#6d071a] p-8 text-center text-white hover:bg-[#8d0922]"
+                className="cursor-pointer rounded-lg bg-[#6d071a] p-8 text-center text-white hover:bg-[#8d0922]"
               >
                 <h3 className="mb-2 text-2xl">VINHOS ATÉ</h3>
                 <p className="text-4xl font-bold">{price}</p>
@@ -228,6 +162,6 @@ export function Homepage() {
 
       {/* Footer */}
       <Footer />
-    </div>
+    </>
   );
 }

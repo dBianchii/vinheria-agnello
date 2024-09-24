@@ -8,11 +8,13 @@ interface CardHomeProps {
   price: number;
   oldPrice: number;
   imgUrl: string;
+  id: string;
+  handleClick: (id: string) => void;
 }
 
-export default function CardHomePage({name, stars, price, oldPrice, imgUrl}: CardHomeProps) {
+export default function CardHomePage({name, stars, price, oldPrice, imgUrl, id, handleClick}: CardHomeProps) {
   return (
-    <div className="overflow-hidden rounded-lg bg-white shadow-md">
+    <div onClick={() => handleClick(id)} className="cursor-pointer hover:shadow-lg overflow-hidden rounded-lg bg-white shadow-md">
       <Image
         src={imgUrl}
         alt={name}
