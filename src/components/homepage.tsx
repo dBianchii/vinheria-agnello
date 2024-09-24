@@ -6,6 +6,7 @@ import Header from "./header";
 import Footer from "./footer";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
+import { vinhos } from "data/vinhos";
 
 export function Homepage() {
   const [counterViniculas, setCounterViniculas] = useState(0);
@@ -151,35 +152,21 @@ export function Homepage() {
         </div>
       </section>
 
-      {/* Best Sellers Section */}
+{/* Best Sellers Section */}
       <section className="bg-white py-12">
         <div className="container mx-auto px-4">
           <h2 className="mb-8 text-3xl font-bold">MAIS VENDIDOS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <CardHomePage
-              name="Kit 1 Wine Selection"
-              stars={3.8}
-              price={239.9}
-              oldPrice={299.9}
-            />
-            <CardHomePage
-              name="Kit 1 Wine Selection"
-              stars={4}
-              price={239.9}
-              oldPrice={299.9}
-            />
-            <CardHomePage
-              name="Kit 1 Wine Selection"
-              stars={5}
-              price={239.9}
-              oldPrice={299.9}
-            />
-            <CardHomePage
-              name="Kit 1 Wine Selection"
-              stars={3.5}
-              price={239.9}
-              oldPrice={299.9}
-            />
+            {vinhos.map((vinho) => (
+              <CardHomePage
+                key={vinho.name}
+                name={vinho.name}
+                stars={vinho.stars} // Coloque a avaliação que desejar
+                price={vinho.preco}
+                oldPrice={vinho.preco + 50} // Exemplo de preço anterior
+                imgUrl={vinho.img}
+              />
+            ))}
           </div>
           <div className="mt-8 text-center">
             <Button
