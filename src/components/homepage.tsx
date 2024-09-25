@@ -2,10 +2,8 @@
 
 import Image from "next/image";
 import CardHomePage from "./card-home";
-import Header from "./header";
 import Footer from "./footer";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
 import { vinhos } from "data/vinhos";
 import Stats from "./stats";
 import { useRouter } from "next/navigation";
