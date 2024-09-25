@@ -63,7 +63,7 @@ export function Homepage() {
                 name={vinho.name}
                 stars={vinho.stars} // Coloque a avaliação que desejar
                 price={vinho.preco}
-                oldPrice={vinho.preco + 50} // Exemplo de preço anterior
+								discount={vinho.desconto}
                 imgUrl={vinho.img}
                 id={vinho.id}
                 handleClick={goToProductPage}
@@ -93,7 +93,7 @@ export function Homepage() {
                 name={vinho.name}
                 stars={vinho.stars} // Coloque a avaliação que desejar
                 price={vinho.preco}
-                oldPrice={vinho.preco + 50} // Exemplo de preço anterior
+								discount={vinho.desconto}
                 imgUrl={vinho.img}
                 id={vinho.id}
                 handleClick={goToProductPage}
