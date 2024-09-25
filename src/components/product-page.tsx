@@ -87,8 +87,8 @@ export function ProductPageComponent() {
               <div className="py-8 text-neutral-500">{product.descricao}</div>
             </div>
             <div>
-              <div className="mb-4 flex items-center gap-4">
-                <div className="w-1/3 flex justify-center rounded-full bg-neutral-200 py-3 px-4">
+              <div className="mb-4 border-t pt-4 flex items-center gap-4">
+                <div className="w-56 flex items-center justify-between rounded-full bg-neutral-200 h-12 px-6">
                   <button className="hover:opacity-85" onClick={decrementQuantity}>
                     <Minus className="h-6 w-6"  />
                   </button>
@@ -97,7 +97,7 @@ export function ProductPageComponent() {
                     <Plus className="h-6 w-6" />
                   </button>
                 </div>
-                <Button className="text-md ml-4 w-2/3 rounded-full bg-neutral-950 py-6 text-neutral-50">
+                <Button className="text-md ml-4 w-full rounded-full bg-neutral-950 py-6 text-neutral-50">
                   Adicionar ao carrinho
                 </Button>
               </div>
