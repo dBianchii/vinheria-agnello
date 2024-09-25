@@ -30,17 +30,22 @@ export default function CartCard({
   );
 
   return (
-    <div className="flex items-center border-b py-4">
+    <div className="flex items-center border-b py-4 gap-4">
+			<div className="border rounded-lg p-1">
+
       <Image
         src={imgUrl}
         alt={name}
         width={80}
         height={80}
-        className="mr-4 h-20 w-20 object-cover"
-      />
-      <div className="flex-grow">
+        className="h-20 w-20 object-cover"
+				/>
+				</div>
+<div className="flex justify-between w-full h-20">
+
+      <div className="flex flex-col justify-between">
         <h3 className="font-semibold">{name}</h3>
-        <div className="mt-2 flex items-center">
+        <div className="flex items-center">
           <span className="text-lg font-bold">{finalPrice}</span>
           {discount > 0 && (
             <div className="flex items-center">
@@ -52,6 +57,7 @@ export default function CartCard({
           )}
         </div>
       </div>
+
       <div className="flex items-center">
         <Button
           variant="outline"
@@ -73,6 +79,7 @@ export default function CartCard({
           <Plus className="h-4 w-4" />
         </Button>
       </div>
+			</div>
     </div>
   );
 }
