@@ -119,7 +119,7 @@ export function CartPageComponent() {
               <div className="mt-6">
                 <Input
                   placeholder="Adicionar código promocional"
-                  className="mb-2"
+                  className="mb-2 bg-white"
                 />
                 <Button variant="primary" className="w-full">Aplicar</Button>
               </div>

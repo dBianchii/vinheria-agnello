@@ -133,17 +133,17 @@ export function Homepage() {
       </section>
 
       {/* Newsletter */}
-      <section className="bg-slate-900 py-12 text-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-2xl font-bold">
+      <section className="bg-slate-900 py-12 text-white ">
+        <div className="container mx-auto px-4 ">
+          <div className="text-center md:text-left flex flex-col gap-2 items-center md:flex-row md:justify-between">
+            <h2 className="mb-4 text-2xl font-bold md:mb-0 md:w-1/2 md:max-w-[450px]">
               FIQUE POR DENTRO DE NOSSAS OFERTAS EXCLUSIVAS DE VINHOS!
             </h2>
-            <form className="flex flex-col gap-4 sm:flex-row">
+            <form className="flex flex-col gap-3 md:w-1/2 w-full">
               <input
                 type="email"
                 placeholder="Digite seu e-mail"
-                className="flex-grow rounded px-4 py-2 text-gray-900"
+                className="flex-grow rounded px-4 py-2 text-gray-900 text-center"
               />
               <Button
                 type="submit"
