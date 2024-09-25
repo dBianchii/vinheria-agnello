@@ -1,7 +1,8 @@
 import Image from "next/image";
 import React from "react";
 import Stars from "./stars";
-import { calculatePriceAfterDiscount } from "~/lib/utils";
+import { calculatePriceAfterDiscount, formatPrice } from "~/lib/utils";
+import DiscountBadge from "./discount-badge";
 
 interface CardHomeProps {
   name: string;
@@ -39,12 +40,16 @@ export default function CardHomePage({
       <div className="p-4">
         <h3 className="mb-2 font-semibold">{name}</h3>
         <Stars stars={stars} />
-        <p className="text-lg font-bold">R${finalPrice.toFixed(2)}</p>
-        <div className="flex items-center gap-2 text-xs">
-          <p className="text-sm text-gray-500 line-through">
-            R${price.toFixed(2)}
-          </p>
-          <p className="text-red-500">-{discount.toFixed(0)}%</p>
+        <div className="flex items-center gap-2">
+          <p className="text-lg font-bold">{formatPrice(finalPrice)}</p>
+          {discount > 0 && (
+            <div className="flex items-center">
+              <p className="text-sm text-gray-500 line-through">
+                {formatPrice(price)}
+              </p>
+              <DiscountBadge classname="ml-2 text-xs" discount={discount} />
+            </div>
+          )}
         </div>
       </div>
     </div>

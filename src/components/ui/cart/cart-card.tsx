@@ -4,6 +4,7 @@ import React from "react";
 import { calculatePriceAfterDiscount, formatPrice } from "~/lib/utils";
 import { Button } from "../button";
 import { Minus, Plus, Trash } from "lucide-react";
+import DiscountBadge from "~/components/discount-badge";
 
 interface CardCartProps {
   id: string;
@@ -24,7 +25,9 @@ export default function CartCard({
   quantity,
   updateQuantity,
 }: CardCartProps) {
-  const finalPrice = formatPrice(calculatePriceAfterDiscount(price * quantity, discount));
+  const finalPrice = formatPrice(
+    calculatePriceAfterDiscount(price * quantity, discount),
+  );
 
   return (
     <div className="flex items-center border-b py-4">
@@ -39,10 +42,14 @@ export default function CartCard({
         <h3 className="font-semibold">{name}</h3>
         <div className="mt-2 flex items-center">
           <span className="text-lg font-bold">{finalPrice}</span>
-          <span className="ml-2 text-sm text-gray-500 line-through">
-            {formatPrice(price * quantity)}
-          </span>
-          <span className="ml-2 text-sm text-red-500">-{discount}%</span>
+          {discount > 0 && (
+            <div className="flex items-center">
+              <span className="ml-2 text-sm text-gray-500 line-through">
+                {formatPrice(price * quantity)}
+              </span>
+              <DiscountBadge discount={discount} classname="ml-2 text-xs" />
+            </div>
+          )}
         </div>
       </div>
       <div className="flex items-center">
@@ -51,10 +58,11 @@ export default function CartCard({
           size="icon"
           onClick={() => updateQuantity(id, quantity - 1)}
         >
-					{
-						quantity === 1 ? (<Trash className="h-4 w-4" />) : (<Minus className="h-4 w-4" />)
-					}
-          
+          {quantity === 1 ? (
+            <Trash className="h-4 w-4" />
+          ) : (
+            <Minus className="h-4 w-4" />
+          )}
         </Button>
         <span className="mx-2">{quantity}</span>
         <Button
