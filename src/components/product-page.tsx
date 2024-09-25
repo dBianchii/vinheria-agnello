@@ -66,12 +66,13 @@ export function ProductPageComponent() {
                 <p className="text-3xl font-bold">
                   {formatPrice(finalPrice(product.preco, product.desconto))}
                 </p>
-                <p className="ml-4 text-3xl font-bold text-gray-400 line-through">
-                  {formatPrice(product.preco)}
-                </p>
-                <p className="ml-6 select-none rounded-xl bg-red-100 px-3 py-1 font-semibold text-red-500">
-                  -{product.desconto}%
-                </p>
+                {product.desconto > 0 &&
+                <><p className="ml-4 text-3xl font-bold text-gray-400 line-through">
+                    {formatPrice(product.preco)}
+                  </p><p className="ml-6 select-none rounded-xl bg-red-100 px-3 py-1 font-semibold text-red-500">
+                      -{product.desconto}%
+                    </p></>
+                }
               </div>
               <div className="py-8 text-neutral-500">{product.descricao}</div>
             </div>
