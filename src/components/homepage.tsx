@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { vinhos } from "data/vinhos";
 import Stats from "./stats";
 import { useRouter } from "next/navigation";
+import Newsletter from "./newsletter";
 
 export function Homepage() {
   const router = useRouter();
@@ -132,34 +133,6 @@ export function Homepage() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="bg-slate-900 py-12 text-white ">
-        <div className="container mx-auto px-4 ">
-          <div className="text-center md:text-left flex flex-col gap-2 items-center md:flex-row md:justify-between">
-            <h2 className="mb-4 text-2xl font-bold md:mb-0 md:w-1/2 md:max-w-[450px]">
-              FIQUE POR DENTRO DE NOSSAS OFERTAS EXCLUSIVAS DE VINHOS!
-            </h2>
-            <form className="flex flex-col gap-3 md:w-1/2 w-full">
-              <input
-                type="email"
-                placeholder="Digite seu e-mail"
-                className="flex-grow rounded px-4 py-2 text-gray-900 text-center"
-              />
-              <Button
-                type="submit"
-                className="bg-[#6d071a] text-white hover:bg-[#8d0922]"
-                variant={"default"}
-                size={"lg"}
-              >
-                Quero receber ofertas!
-              </Button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <Footer />
     </>
   );
 }
