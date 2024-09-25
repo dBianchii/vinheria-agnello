@@ -1,37 +1,44 @@
 import Image from "next/image";
 import { Search, ShoppingCart, User } from "lucide-react";
+import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="bg-white shadow fixed w-full">
-      <div className="h-20 container mx-auto flex items-center justify-between px-4 py-4 md:flex-row">
+    <header className="fixed w-full bg-white shadow">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 py-4 md:flex-row">
         <div className="flex items-center md:mb-0">
-          <Image
-            src="https://placehold.co/150x50"
-            alt="Agnello Logo"
-            width={150}
-            height={50}
-            className="mr-4"
-          />
+          <Link href="/">
+            <Image
+              src="https://placehold.co/150x50"
+              alt="Agnello Logo"
+              width={150}
+              height={50}
+              className="mr-4"
+            />
+          </Link>
           <nav className="hidden space-x-4 md:flex">
-            <a href="#" className="text-gray-600 hover:text-gray-900">
+            <Link href="#" className="text-gray-600 hover:text-gray-900">
               Vinhos
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-900">
+            </Link>
+            <Link href="#" className="text-gray-600 hover:text-gray-900">
               Kits
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-900">
+            </Link>
+            <Link href="#" className="text-gray-600 hover:text-gray-900">
               Mais Vendidos
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-900">
+            </Link>
+            <Link href="#" className="text-gray-600 hover:text-gray-900">
               Promoções
-            </a>
+            </Link>
           </nav>
         </div>
         <div className="flex items-center space-x-4">
           <Search className="text-gray-600" />
-          <ShoppingCart className="text-gray-600" />
-          <User className="text-gray-600" />
+          <Link href="/cart">
+            <ShoppingCart className="text-gray-600 hover:text-[#6d071a]" />
+          </Link>
+					<Link href="/account">
+						<User className="text-gray-600 hover:text-[#6d071a]" />
+					</Link>
         </div>
       </div>
     </header>
