@@ -40,7 +40,7 @@ export default function CardHomePage({
       <div className="p-4">
         <h3 className="mb-2 font-semibold">{name}</h3>
         <Stars stars={stars} />
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 lg:flex-col lg:items-start lg:gap-0 xl:flex-row xl:items-center xl:gap-2">
           <p className="text-lg font-bold">{formatPrice(finalPrice)}</p>
           {discount > 0 && (
             <div className="flex items-center">
