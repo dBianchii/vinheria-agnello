@@ -1,13 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import CardHomePage from "./card-home";
-import Footer from "./footer";
-import { Button } from "./ui/button";
 import { vinhos } from "data/vinhos";
-import Stats from "./stats";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Newsletter from "./newsletter";
+import CardHomePage from "./card-home";
+import Stats from "./stats";
+import { Button } from "./ui/button";
 
 export function Homepage() {
   const router = useRouter();

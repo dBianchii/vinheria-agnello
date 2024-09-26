@@ -8,7 +8,7 @@ import DiscountBadge from "~/components/discount-badge";
 import Link from "next/link";
 import { useCart } from "~/context/cart-context";
 import type { CartItem } from "~/lib/types";
-
+import { vinhos } from "data/vinhos";
 
 export default function CartCard({
   id,
@@ -19,13 +19,12 @@ export default function CartCard({
   quantity,
 }: CartItem) {
   const { incrementItem, decrementItem, removeItem } = useCart();
+  const product = vinhos.find((vinho) => vinho.id === id);
+  if (!product) return null;
 
   const finalPrice = formatPrice(
     calculatePriceAfterDiscount(price * quantity, discount),
   );
-
-	console.log("CartCard", id, name, imgUrl, price, discount, quantity);
-	console.log("CartCard", finalPrice);
 
   return (
     <div className="flex items-center gap-4 border-b py-4">
@@ -61,7 +60,7 @@ export default function CartCard({
             variant={"ghost"}
             size={"icon"}
             className="rounded-full hover:bg-red-100"
-						onClick={() => removeItem(id)}
+            onClick={() => removeItem(id)}
           >
             <Trash className="h-4 w-4 text-red-500" />
           </Button>
@@ -79,7 +78,7 @@ export default function CartCard({
               variant="outline"
               size="icon"
               className="rounded-full bg-neutral-200"
-              onClick={() => incrementItem(id)}
+              onClick={() => incrementItem(product)}
             >
               <Plus className="h-4 w-4" />
             </Button>

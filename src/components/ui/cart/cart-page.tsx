@@ -9,10 +9,8 @@ import CartCard from "./cart-card";
 import { formatPrice } from "~/lib/utils";
 import { useCart } from "~/context/cart-context";
 
-export function CartPageComponent() {
+export default function CartPageComponent() {
   const { items } = useCart();
-
-	console.log("CartPage", items);
 
   const priceWithDiscount = items.reduce(
     (sum, item) =>
@@ -41,8 +39,8 @@ export function CartPageComponent() {
               <div className="lg:w-2/3">
                 {items.map((item) => (
                   <CartCard
-                    key={item.id}
                     id={item.id}
+                    key={item.id}
                     name={item.name}
                     imgUrl={item.imgUrl}
                     price={item.price}
@@ -100,7 +98,9 @@ export function CartPageComponent() {
                   deseja comprar!
                 </p>
                 <Link href="/">
-                  <Button variant={"primary"} size={"lg"}>Ver produtos</Button>
+                  <Button variant={"primary"} size={"lg"}>
+                    Ver produtos
+                  </Button>
                 </Link>
               </div>
             </div>

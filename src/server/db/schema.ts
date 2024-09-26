@@ -128,3 +128,33 @@ export const verificationTokens = createTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
+
+// id: "dcf03d16-c3e0-4b26-b401-8c304fd3bb3f",
+//       name: "Catena Zapata Malbec Argentino",
+//       img: "https://th.bing.com/th/id/OIP.cHsi6voglna5IjKHxG6dEQHaHa?rs=1&pid=ImgDetMain",
+//       vinicula: "Catena Zapata",
+//       preco: 180.00,
+// 			desconto: 30,
+//       descricao: "Um Malbec encorpado, com notas de frutas vermelhas e especiarias, proveniente de vinhedos de altitude.",
+//       categoria: "vinho",
+//       tipo_de_uva: "Malbec",
+//       tipo: "tinto",
+//       uva: "Malbec",
+//       pais: "Argentina",
+//       harmonizacao: "Carnes grelhadas, queijos curados.",
+//       stars: 4.5,
+//       unidades: 1
+export const wines = createTable(
+  "wine",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 255 }).notNull(),
+    price: integer("price").notNull(),
+    discount: integer("discount").notNull(),
+    country: varchar("country", { length: 255 }).notNull(),
+    img: varchar("img", { length: 255 }).notNull(),
+  },
+  (wine) => ({
+    countryIdx: index("wine_country_idx").on(wine.country),
+  })
+);

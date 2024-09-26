@@ -1,13 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { type IProduto } from "data/vinhos";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import type { CartItem } from "~/lib/types";
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (item: CartItem) => void;
-	incrementItem: (id: string) => void;
+  incrementItem: (product: IProduto) => void;
   decrementItem: (id: string) => void;
   removeItem: (id: string) => void;
   clearCart: () => void;
@@ -23,35 +23,40 @@ export const useCart = () => {
   return context;
 };
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [items, setItems] = useState<CartItem[]>([]);
+const productToCartItem = (product: IProduto): CartItem => ({
+  id: product.id,
+  name: product.name,
+  imgUrl: product.img,
+  price: product.preco,
+  discount: product.desconto,
+  quantity: 1,
+});
 
-  const addItem = (newItem: CartItem) => {
+export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const [items, setItems] = useState<CartItem[]>(() => {
+    if (typeof window !== "undefined") {
+      const savedItems = localStorage.getItem("cartItems");
+      return savedItems ? (JSON.parse(savedItems) as CartItem[]) : [];
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(items));
+  }, [items]);
+
+  const incrementItem = (product: IProduto) => {
+    if (!items.find((item) => item.id === product.id))
+      return setItems([...items, productToCartItem(product)]);
+
     setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === newItem.id);
+      const existingItem = prevItems.find((item) => item.id === product.id);
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === newItem.id
-            ? { ...item, quantity: item.quantity + newItem.quantity }
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
             : item,
         );
-      } else {
-        return [...prevItems, newItem];
-      }
-    });
-  };
-
-	const incrementItem = (id: string) => {
-    console.log("incrementItem", id);
-		setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === id);
-      if (existingItem) {
-        if (existingItem.quantity >= 0) {
-					console.log("incrementItem", existingItem.quantity);
-          return prevItems.map((item) =>
-            item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
-          );
-        }
       }
       return prevItems;
     });
@@ -81,7 +86,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, incrementItem, decrementItem, removeItem, clearCart }}
+      value={{ items, incrementItem, decrementItem, removeItem, clearCart }}
     >
       {children}
     </CartContext.Provider>

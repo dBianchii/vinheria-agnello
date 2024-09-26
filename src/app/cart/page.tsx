@@ -1,3 +1,10 @@
-import { CartPageComponent } from "~/components/ui/cart/cart-page";
+import dynamic from "next/dynamic";
 
-export default CartPageComponent;
+const CartPageComponent = dynamic(
+  () => import("~/components/ui/cart/cart-page"),
+  { ssr: false },
+);
+
+export default function CartPage() {
+  return <CartPageComponent />;
+}
