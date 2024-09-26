@@ -87,7 +87,7 @@ export function ProductPageComponent({ product }: { product: IProduto }) {
                 <div className="flex h-12 w-56 items-center justify-between rounded-full bg-neutral-200 px-6">
                   <button
                     className="hover:opacity-85"
-                    onClick={() => decrementItem(product)}
+                    onClick={() => decrementItem(product.id)}
                   >
                     <Minus className="h-6 w-6" />
                   </button>
