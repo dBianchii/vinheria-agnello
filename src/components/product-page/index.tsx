@@ -5,24 +5,14 @@
 
 import { getCountryImg } from "data/getCountryImg";
 import { type IProduto } from "data/vinhos";
-import { Archive, LucideLoader2, Minus, Plus, Wine } from "lucide-react";
-import dynamic from "next/dynamic";
+import { Archive, Wine } from "lucide-react";
 import Image from "next/image";
-import { useCart } from "~/context/cart-context";
 import { formatPrice } from "~/lib/utils";
 import "~/lib/zoom.css";
+import { ProductCounter } from "../product-counter";
 import Stars from "../stars";
 
-const CurrentProductCount = dynamic(() => import("./current-prduct-count"), {
-  ssr: false,
-  loading: () => (
-    <LucideLoader2 className="size-5 animate-spin text-muted-foreground"></LucideLoader2>
-  ),
-});
-
 export function ProductPageComponent({ product }: { product: IProduto }) {
-  const { incrementItem, decrementItem } = useCart();
-
   const finalPrice = (price: number, discount: number) =>
     price - (price * discount) / 100;
 
@@ -82,25 +72,7 @@ export function ProductPageComponent({ product }: { product: IProduto }) {
                 </span>
               </div>
             </div>
-            <div>
-              <div className="mb-4 flex items-center gap-4 border-t pt-4">
-                <div className="flex h-12 w-56 items-center justify-between rounded-full bg-neutral-200 px-6">
-                  <button
-                    className="hover:opacity-85"
-                    onClick={() => decrementItem(product.id)}
-                  >
-                    <Minus className="h-6 w-6" />
-                  </button>
-                  <CurrentProductCount product={product} />
-                  <button
-                    className="hover:opacity-85"
-                    onClick={() => incrementItem(product)}
-                  >
-                    <Plus className="h-6 w-6" />
-                  </button>
-                </div>
-              </div>
-            </div>
+            <ProductCounter product={product} />
           </div>
         </div>
       )}
