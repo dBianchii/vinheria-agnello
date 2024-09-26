@@ -72,7 +72,9 @@ export function ProductPageComponent({ product }: { product: IProduto }) {
                 </span>
               </div>
             </div>
-            <ProductCounter product={product} />
+            <div className="w-44">
+              <ProductCounter product={product} />
+            </div>
           </div>
         </div>
       )}

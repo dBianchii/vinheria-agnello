@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "~/lib/utils";
+import { Badge } from "./ui/badge";
 
 export default function DiscountBadge({
   classname,
@@ -9,13 +10,11 @@ export default function DiscountBadge({
   discount: number;
 }) {
   return (
-    <p
-      className={cn(
-        "select-none rounded-xl bg-red-100 px-3 py-1 font-semibold text-red-500",
-        classname,
-      )}
+    <Badge
+      variant={"destructive"}
+      className={cn("hover:bg-danger rounded-xl", classname)}
     >
       -{discount.toFixed(0)}%
-    </p>
+    </Badge>
   );
 }

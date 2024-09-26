@@ -8,5 +8,5 @@ export default function CurrentProductCount({
 }) {
   const { items } = useCart();
   const quantity = items.find((item) => item.id === product.id)?.quantity ?? 0;
-  return <span className="mx-6 font-semibold">{quantity}</span>;
+  return <span className="mx-4 font-semibold">{quantity}</span>;
 }

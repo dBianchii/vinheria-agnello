@@ -1,14 +1,14 @@
 import Image from "next/image";
-import React from "react";
 
-import { calculatePriceAfterDiscount, formatPrice } from "~/lib/utils";
-import { Button } from "../button";
-import { Minus, Plus, Trash } from "lucide-react";
-import DiscountBadge from "~/components/discount-badge";
+import { vinhos } from "data/vinhos";
+import { Trash } from "lucide-react";
 import Link from "next/link";
+import DiscountBadge from "~/components/discount-badge";
+import { ProductCounter } from "~/components/product-counter";
 import { useCart } from "~/context/cart-context";
 import type { CartItem } from "~/lib/types";
-import { vinhos } from "data/vinhos";
+import { calculatePriceAfterDiscount, formatPrice } from "~/lib/utils";
+import { Button } from "../button";
 
 export default function CartCard({
   id,
@@ -18,7 +18,7 @@ export default function CartCard({
   discount,
   quantity,
 }: CartItem) {
-  const { incrementItem, decrementItem, removeItem } = useCart();
+  const { removeItem } = useCart();
   const product = vinhos.find((vinho) => vinho.id === id);
   if (!product) return null;
 
@@ -64,25 +64,8 @@ export default function CartCard({
           >
             <Trash className="h-4 w-4 text-red-500" />
           </Button>
-          <div className="flex items-center justify-between rounded-full bg-neutral-200">
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full bg-neutral-200"
-              onClick={() => decrementItem(id)}
-            >
-              <Minus className="h-4 w-4" />
-            </Button>
-            <span className="w-[30px] text-center">{quantity}</span>
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full bg-neutral-200"
-              onClick={() => incrementItem(product)}
-            >
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
+
+          <ProductCounter product={product} size="small" />
         </div>
       </div>
     </div>

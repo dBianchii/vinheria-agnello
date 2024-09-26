@@ -28,7 +28,7 @@ export default function CardHomePage({
   return (
     <div
       onClick={() => handleClick(id)}
-      className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg"
+      className="cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-lg"
     >
       <Image
         src={imgUrl}

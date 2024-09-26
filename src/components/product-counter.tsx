@@ -2,6 +2,8 @@ import { type IProduto } from "data/vinhos";
 import { LucideLoader2, Minus, Plus } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useCart } from "~/context/cart-context";
+import { cn } from "~/lib/utils";
+import { Button } from "./ui/button";
 
 const CurrentProductCount = dynamic(
   () => import("./product-page/current-prduct-count"),
@@ -13,24 +15,47 @@ const CurrentProductCount = dynamic(
   },
 );
 
-export function ProductCounter({ product }: { product: IProduto }) {
+export function ProductCounter({
+  product,
+  size = "default",
+}: {
+  product: IProduto;
+  size?: "small" | "default";
+}) {
   const { incrementItem, decrementItem } = useCart();
 
   return (
-    <div className="flex h-12 w-56 items-center justify-between rounded-full bg-neutral-200 px-6">
-      <button
-        className="hover:opacity-85"
+    <div
+      className={cn(
+        "flex items-center justify-between rounded-full bg-secondary",
+      )}
+    >
+      <Button
+        variant="outline"
+        size={"sm"}
+        className="m-1 rounded-full shadow-none"
         onClick={() => decrementItem(product.id)}
       >
-        <Minus className="h-6 w-6" />
-      </button>
+        <Minus
+          className={cn({
+            "size-6": size === "default",
+            "size-4": size === "small",
+          })}
+        />
+      </Button>
       <CurrentProductCount product={product} />
-      <button
-        className="hover:opacity-85"
+      <Button
+        size={"sm"}
+        className="m-1 rounded-full shadow-none"
         onClick={() => incrementItem(product)}
       >
-        <Plus className="h-6 w-6" />
-      </button>
+        <Plus
+          className={cn({
+            "size-6": size === "default",
+            "size-4": size === "small",
+          })}
+        />
+      </Button>
     </div>
   );
 }
