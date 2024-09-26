@@ -3,30 +3,16 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { vinhos } from "data/vinhos";
+import { IProduto, vinhos } from "data/vinhos";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Stars from "./stars";
 import { Button } from "./ui/button";
 import { formatPrice } from "~/lib/utils";
-import { Minus, Plus } from "lucide-react";
+import { Archive, Flag, Minus, Plus, Wine } from "lucide-react";
+import { getCountryImg } from "data/getCountryImg";
 
-interface IProduto {
-  id: string;
-  name: string;
-  img: string;
-  vinicula: string;
-  preco: number;
-  desconto: number;
-  descricao: string;
-  categoria: string;
-  tipo_de_uva: string;
-  tipo: string;
-  uva: string;
-  pais: string;
-  harmonizacao: string;
-  stars: number;
-}
+
 
 export function ProductPageComponent() {
   const [quantity, setQuantity] = useState(1);
@@ -40,8 +26,9 @@ export function ProductPageComponent() {
 
   useEffect(() => {
     if (id) {
-      const foundProduct = vinhos.find((vinho) => vinho.id === id);
+      let foundProduct: IProduto | undefined = vinhos.find((vinho) => vinho.id === id);
       if (foundProduct) {
+        foundProduct.countryImg = getCountryImg(foundProduct.pais)
         setProduct(foundProduct);
         console.log(foundProduct);
       }
@@ -84,7 +71,13 @@ export function ProductPageComponent() {
                   </>
                 )}
               </div>
-              <div className="py-8 text-neutral-500">{product.descricao}</div>
+              <div className="text-lg font-light py-8 text-neutral-500">{product.descricao}</div>
+              <div>
+                <span className="flex mb-2 text-lg items-center justify-start"><Wine    className="w-7 mr-3 text-rose-900" /><p className="text-neutral-500 ">{product.tipo_de_uva}</p></span>
+                <span className="flex mb-2 text-lg items-center justify-start"><img className=" w-7    mr-3 h-7 object-cover" src={getCountryImg(product.pais)} /><p className="text-neutral-500  ">{product.pais}</p></span>
+                <span className="flex mb-2 text-lg items-center justify-start"><Archive className="w-7 mr-3 "/><p className="text-neutral-500 ">{product.unidades} unidade{product.unidades != 1 ? "s" : ""}</p></span>
+                
+              </div>
             </div>
             <div>
               <div className="mb-4 border-t pt-4 flex items-center gap-4">

@@ -1,4 +1,23 @@
-export const vinhos = [
+export interface IProduto {
+  id: string;
+  name: string;
+  img: string;
+  vinicula: string;
+  preco: number;
+  desconto: number;
+  descricao: string;
+  categoria: string;
+  tipo_de_uva: string;
+  tipo: string;
+  uva: string;
+  pais: string;
+  harmonizacao: string;
+  stars: number;
+  unidades: number;
+  countryImg?: string;
+}
+
+export const vinhos: IProduto[] = [
   {
       id: "dcf03d16-c3e0-4b26-b401-8c304fd3bb3f",
       name: "Catena Zapata Malbec Argentino",
@@ -13,7 +32,8 @@ export const vinhos = [
       uva: "Malbec",
       pais: "Argentina",
       harmonizacao: "Carnes grelhadas, queijos curados.",
-      stars: 4.5
+      stars: 4.5,
+      unidades: 1
   },
   {
       id: "b03aaba3-221d-4d4a-baac-4d1e17a51ae5",
@@ -29,7 +49,8 @@ export const vinhos = [
       uva: "Chardonnay",
       pais: "Argentina",
       harmonizacao: "Frutos do mar, pratos à base de frango.",
-      stars: 4.0
+      stars: 4.0,
+      unidades: 1
   },
   {
       id: "584765ca-39fb-4ee9-a035-d17f508dfc99",
@@ -45,7 +66,8 @@ export const vinhos = [
       uva: "Malbec",
       pais: "Argentina",
       harmonizacao: "Saladas, pratos leves, aperitivos.",
-      stars: 4
+      stars: 4,
+      unidades: 1
   },
   {
       id: "0cdf8a76-9471-4f56-9c11-7ebaf75b234e",
@@ -61,7 +83,8 @@ export const vinhos = [
       uva: "Malbec",
       pais: "Argentina",
       harmonizacao: "Carnes vermelhas, queijos maturados e pratos de massa.",
-      stars: 5
+      stars: 5,
+      unidades: 1
   }
 
 ];
