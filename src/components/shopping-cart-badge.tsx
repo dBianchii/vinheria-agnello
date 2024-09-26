@@ -1,3 +1,5 @@
+"use client";
+
 import { useCart } from "~/context/cart-context";
 
 export default function ShoppingCartBadge() {
