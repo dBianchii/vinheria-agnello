@@ -1,10 +1,10 @@
-"use client";
-
-import { Search, User } from "lucide-react";
+import { ShoppingCart as IconShoppingCart, Search, User } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart as IconShoppingCart } from "lucide-react";
+import { getServerAuthSession } from "~/server/auth";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Suspense } from "react";
 
 const ShoppingCartBadge = dynamic(() => import("./shopping-cart-badge"), {
   ssr: false,
@@ -44,12 +44,32 @@ export default function Header() {
           <Link href="/cart">
             <ShoppingCart />
           </Link>
-          <Link href="/account">
-            <User className="text-gray-600 hover:text-[#6d071a]" />
-          </Link>
+          <Suspense fallback={<NotLoggedInUserProfile />}>
+            <UserProfile />
+          </Suspense>
         </div>
       </div>
     </header>
+  );
+}
+
+function NotLoggedInUserProfile() {
+  return (
+    <Link href="/login">
+      <User className="text-gray-600 hover:text-[#6d071a]" />
+    </Link>
+  );
+}
+
+async function UserProfile() {
+  const session = await getServerAuthSession();
+
+  if (!session) return <NotLoggedInUserProfile />;
+  return (
+    <Avatar>
+      <AvatarImage src={session.user.image ?? ""} alt="@shadcn" />
+      <AvatarFallback>{session.user.name}</AvatarFallback>
+    </Avatar>
   );
 }
 

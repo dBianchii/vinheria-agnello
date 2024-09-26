@@ -3,6 +3,7 @@ import React from "react";
 import Stars from "./stars";
 import { calculatePriceAfterDiscount, formatPrice } from "~/lib/utils";
 import DiscountBadge from "./discount-badge";
+import Link from "next/link";
 
 interface CardHomeProps {
   name: string;
@@ -11,7 +12,6 @@ interface CardHomeProps {
   discount: number;
   imgUrl: string;
   id: string;
-  handleClick: (id: string) => void;
 }
 
 export default function CardHomePage({
@@ -21,13 +21,12 @@ export default function CardHomePage({
   discount,
   imgUrl,
   id,
-  handleClick,
 }: CardHomeProps) {
   const finalPrice = calculatePriceAfterDiscount(price, discount);
 
   return (
-    <div
-      onClick={() => handleClick(id)}
+    <Link
+      href={`/product/${id}`}
       className="cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-lg"
     >
       <Image
@@ -52,6 +51,6 @@ export default function CardHomePage({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

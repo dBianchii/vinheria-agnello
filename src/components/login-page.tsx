@@ -12,7 +12,7 @@ export function LoginPageComponent() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-[#f5f0e8] text-[#6d071a]">
+    <div className="flex text-primary">
       <div className="m-auto w-full max-w-md rounded-3xl bg-[#f9f6f1] p-8 shadow-lg">
         {isLogin ? (
           <div className="space-y-6 text-center">

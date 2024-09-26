@@ -2,18 +2,11 @@
 
 import { vinhos } from "data/vinhos";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import CardHomePage from "./card-home";
 import Stats from "./stats";
 import { Button } from "./ui/button";
 
 export function Homepage() {
-  const router = useRouter();
-
-  const goToProductPage = (id: string) => {
-    router.push(`/product/${id}`);
-  };
-
   return (
     <>
       {/* Hero Section */}
@@ -65,7 +58,6 @@ export function Homepage() {
                 discount={vinho.desconto}
                 imgUrl={vinho.img}
                 id={vinho.id}
-                handleClick={goToProductPage}
               />
             ))}
           </div>
@@ -95,7 +87,6 @@ export function Homepage() {
                 discount={vinho.desconto}
                 imgUrl={vinho.img}
                 id={vinho.id}
-                handleClick={goToProductPage}
               />
             ))}
           </div>
