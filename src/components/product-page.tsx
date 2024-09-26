@@ -11,7 +11,7 @@ import { Button } from "./ui/button";
 import { formatPrice } from "~/lib/utils";
 import { Archive, Flag, Minus, Plus, Wine } from "lucide-react";
 import { getCountryImg } from "data/getCountryImg";
-
+import '../lib/zoom.css'
 
 
 export function ProductPageComponent() {
@@ -43,7 +43,7 @@ export function ProductPageComponent() {
     <div className="flex justify-center overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg">
       {product && (
         <div className="container flex w-4/5 gap-4 p-4">
-          <div className="w-1/2 rounded border">
+          <div className="zoom-img w-1/2 rounded border">
             <Image
               src={product.img}
               alt={product.name}
