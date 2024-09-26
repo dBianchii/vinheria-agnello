@@ -9,7 +9,12 @@ export default function DiscountBadge({
   discount: number;
 }) {
   return (
-    <p className={cn("select-none rounded-xl bg-red-100 px-3 py-1 font-semibold text-red-500", classname)}>
+    <p
+      className={cn(
+        "select-none rounded-xl bg-red-100 px-3 py-1 font-semibold text-red-500",
+        classname,
+      )}
+    >
       -{discount.toFixed(0)}%
     </p>
   );

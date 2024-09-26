@@ -1,3 +1,3 @@
 import { LoginPageComponent } from "~/components/login-page";
 
-export default LoginPageComponent
+export default LoginPageComponent;

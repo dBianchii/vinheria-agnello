@@ -62,7 +62,7 @@ export function Homepage() {
                 name={vinho.name}
                 stars={vinho.stars} // Coloque a avaliação que desejar
                 price={vinho.preco}
-								discount={vinho.desconto}
+                discount={vinho.desconto}
                 imgUrl={vinho.img}
                 id={vinho.id}
                 handleClick={goToProductPage}
@@ -92,7 +92,7 @@ export function Homepage() {
                 name={vinho.name}
                 stars={vinho.stars} // Coloque a avaliação que desejar
                 price={vinho.preco}
-								discount={vinho.desconto}
+                discount={vinho.desconto}
                 imgUrl={vinho.img}
                 id={vinho.id}
                 handleClick={goToProductPage}
@@ -130,7 +130,6 @@ export function Homepage() {
           </div>
         </div>
       </section>
-
     </>
   );
 }

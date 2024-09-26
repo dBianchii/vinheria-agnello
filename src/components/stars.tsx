@@ -1,5 +1,5 @@
-import React from 'react';
-import { Star, StarHalf } from 'lucide-react';
+import React from "react";
+import { Star, StarHalf } from "lucide-react";
 
 interface StarsProps {
   stars: number;
@@ -30,6 +30,6 @@ const Stars: React.FC<StarsProps> = ({ stars }) => {
       <span className="ml-2 text-gray-600">({roundedStars.toFixed(1)})</span>
     </div>
   );
-}
+};
 
 export default Stars;
