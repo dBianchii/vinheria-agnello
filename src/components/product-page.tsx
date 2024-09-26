@@ -12,9 +12,12 @@ import { formatPrice } from "~/lib/utils";
 import { Archive, Flag, Minus, Plus, Wine } from "lucide-react";
 import { getCountryImg } from "data/getCountryImg";
 import '../lib/zoom.css'
+import { useCart } from "~/context/cart-context";
+import { toast } from "sonner";
 
 
 export function ProductPageComponent() {
+	const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => setQuantity((prev) => prev + 1);
@@ -38,6 +41,18 @@ export function ProductPageComponent() {
   const finalPrice = (price: number, discount: number) => {
     return price - (price * discount) / 100;
   };
+
+	const handleClickOnAdd = () => {
+		addItem({
+			id: product!.id,
+			name: product!.name,
+			imgUrl: product!.img,
+			price: finalPrice(product!.preco, product!.desconto),
+			discount: product!.desconto,
+			quantity: quantity
+		});
+		toast.success("Produto adicionado ao carrinho");
+	}
 
   return (
     <div className="flex justify-center overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg">
@@ -90,7 +105,7 @@ export function ProductPageComponent() {
                     <Plus className="h-6 w-6" />
                   </button>
                 </div>
-                <Button className="text-md ml-4 w-full rounded-full bg-neutral-950 py-6 text-neutral-50">
+                <Button className="text-md ml-4 w-full rounded-full bg-neutral-950 py-6 text-neutral-50" onClick={handleClickOnAdd}>
                   Adicionar ao carrinho
                 </Button>
               </div>

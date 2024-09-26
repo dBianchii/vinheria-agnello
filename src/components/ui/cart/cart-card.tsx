@@ -6,16 +6,9 @@ import { Button } from "../button";
 import { Minus, Plus, Trash } from "lucide-react";
 import DiscountBadge from "~/components/discount-badge";
 import Link from "next/link";
+import { useCart } from "~/context/cart-context";
+import type { CartItem } from "~/lib/types";
 
-interface CardCartProps {
-  id: string;
-  name: string;
-  imgUrl: string;
-  price: number;
-  discount: number;
-  quantity: number;
-  updateQuantity: (id: string, quantity: number) => void;
-}
 
 export default function CartCard({
   id,
@@ -24,11 +17,15 @@ export default function CartCard({
   price,
   discount,
   quantity,
-  updateQuantity,
-}: CardCartProps) {
+}: CartItem) {
+  const { incrementItem, decrementItem, removeItem } = useCart();
+
   const finalPrice = formatPrice(
     calculatePriceAfterDiscount(price * quantity, discount),
   );
+
+	console.log("CartCard", id, name, imgUrl, price, discount, quantity);
+	console.log("CartCard", finalPrice);
 
   return (
     <div className="flex items-center gap-4 border-b py-4">
@@ -59,26 +56,34 @@ export default function CartCard({
           </div>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex flex-col items-end justify-between">
           <Button
-            variant="outline"
-            size="icon"
-            onClick={() => updateQuantity(id, quantity - 1)}
+            variant={"ghost"}
+            size={"icon"}
+            className="rounded-full hover:bg-red-100"
+						onClick={() => removeItem(id)}
           >
-            {quantity === 1 ? (
-              <Trash className="h-4 w-4" />
-            ) : (
+            <Trash className="h-4 w-4 text-red-500" />
+          </Button>
+          <div className="flex items-center justify-between rounded-full bg-neutral-200">
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full bg-neutral-200"
+              onClick={() => decrementItem(id)}
+            >
               <Minus className="h-4 w-4" />
-            )}
-          </Button>
-          <span className="mx-2">{quantity}</span>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => updateQuantity(id, quantity + 1)}
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
+            </Button>
+            <span className="w-[30px] text-center">{quantity}</span>
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full bg-neutral-200"
+              onClick={() => incrementItem(id)}
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

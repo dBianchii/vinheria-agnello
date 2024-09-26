@@ -5,6 +5,8 @@ import { type Metadata } from "next";
 import Header from "~/components/header";
 import Newsletter from "~/components/newsletter";
 import Footer from "~/components/footer";
+import { Toaster } from "~/components/ui/sonner";
+import { CartProvider } from "~/context/cart-context";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -18,12 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <Header />
-        <div className="min-h-screen pt-20 bg-gray-100 flex flex-col">
-          <div className="flex-grow">{children}</div>
-          <Newsletter />
-          <Footer />
-        </div>
+        <CartProvider>
+          <Header />
+          <div className="flex min-h-screen flex-col bg-gray-100 pt-20">
+            <div className="flex-grow">{children}</div>
+            <Newsletter />
+            <Footer />
+          </div>
+        </CartProvider>
+        <Toaster />
       </body>
     </html>
   );
