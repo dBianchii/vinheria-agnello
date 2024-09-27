@@ -35,18 +35,18 @@ export default function CartCard({
             alt={name}
             width={80}
             height={80}
-            className="h-20 w-20 object-cover"
+            className="h-24 w-24 object-cover"
           />
         </div>
       </Link>
-      <div className="flex h-20 w-full justify-between">
+      <div className="flex h-24 w-full justify-between">
         <div className="flex flex-col justify-between">
           <h3 className="font-semibold">{name}</h3>
-          <div className="flex items-center">
+          <div className="flex flex-col items-start sm:flex-row sm:items-center">
             <span className="text-lg font-bold">{finalPrice}</span>
             {discount > 0 && (
               <div className="flex items-center">
-                <span className="ml-2 text-sm text-gray-500 line-through">
+                <span className="sm:ml-2 text-sm text-gray-500 line-through">
                   {formatPrice(price * quantity)}
                 </span>
                 <DiscountBadge discount={discount} classname="ml-2 text-xs" />
