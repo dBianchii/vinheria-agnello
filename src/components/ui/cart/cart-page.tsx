@@ -95,7 +95,7 @@ export default function CartPageComponent() {
                 deseja comprar!
               </p>
               <Link href="/">
-                <Button variant={"primary"} size={"lg"}>
+                <Button variant={"default"} size={"lg"}>
                   Ver produtos
                 </Button>
               </Link>

@@ -17,7 +17,7 @@ export default function Newsletter() {
                 placeholder="Digite seu e-mail"
                 className="flex-grow rounded px-4 py-2 text-center text-gray-900"
               />
-              <Button type="submit" variant={"primary"} size={"lg"}>
+              <Button type="submit" variant={"default"} size={"lg"}>
                 Quero receber ofertas!
               </Button>
             </form>

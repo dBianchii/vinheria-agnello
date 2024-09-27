@@ -11,10 +11,15 @@ import { formatPrice } from "~/lib/utils";
 import "~/lib/zoom.css";
 import { ProductCounter } from "../product-counter";
 import Stars from "../stars";
+import { useEffect } from "react";
 
 export function ProductPageComponent({ product }: { product: IProduto }) {
   const finalPrice = (price: number, discount: number) =>
     price - (price * discount) / 100;
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	}, [])
 
   return (
     <div className="flex justify-center overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg">

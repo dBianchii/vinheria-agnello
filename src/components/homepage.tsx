@@ -21,7 +21,6 @@ export function Homepage() {
               para cada ocasião.
             </p>
             <Button
-              className="bg-[#6d071a] text-white hover:bg-[#8d0922]"
               variant={"default"}
               size={"lg"}
             >
@@ -63,7 +62,6 @@ export function Homepage() {
           </div>
           <div className="mt-8 text-center">
             <Button
-              className="bg-[#6d071a] text-white hover:bg-[#8d0922]"
               variant={"default"}
               size={"lg"}
             >
@@ -92,7 +90,6 @@ export function Homepage() {
           </div>
           <div className="mt-8 text-center">
             <Button
-              className="bg-[#6d071a] text-white hover:bg-[#8d0922]"
               variant={"default"}
               size={"lg"}
             >
@@ -112,7 +109,7 @@ export function Homepage() {
             {["R$29,90", "R$49,90", "R$99,90"].map((price) => (
               <div
                 key={price}
-                className="cursor-pointer rounded-lg bg-[#6d071a] p-8 text-center text-white hover:bg-[#8d0922]"
+                className="cursor-pointer rounded-lg bg-primary p-8 text-center text-white hover:bg-primary/90"
               >
                 <h3 className="mb-2 text-2xl">VINHOS ATÉ</h3>
                 <p className="text-4xl font-bold">{price}</p>
