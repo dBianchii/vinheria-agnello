@@ -2,6 +2,8 @@ import { relations, sql } from "drizzle-orm";
 import {
   index,
   integer,
+  numeric,
+  pgEnum,
   pgTableCreator,
   primaryKey,
   serial,
@@ -129,32 +131,68 @@ export const verificationTokens = createTable(
   }),
 );
 
-// id: "dcf03d16-c3e0-4b26-b401-8c304fd3bb3f",
-//       name: "Catena Zapata Malbec Argentino",
-//       img: "https://th.bing.com/th/id/OIP.cHsi6voglna5IjKHxG6dEQHaHa?rs=1&pid=ImgDetMain",
-//       vinicula: "Catena Zapata",
-//       preco: 180.00,
-// 			desconto: 30,
-//       descricao: "Um Malbec encorpado, com notas de frutas vermelhas e especiarias, proveniente de vinhedos de altitude.",
-//       categoria: "vinho",
-//       tipo_de_uva: "Malbec",
-//       tipo: "tinto",
-//       uva: "Malbec",
-//       pais: "Argentina",
-//       harmonizacao: "Carnes grelhadas, queijos curados.",
-//       stars: 4.5,
-//       unidades: 1
+const percentageColumn = (columnName: string) =>
+  numeric(columnName, { precision: 5, scale: 2 }); //E.G. -> 123.00 (p=5, s=2)
+
+export const categoriaEnum = pgEnum("categoria", ["kit", "singular"]);
 export const wines = createTable(
   "wine",
   {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 255 }).notNull(),
-    price: integer("price").notNull(),
-    discount: integer("discount").notNull(),
-    country: varchar("country", { length: 255 }).notNull(),
-    img: varchar("img", { length: 255 }).notNull(),
+    id: serial("id").primaryKey().notNull(),
+    name: varchar("name", { length: 256 }).notNull(),
+    img: varchar("img", { length: 256 }).notNull(),
+    vinicula: varchar("vinicula", { length: 256 }).notNull(),
+    preco: numeric("preco").notNull(),
+    desconto: percentageColumn("desconto"),
+    descricao: text("descricao").notNull(),
+    categoria: categoriaEnum("categoria"),
+    uva: varchar("uva", { length: 256 }).notNull(),
+    pais: varchar("pais", { length: 256 }).notNull(),
+    stars: integer("stars").notNull(),
+    unidades: integer("unidades").notNull(),
+    tipo: varchar("tipo", { length: 256 }),
+    safra: integer("safra"),
+    teorAlcoolico: percentageColumn("teorAlcoolico").notNull(),
+    temperaturaServico: varchar("temperaturaServico", { length: 256 }),
+    tipoFechamento: varchar("tipoFechamento", { length: 256 }),
+    volume: integer("volume"),
+    cor: varchar("cor", { length: 256 }),
+    aroma: varchar("aroma", { length: 256 }),
+    sabor: varchar("sabor", { length: 256 }),
+    harmonizacao: varchar("harmonizacao", { length: 256 }),
   },
   (wine) => ({
-    countryIdx: index("wine_country_idx").on(wine.country),
+    nameIndex: index("name_idx").on(wine.name),
   }),
 );
+export const winesRelations = relations(wines, ({ many }) => ({
+  orders: many(orders),
+}));
+
+export const orders = createTable(
+  "order",
+  {
+    id: serial("id").primaryKey().notNull(),
+    userId: varchar("userId", { length: 255 })
+      .notNull()
+      .references(() => users.id),
+    wineId: integer("wineId")
+      .notNull()
+      .references(() => wines.id),
+    status: varchar("status", { length: 256 }).notNull(),
+    total: numeric("total").notNull(),
+    createdAt: timestamp("createdAt", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updatedAt", { withTimezone: true }).$onUpdate(
+      () => new Date(),
+    ),
+  },
+  (order) => ({
+    userIdIdx: index("order_user_id_idx").on(order.userId),
+  }),
+);
+export const ordersRelations = relations(orders, ({ one }) => ({
+  user: one(users, { fields: [orders.userId], references: [users.id] }),
+  wine: one(wines, { fields: [orders.wineId], references: [wines.id] }),
+}));
