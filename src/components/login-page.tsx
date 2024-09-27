@@ -22,7 +22,9 @@ export function LoginPageComponent() {
               variant={"outline"}
               className="w-full"
               onClick={async () => {
-                await signIn("google");
+                await signIn("google", {
+                  callbackUrl: "/",
+                });
               }}
             >
               <FcGoogle className="mr-2 size-4" />

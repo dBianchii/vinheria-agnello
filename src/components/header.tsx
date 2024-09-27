@@ -58,7 +58,7 @@ export default function Header() {
 
 function NotLoggedInUserProfile() {
   return (
-    <Link href="/login">
+    <Link href="/signin">
       <User className="text-gray-600 hover:text-[#6d071a]" />
     </Link>
   );
