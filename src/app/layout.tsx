@@ -28,7 +28,7 @@ export default function RootLayout({
       >
         <CartProvider>
           <Header />
-          <div className="flex min-h-screen flex-col pt-20">
+          <div className="flex min-h-screen flex-col">
             <div className="flex-grow">{children}</div>
             <Newsletter />
             <Footer />

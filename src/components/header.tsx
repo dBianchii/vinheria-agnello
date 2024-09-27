@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getServerAuthSession } from "~/server/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Suspense } from "react";
+import HeaderFooterRemover from "./header-footer-remover";
 
 const ShoppingCartBadge = dynamic(() => import("./shopping-cart-badge"), {
   ssr: false,
@@ -12,44 +13,46 @@ const ShoppingCartBadge = dynamic(() => import("./shopping-cart-badge"), {
 
 export default function Header() {
   return (
-    <header className="fixed w-full bg-accent shadow backdrop-blur">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 py-4 md:flex-row">
-        <div className="flex items-center md:mb-0">
-          <Link href="/">
-            <Image
-              src="https://placehold.co/150x50"
-              alt="Agnello Logo"
-              width={150}
-              height={50}
-              className="mr-4"
-            />
-          </Link>
-          <nav className="hidden space-x-4 md:flex">
-            <Link href="#" className="text-gray-600 hover:text-gray-900">
-              Vinhos
+    <HeaderFooterRemover>
+      <header className="fixed w-full bg-background/20 shadow backdrop-blur">
+        <div className="container mx-auto flex h-20 items-center justify-between px-4 py-4 md:flex-row">
+          <div className="flex items-center md:mb-0">
+            <Link href="/">
+              <Image
+                src="https://placehold.co/150x50"
+                alt="Agnello Logo"
+                width={150}
+                height={50}
+                className="mr-4"
+              />
             </Link>
-            <Link href="#" className="text-gray-600 hover:text-gray-900">
-              Kits
+            <nav className="hidden space-x-4 md:flex">
+              <Link href="#" className="text-gray-600 hover:text-gray-900">
+                Vinhos
+              </Link>
+              <Link href="#" className="text-gray-600 hover:text-gray-900">
+                Kits
+              </Link>
+              <Link href="#" className="text-gray-600 hover:text-gray-900">
+                Mais Vendidos
+              </Link>
+              <Link href="#" className="text-gray-600 hover:text-gray-900">
+                Promoções
+              </Link>
+            </nav>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Search className="text-gray-600" />
+            <Link href="/cart">
+              <ShoppingCart />
             </Link>
-            <Link href="#" className="text-gray-600 hover:text-gray-900">
-              Mais Vendidos
-            </Link>
-            <Link href="#" className="text-gray-600 hover:text-gray-900">
-              Promoções
-            </Link>
-          </nav>
+            <Suspense fallback={<NotLoggedInUserProfile />}>
+              <UserProfile />
+            </Suspense>
+          </div>
         </div>
-        <div className="flex items-center space-x-4">
-          <Search className="text-gray-600" />
-          <Link href="/cart">
-            <ShoppingCart />
-          </Link>
-          <Suspense fallback={<NotLoggedInUserProfile />}>
-            <UserProfile />
-          </Suspense>
-        </div>
-      </div>
-    </header>
+      </header>
+    </HeaderFooterRemover>
   );
 }
 

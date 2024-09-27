@@ -10,7 +10,7 @@ export function Homepage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gray-200 py-12 md:py-24">
+      <section className="bg-card-foreground/10 py-12 md:py-24">
         <div className="container mx-auto flex flex-col items-center px-4 md:flex-row">
           <div className="mb-8 md:mb-0 md:w-1/2">
             <h1 className="mb-4 text-4xl font-bold md:text-5xl">
