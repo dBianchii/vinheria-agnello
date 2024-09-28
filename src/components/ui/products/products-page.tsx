@@ -12,7 +12,7 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import CardHomePage from "~/components/card-wine";
-import { vinhos } from "data/vinhos";
+import { wines } from "data/seed";
 
 export default function WineShop() {
   const [priceRange, setPriceRange] = useState([0, 100]);
@@ -117,21 +117,17 @@ export default function WineShop() {
             </select>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[...Array(4)].map((_, i) =>
-              vinhos
-                .filter((_, index) => index < 3)
-                .map((vinho) => (
-                  <CardHomePage
-                    key={`${vinho.name}-${i}`}
-                    name={vinho.name}
-                    stars={vinho.stars} // Coloque a avaliação que desejar
-                    price={vinho.preco}
-                    discount={vinho.desconto}
-                    imgUrl={vinho.img}
-                    id={vinho.id}
-                  />
-                )),
-            )}
+            {wines.filter((_, i) => i < 12).map((vinho) => (
+              <CardHomePage
+                key={`${vinho.name}`}
+                name={vinho.name}
+                stars={vinho.stars} // Coloque a avaliação que desejar
+                price={vinho.preco}
+                discount={vinho.desconto}
+                imgUrl={vinho.img}
+                id={vinho.name}
+              />
+            ))}
           </div>
 
           {/* Pagination */}

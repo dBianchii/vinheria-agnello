@@ -29,13 +29,13 @@ export default function CardWine({
       href={`/product/${id}`}
       className="cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-lg"
     >
-      <div className="">
+      <div className="w-full h-48 overflow-hidden flex items-center justify-center">
         <Image
           src={imgUrl}
           alt={name}
           width={300}
           height={300}
-          className="w-full"
+          className="h-full object-contain"
         />
       </div>
       <div className="p-4">
