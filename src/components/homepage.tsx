@@ -2,7 +2,7 @@
 
 import { vinhos } from "data/vinhos";
 import Image from "next/image";
-import CardHomePage from "./card-home";
+import CardWine from "./card-wine";
 import Stats from "./stats";
 import { Button } from "./ui/button";
 
@@ -20,10 +20,7 @@ export function Homepage() {
               Descubra nossa seleção de vinhos premium e encontre o sabor ideal
               para cada ocasião.
             </p>
-            <Button
-              variant={"default"}
-              size={"lg"}
-            >
+            <Button variant={"default"} size={"lg"}>
               Comprar Agora
             </Button>
           </div>
@@ -49,7 +46,7 @@ export function Homepage() {
           <h2 className="mb-8 text-3xl font-bold">KITS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {vinhos.map((vinho) => (
-              <CardHomePage
+              <CardWine
                 key={vinho.name}
                 name={vinho.name}
                 stars={vinho.stars} // Coloque a avaliação que desejar
@@ -61,10 +58,7 @@ export function Homepage() {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Button
-              variant={"default"}
-              size={"lg"}
-            >
+            <Button variant={"default"} size={"lg"}>
               Ver Todos
             </Button>
           </div>
@@ -77,7 +71,7 @@ export function Homepage() {
           <h2 className="mb-8 text-3xl font-bold">MAIS VENDIDOS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {vinhos.map((vinho) => (
-              <CardHomePage
+              <CardWine
                 key={vinho.name}
                 name={vinho.name}
                 stars={vinho.stars} // Coloque a avaliação que desejar
@@ -89,10 +83,7 @@ export function Homepage() {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Button
-              variant={"default"}
-              size={"lg"}
-            >
+            <Button variant={"default"} size={"lg"}>
               Ver Todos
             </Button>
           </div>

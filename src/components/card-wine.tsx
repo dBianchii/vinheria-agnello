@@ -5,7 +5,7 @@ import { calculatePriceAfterDiscount, formatPrice } from "~/lib/utils";
 import DiscountBadge from "./discount-badge";
 import Link from "next/link";
 
-interface CardHomeProps {
+interface CardWineProps {
   name: string;
   stars: number;
   price: number;
@@ -14,14 +14,14 @@ interface CardHomeProps {
   id: string;
 }
 
-export default function CardHomePage({
+export default function CardWine({
   name,
   stars,
   price,
   discount,
   imgUrl,
   id,
-}: CardHomeProps) {
+}: CardWineProps) {
   const finalPrice = calculatePriceAfterDiscount(price, discount);
 
   return (
@@ -29,13 +29,15 @@ export default function CardHomePage({
       href={`/product/${id}`}
       className="cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-lg"
     >
-      <Image
-        src={imgUrl}
-        alt={name}
-        width={300}
-        height={300}
-        className="w-full"
-      />
+      <div className="">
+        <Image
+          src={imgUrl}
+          alt={name}
+          width={300}
+          height={300}
+          className="w-full"
+        />
+      </div>
       <div className="p-4">
         <h3 className="mb-2 font-semibold">{name}</h3>
         <Stars stars={stars} />
