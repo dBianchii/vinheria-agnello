@@ -72,7 +72,7 @@ export default function CartPageComponent() {
                     placeholder="Adicionar código promocional"
                     className="mb-2 bg-white"
                   />
-                  <Button variant="primary" className="w-full">
+                  <Button variant="default" className="w-full">
                     Aplicar
                   </Button>
                 </div>
