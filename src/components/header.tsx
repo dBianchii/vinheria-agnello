@@ -27,16 +27,16 @@ export default function Header() {
               />
             </Link>
             <nav className="hidden space-x-4 md:flex">
-              <Link href="#" className="text-gray-600 hover:text-gray-900">
+              <Link href="/products" className="text-gray-600 hover:text-gray-900">
                 Vinhos
               </Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-900">
+              <Link href="/products" className="text-gray-600 hover:text-gray-900">
                 Kits
               </Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-900">
+              <Link href="/products" className="text-gray-600 hover:text-gray-900">
                 Mais Vendidos
               </Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-900">
+              <Link href="/products" className="text-gray-600 hover:text-gray-900">
                 Promoções
               </Link>
             </nav>
