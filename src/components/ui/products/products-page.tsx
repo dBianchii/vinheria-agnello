@@ -4,9 +4,8 @@ import { useState } from "react";
 import { Slider } from "~/components/ui/slider";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Button } from "~/components/ui/button";
-import { FiFilter, FiMessageCircle  } from "react-icons/fi"; 
+import { FiFilter, FiMessageCircle } from "react-icons/fi";
 import Modal from "~/components/ui/modal";
-import sendPrompt from "../../../server/gpt";
 
 import {
   Accordion,
@@ -16,19 +15,19 @@ import {
 } from "~/components/ui/accordion";
 import CardHomePage from "~/components/card-wine";
 import { wines } from "data/seed";
+import { sendPrompt } from "./actions";
 
-
-
-export default function WineShop() {
+export default function ProductsPage() {
   const [priceRange, setPriceRange] = useState([0, 100]);
-  const [showFilters, setShowFilters] = useState(false); 
+  const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
-  const [question, setQuestion] = useState(""); 
-  const [answer, setAnswer] = useState(""); 
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
 
   const handleSend = async () => {
     const response = await sendPrompt(question);
-    setAnswer(response); 
+    if (!response) return;
+    setAnswer(response);
   };
 
   const filterCategories = [
@@ -73,7 +72,7 @@ export default function WineShop() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Filtros para telas menores */}
-        <div className="lg:hidden mb-4">
+        <div className="mb-4 lg:hidden">
           <button
             className="flex items-center space-x-2 text-lg font-semibold"
             onClick={() => setShowFilters(!showFilters)}
@@ -128,7 +127,7 @@ export default function WineShop() {
         </div>
 
         {/* Sidebar para telas grandes */}
-        <div className="hidden lg:block w-1/4">
+        <div className="hidden w-1/4 lg:block">
           <h2 className="mb-4 text-lg font-semibold">Filtros</h2>
           <Accordion type="multiple" className="w-full">
             {filterCategories.map((category, index) => (
@@ -186,17 +185,19 @@ export default function WineShop() {
             </select>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {wines.filter((_, i) => i < 12).map((vinho) => (
-              <CardHomePage
-                key={`${vinho.name}`}
-                name={vinho.name}
-                stars={vinho.stars} // Coloque a avaliação que desejar
-                price={vinho.preco}
-                discount={vinho.desconto}
-                imgUrl={vinho.img}
-                id={vinho.name}
-              />
-            ))}
+            {wines
+              .filter((_, i) => i < 12)
+              .map((vinho) => (
+                <CardHomePage
+                  key={`${vinho.name}`}
+                  name={vinho.name}
+                  stars={vinho.stars} // Coloque a avaliação que desejar
+                  price={vinho.preco}
+                  discount={vinho.desconto}
+                  imgUrl={vinho.img}
+                  id={vinho.name}
+                />
+              ))}
           </div>
 
           {/* Pagination */}
@@ -222,7 +223,7 @@ export default function WineShop() {
       {/* Ícone de Chat */}
       <div className="fixed bottom-4 right-4">
         <button
-          className="p-4 rounded-full bg-orange-300 text-white shadow-lg"
+          className="rounded-full bg-orange-300 p-4 text-white shadow-lg"
           onClick={() => setShowChat(true)}
         >
           <FiMessageCircle size={24} />
@@ -233,16 +234,21 @@ export default function WineShop() {
       {showChat && (
         <Modal onClose={() => setShowChat(false)}>
           <div className="p-4">
-            <h2 className="text-lg font-semibold mb-4">Pergunte sobre vinhos</h2>
+            <h2 className="mb-4 text-lg font-semibold">
+              Pergunte sobre vinhos
+            </h2>
             <input
               type="text"
               placeholder="Faça sua pergunta"
               value={question}
               onChange={(e) => setQuestion(e.target.value)} // Atualiza o estado da pergunta
-              className="w-full p-2 border rounded mb-4"
+              className="mb-4 w-full rounded border p-2"
             />
-            <Button className="w-full" onClick={handleSend}>Enviar</Button>
-            {answer && <p className="mt-4">{answer}</p>} {/* Exibe a resposta */}
+            <Button className="w-full" onClick={handleSend}>
+              Enviar
+            </Button>
+            {answer && <p className="mt-4">{answer}</p>}{" "}
+            {/* Exibe a resposta */}
           </div>
         </Modal>
       )}
