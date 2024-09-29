@@ -8,8 +8,8 @@ import type { CartItem } from "~/lib/types";
 interface CartContextType {
   items: CartItem[];
   incrementItem: (product: IWine) => void;
-  decrementItem: (id: string) => void;
-  removeItem: (id: string) => void;
+  decrementItem: (id: number) => void;
+  removeItem: (id: number) => void;
   clearCart: () => void;
 }
 
@@ -62,7 +62,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const decrementItem = (id: string) => {
+  const decrementItem = (id: number) => {
     setItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === id);
       if (existingItem) {
@@ -76,7 +76,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const removeItem = (id: string) => {
+  const removeItem = (id: number) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 

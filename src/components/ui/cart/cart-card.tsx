@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { vinhos } from "data/vinhos";
 import { Trash } from "lucide-react";
 import Link from "next/link";
 import DiscountBadge from "~/components/discount-badge";
@@ -9,6 +8,7 @@ import { useCart } from "~/context/cart-context";
 import type { CartItem } from "~/lib/types";
 import { calculatePriceAfterDiscount, formatPrice } from "~/lib/utils";
 import { Button } from "../button";
+import { getWineById } from "~/server/db/select";
 
 export default function CartCard({
   id,
@@ -19,7 +19,7 @@ export default function CartCard({
   quantity,
 }: CartItem) {
   const { removeItem } = useCart();
-  const product = vinhos.find((vinho) => vinho.id === id);
+  const product = getWineById(id)
   if (!product) return null;
 
   const finalPrice = formatPrice(
