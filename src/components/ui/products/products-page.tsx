@@ -14,7 +14,7 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import CardHomePage from "~/components/card-wine";
-import { _wines } from "data/seed";
+import { _wines } from "data/new-seed";
 import { sendPrompt } from "./actions";
 
 export default function ProductsPage() {
