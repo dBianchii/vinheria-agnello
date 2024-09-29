@@ -14,7 +14,7 @@ export default function DiscountBadge({
       variant={"destructive"}
       className={cn("hover:bg-danger rounded-xl", classname)}
     >
-      -{discount.toFixed(0)}%
+      -{Number(discount)}%
     </Badge>
   );
 }

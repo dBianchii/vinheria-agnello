@@ -13,11 +13,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import CardHomePage from "~/components/card-wine";
-import { _wines } from "data/new-seed";
+import CardWine from "~/components/card-wine";
 import { sendPrompt } from "./actions";
+import { type SelectWine } from "~/server/db/schema";
 
-export default function ProductsPage() {
+export default function ProductsPage({ wines }: { wines: SelectWine[] }) {
+
   const [priceRange, setPriceRange] = useState([0, 100]);
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -185,17 +186,17 @@ export default function ProductsPage() {
             </select>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {_wines
+            {wines
               .filter((_, i) => i < 12)
               .map((vinho) => (
-                <CardHomePage
+                <CardWine
                   key={`${vinho.name}`}
                   name={vinho.name}
                   stars={vinho.stars} // Coloque a avaliação que desejar
                   price={vinho.preco}
                   discount={vinho.desconto}
                   imgUrl={vinho.img}
-                  id={vinho.name}
+                  id={String(vinho.id)}
                 />
               ))}
           </div>
