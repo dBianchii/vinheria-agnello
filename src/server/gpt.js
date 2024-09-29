@@ -1,14 +1,20 @@
+import { env } from "~/env";
+
+
+
 import OpenAI from 'openai';
-import dotenv from 'dotenv';
 
+console.log('OPENAI_API_KEY:', process.env.NEXT_PUBLIC_OPENAI_API_KEY);
 
-dotenv.config();
+const key = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
-const key = "sk-PYHexFc_4cSw6EOgNzrae3GbJBtLEb2OoWLGN5mzZsT3BlbkFJijUdmlVScgCsP3pmJ3brBdpXw-lL0DqFG3N4cWbO0A"
+if (!key) {
+    throw new Error('A chave da API do OpenAI não está definida no arquivo .env');
+}
 
 const openai = new OpenAI({
     apiKey: key,
-    dangerouslyAllowBrowser: true
+    dangerouslyAllowBrowser: true,
 });
 
 export default async function sendPrompt(prompt) {
@@ -23,5 +29,5 @@ export default async function sendPrompt(prompt) {
         max_tokens: 100,
     });
 
-    return completion.choices[0].message.content; // Acesse o conteúdo da resposta
+    return completion.choices[0].message.content; 
 }

@@ -6,7 +6,7 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { Button } from "~/components/ui/button";
 import { FiFilter, FiMessageCircle  } from "react-icons/fi"; 
 import Modal from "~/components/ui/modal";
-import sendPrompt from "./gpt";
+import sendPrompt from "../../../server/gpt";
 
 import {
   Accordion,
