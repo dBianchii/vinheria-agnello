@@ -4,7 +4,7 @@ import { env } from "~/env";
 
 import OpenAI from 'openai';
 
-console.log('OPENAI_API_KEY:', process.env.NEXT_PUBLIC_OPENAI_API_KEY);
+
 
 const key = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
