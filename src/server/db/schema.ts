@@ -114,6 +114,7 @@ const percentageColumn = (columnName: string) =>
   numeric(columnName, { precision: 5, scale: 2 }).$type<number>(); //E.G. -> 123.00 (p=5, s=2)
 
 export const categoriaEnum = pgEnum("categoria", ["kit", "singular"]);
+
 export const wines = createTable(
   "wine",
   {
@@ -122,7 +123,7 @@ export const wines = createTable(
     img: varchar("img", { length: 256 }).notNull(),
     vinicula: varchar("vinicula", { length: 256 }).notNull(),
     preco: numeric("preco").$type<number>().notNull(),
-    desconto: percentageColumn("desconto"),
+    desconto: percentageColumn("desconto").notNull(),
     descricao: text("descricao").notNull(),
     categoria: categoriaEnum("categoria"),
     uva: varchar("uva", { length: 256 }).notNull(),
@@ -144,6 +145,7 @@ export const wines = createTable(
     nameIndex: index("name_idx").on(wine.name),
   }),
 );
+
 export const winesRelations = relations(wines, ({ many }) => ({
   orders: many(orders),
 }));
@@ -171,7 +173,11 @@ export const orders = createTable(
     userIdIdx: index("order_user_id_idx").on(order.userId),
   }),
 );
+
 export const ordersRelations = relations(orders, ({ one }) => ({
   user: one(users, { fields: [orders.userId], references: [users.id] }),
   wine: one(wines, { fields: [orders.wineId], references: [wines.id] }),
 }));
+
+
+export type SelectWine = typeof wines.$inferSelect;
