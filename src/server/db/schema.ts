@@ -127,7 +127,7 @@ export const wines = createTable(
     categoria: categoriaEnum("categoria"),
     uva: varchar("uva", { length: 256 }).notNull(),
     pais: varchar("pais", { length: 256 }).notNull(),
-    stars: integer("stars").notNull(),
+    stars: numeric("stars", { precision: 2, scale: 1 }).$type<number>().notNull(), // Changed to numeric with precision and scale
     unidades: integer("unidades").notNull(),
     tipo: varchar("tipo", { length: 256 }),
     safra: integer("safra"),
