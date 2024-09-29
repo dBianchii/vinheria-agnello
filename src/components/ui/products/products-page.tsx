@@ -14,7 +14,7 @@ import {
   AccordionTrigger,
 } from "~/components/ui/accordion";
 import CardHomePage from "~/components/card-wine";
-import { wines } from "data/seed";
+import { _wines } from "data/seed";
 import { sendPrompt } from "./actions";
 
 export default function ProductsPage() {
@@ -185,7 +185,7 @@ export default function ProductsPage() {
             </select>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {wines
+            {_wines
               .filter((_, i) => i < 12)
               .map((vinho) => (
                 <CardHomePage

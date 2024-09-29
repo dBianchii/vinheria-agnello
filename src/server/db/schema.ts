@@ -111,7 +111,7 @@ export const verificationTokens = createTable(
 );
 
 const percentageColumn = (columnName: string) =>
-  numeric(columnName, { precision: 5, scale: 2 }); //E.G. -> 123.00 (p=5, s=2)
+  numeric(columnName, { precision: 5, scale: 2 }).$type<number>(); //E.G. -> 123.00 (p=5, s=2)
 
 export const categoriaEnum = pgEnum("categoria", ["kit", "singular"]);
 export const wines = createTable(
@@ -121,7 +121,7 @@ export const wines = createTable(
     name: varchar("name", { length: 256 }).notNull(),
     img: varchar("img", { length: 256 }).notNull(),
     vinicula: varchar("vinicula", { length: 256 }).notNull(),
-    preco: numeric("preco").notNull(),
+    preco: numeric("preco").$type<number>().notNull(),
     desconto: percentageColumn("desconto"),
     descricao: text("descricao").notNull(),
     categoria: categoriaEnum("categoria"),
@@ -131,10 +131,10 @@ export const wines = createTable(
     unidades: integer("unidades").notNull(),
     tipo: varchar("tipo", { length: 256 }),
     safra: integer("safra"),
-    teorAlcoolico: percentageColumn("teorAlcoolico").notNull(),
-    temperaturaServico: varchar("temperaturaServico", { length: 256 }),
-    tipoFechamento: varchar("tipoFechamento", { length: 256 }),
-    volume: integer("volume"),
+    teoralcoolico: percentageColumn("teoralcoolico").notNull(), //?lowercase bc... https://github.com/drizzle-team/drizzle-orm/issues/3024
+    temperaturaservico: varchar("temperaturaservico", { length: 256 }),
+    tipofechamento: varchar("tipofechamento", { length: 256 }),
+    volume: varchar("volume", { length: 256 }),
     cor: varchar("cor", { length: 256 }),
     aroma: varchar("aroma", { length: 256 }),
     sabor: varchar("sabor", { length: 256 }),

@@ -1,29 +1,10 @@
-interface IWine {
-  name: string;
-  img: string;
-  vinicula: string;
-  preco: number;
-  desconto: number;
-  descricao: string;
-  categoria: "kit" | "singular";
-  uva: string;
-  pais: string;
-  stars: number;
-  unidades: number;
-  countryImg: string;
-  tipo: "vinho tinto" | "vinho branco" | "vinho rosé" | "espumante" | "espumante branco" | "espumante rosé" | "diversos";
-  safra: number;
-  teorAlcoolico: number;
-  temperaturaServico: string;
-  tipoFechamento: string;
-  volume: string;
-  cor: string;
-  aroma: string;
-  sabor: string;
-  harmonizacao: string;
-}
+import { getTableColumns } from "drizzle-orm";
+import { type PgTable } from "drizzle-orm/pg-core";
+import { type SQL, sql } from "drizzle-orm/sql";
+import { db } from "~/server/db";
+import { wines } from "~/server/db/schema";
 
-export const wines: IWine[] = [
+const _wines = [
   {
     name: "Portada Winemaker's Selection 2021",
     img: "https://res.cloudinary.com/evino/image/upload/q_auto:good,fl_progressive:steep,f_auto,dpr_1.0,h_434/v1/products/1000022579-standing-front.png",
@@ -39,13 +20,11 @@ export const wines: IWine[] = [
     stars: 4.5,
     unidades: 1,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/3909/3909361.png",
-
     tipo: "vinho tinto",
     safra: 2021,
-    teorAlcoolico: 12.5,
-    temperaturaServico: "17ºC",
-    tipoFechamento: "Rolha de cortiça",
+    teoralcoolico: 12.5,
+    temperaturaservico: "17ºC",
+    tipofechamento: "Rolha de cortiça",
     volume: "750ml",
 
     cor: "Vermelho-rubi",
@@ -69,13 +48,11 @@ export const wines: IWine[] = [
     stars: 4.5,
     unidades: 1,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/13980/13980354.png",
-
     tipo: "vinho tinto",
     safra: 2024,
-    teorAlcoolico: 12,
-    temperaturaServico: "16ºC",
-    tipoFechamento: "Rolha sintética",
+    teoralcoolico: 12,
+    temperaturaservico: "16ºC",
+    tipofechamento: "Rolha sintética",
     volume: "750ml",
 
     cor: "Vermelho-rubi com reflexos violáceos",
@@ -98,14 +75,11 @@ export const wines: IWine[] = [
     stars: 4.2,
     unidades: 1,
 
-    countryImg:
-      "https://static.vecteezy.com/system/resources/previews/015/272/195/original/argentina-3d-rounded-flag-with-no-background-free-png.png",
-
     tipo: "vinho tinto",
     safra: 2024,
-    teorAlcoolico: 13,
-    temperaturaServico: "18ºC",
-    tipoFechamento: "Rolha sintética",
+    teoralcoolico: 13,
+    temperaturaservico: "18ºC",
+    tipofechamento: "Rolha sintética",
     volume: "750ml",
 
     cor: "Vermelho-rubi profundo",
@@ -128,13 +102,11 @@ export const wines: IWine[] = [
     stars: 4.3,
     unidades: 1,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/13980/13980354.png",
-
     tipo: "vinho branco",
     safra: 2024,
-    teorAlcoolico: 11,
-    temperaturaServico: "16ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 11,
+    temperaturaservico: "16ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Amarelo-pálido com tons dourados",
@@ -157,13 +129,11 @@ export const wines: IWine[] = [
     stars: 4.0,
     unidades: 1,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/13980/13980354.png",
-
     tipo: "espumante rosé",
     safra: 2023,
-    teorAlcoolico: 11,
-    temperaturaServico: "9ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 11,
+    temperaturaservico: "9ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Rosa-salmão",
@@ -186,14 +156,11 @@ export const wines: IWine[] = [
     stars: 4.5,
     unidades: 1,
 
-    countryImg:
-      "https://png.pngtree.com/png-vector/20221121/ourmid/pngtree-brazil-flag-glossy-circle-png-image_6474178.png",
-
     tipo: "espumante",
     safra: 2024,
-    teorAlcoolico: 7.5,
-    temperaturaServico: "9ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 7.5,
+    temperaturaservico: "9ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Amarelo-palha com reflexos esverdeados",
@@ -216,13 +183,11 @@ export const wines: IWine[] = [
     stars: 4.6,
     unidades: 3,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/3909/3909361.png",
-
     tipo: "vinho tinto",
     safra: 2021,
-    teorAlcoolico: 12.5,
-    temperaturaServico: "17ºC",
-    tipoFechamento: "Rolha de cortiça",
+    teoralcoolico: 12.5,
+    temperaturaservico: "17ºC",
+    tipofechamento: "Rolha de cortiça",
     volume: "750ml",
 
     cor: "Vermelho-rubi",
@@ -245,13 +210,11 @@ export const wines: IWine[] = [
     stars: 4.4,
     unidades: 6,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/13980/13980354.png",
-
     tipo: "vinho tinto",
     safra: 2024,
-    teorAlcoolico: 12.5,
-    temperaturaServico: "16-18ºC",
-    tipoFechamento: "Rolha sintética",
+    teoralcoolico: 12.5,
+    temperaturaservico: "16-18ºC",
+    tipofechamento: "Rolha sintética",
     volume: "750ml",
 
     cor: "Vermelho-rubi",
@@ -274,13 +237,11 @@ export const wines: IWine[] = [
     stars: 4.8,
     unidades: 1,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/3909/3909361.png",
-
     tipo: "vinho branco",
     safra: 2018,
-    teorAlcoolico: 13,
-    temperaturaServico: "9ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 13,
+    temperaturaservico: "9ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Amarelo-palha brilhante",
@@ -304,14 +265,11 @@ export const wines: IWine[] = [
     stars: 4.4,
     unidades: 1,
 
-    countryImg:
-      "https://png.pngtree.com/png-vector/20221121/ourmid/pngtree-brazil-flag-glossy-circle-png-image_6474178.png",
-
     tipo: "espumante",
     safra: 2024,
-    teorAlcoolico: 12,
-    temperaturaServico: "8ºC",
-    tipoFechamento: "Rolha de cortiça",
+    teoralcoolico: 12,
+    temperaturaservico: "8ºC",
+    tipofechamento: "Rolha de cortiça",
     volume: "750ml",
 
     cor: "Amarelo-pálido com reflexos esverdeados",
@@ -334,13 +292,11 @@ export const wines: IWine[] = [
     stars: 4.7,
     unidades: 1,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/197/197560.png",
-
     tipo: "vinho rosé",
     safra: 2019,
-    teorAlcoolico: 13,
-    temperaturaServico: "9ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 13,
+    temperaturaservico: "9ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Rosa-salmão brilhante",
@@ -363,13 +319,11 @@ export const wines: IWine[] = [
     stars: 4.0,
     unidades: 1,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/13980/13980354.png",
-
     tipo: "espumante rosé",
     safra: 2023,
-    teorAlcoolico: 11,
-    temperaturaServico: "9ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 11,
+    temperaturaservico: "9ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Rosa-salmão",
@@ -392,14 +346,11 @@ export const wines: IWine[] = [
     stars: 4.5,
     unidades: 1,
 
-    countryImg:
-      "https://png.pngtree.com/png-vector/20221121/ourmid/pngtree-brazil-flag-glossy-circle-png-image_6474178.png",
-
     tipo: "espumante rosé",
     safra: 2024,
-    teorAlcoolico: 12,
-    temperaturaServico: "9ºC",
-    tipoFechamento: "Rolha de cortiça",
+    teoralcoolico: 12,
+    temperaturaservico: "9ºC",
+    tipofechamento: "Rolha de cortiça",
     volume: "750ml",
 
     cor: "Rosa-salmão",
@@ -422,14 +373,11 @@ export const wines: IWine[] = [
     stars: 4.5,
     unidades: 1,
 
-    countryImg:
-      "https://png.pngtree.com/png-vector/20221121/ourmid/pngtree-brazil-flag-glossy-circle-png-image_6474178.png",
-
     tipo: "espumante branco",
     safra: 2024,
-    teorAlcoolico: 7.5,
-    temperaturaServico: "9ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 7.5,
+    temperaturaservico: "9ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Amarelo-palha com reflexos esverdeados",
@@ -452,14 +400,11 @@ export const wines: IWine[] = [
     stars: 4.4,
     unidades: 1,
 
-    countryImg:
-      "https://png.pngtree.com/png-vector/20221121/ourmid/pngtree-brazil-flag-glossy-circle-png-image_6474178.png",
-
     tipo: "espumante branco",
     safra: 2024,
-    teorAlcoolico: 12,
-    temperaturaServico: "8ºC",
-    tipoFechamento: "Rolha de cortiça",
+    teoralcoolico: 12,
+    temperaturaservico: "8ºC",
+    tipofechamento: "Rolha de cortiça",
     volume: "750ml",
 
     cor: "Amarelo-pálido com reflexos esverdeados",
@@ -482,13 +427,11 @@ export const wines: IWine[] = [
     stars: 4.7,
     unidades: 4,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/197/197626.png",
-
     tipo: "vinho tinto",
     safra: 2022,
-    teorAlcoolico: 14.5,
-    temperaturaServico: "16ºC",
-    tipoFechamento: "Rolha de cortiça",
+    teoralcoolico: 14.5,
+    temperaturaservico: "16ºC",
+    tipofechamento: "Rolha de cortiça",
     volume: "750ml",
 
     cor: "Vermelho-rubi intenso",
@@ -511,13 +454,11 @@ export const wines: IWine[] = [
     stars: 4.8,
     unidades: 3,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/197/197626.png",
-
     tipo: "vinho tinto",
     safra: 2020,
-    teorAlcoolico: 14,
-    temperaturaServico: "17ºC",
-    tipoFechamento: "Rolha de cortiça",
+    teoralcoolico: 14,
+    temperaturaservico: "17ºC",
+    tipofechamento: "Rolha de cortiça",
     volume: "750ml",
 
     cor: "Vermelho-granada",
@@ -540,13 +481,11 @@ export const wines: IWine[] = [
     stars: 4.3,
     unidades: 6,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/197/197626.png",
-
     tipo: "vinho tinto",
     safra: 2024,
-    teorAlcoolico: 13,
-    temperaturaServico: "15ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 13,
+    temperaturaservico: "15ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Vermelho-rubi profundo",
@@ -569,14 +508,11 @@ export const wines: IWine[] = [
     stars: 4.5,
     unidades: 10,
 
-    countryImg:
-      "https://static.vecteezy.com/system/resources/previews/015/272/195/original/argentina-3d-rounded-flag-with-no-background-free-png.png",
-
     tipo: "vinho tinto",
     safra: 2024,
-    teorAlcoolico: 13.5,
-    temperaturaServico: "16-18ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 13.5,
+    temperaturaservico: "16-18ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Vermelho-rubi",
@@ -599,13 +535,11 @@ export const wines: IWine[] = [
     stars: 4.8,
     unidades: 6,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/197/197626.png",
-
     tipo: "vinho tinto",
     safra: 2022,
-    teorAlcoolico: 14,
-    temperaturaServico: "16ºC",
-    tipoFechamento: "Rolha de cortiça",
+    teoralcoolico: 14,
+    temperaturaservico: "16ºC",
+    tipofechamento: "Rolha de cortiça",
     volume: "750ml",
 
     cor: "Vermelho-rubi com reflexos violáceos",
@@ -628,14 +562,11 @@ export const wines: IWine[] = [
     stars: 4.3,
     unidades: 10,
 
-    countryImg:
-      "https://static.vecteezy.com/system/resources/previews/015/272/195/original/argentina-3d-rounded-flag-with-no-background-free-png.png",
-
     tipo: "diversos",
     safra: 2024,
-    teorAlcoolico: 12,
-    temperaturaServico: "8-10ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 12,
+    temperaturaservico: "8-10ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Amarelo-pálido e rosa-claro",
@@ -658,13 +589,11 @@ export const wines: IWine[] = [
     stars: 4.4,
     unidades: 6,
 
-    countryImg: "https://cdn-icons-png.flaticon.com/128/13980/13980354.png",
-
     tipo: "vinho tinto",
     safra: 2024,
-    teorAlcoolico: 12.5,
-    temperaturaServico: "16ºC",
-    tipoFechamento: "Rolha",
+    teoralcoolico: 12.5,
+    temperaturaservico: "16ºC",
+    tipofechamento: "Rolha",
     volume: "750ml",
 
     cor: "Vermelho-rubi",
@@ -672,4 +601,33 @@ export const wines: IWine[] = [
     sabor: "Equilibrado, com taninos suaves",
     harmonizacao: "Carnes vermelhas, queijos e massas",
   },
-];
+] satisfies (typeof wines.$inferInsert)[];
+
+void (async () => {
+  const keys = Object.keys(_wines[0]!) as (keyof typeof wines._.columns)[];
+  await db
+    .insert(wines)
+    .values(_wines)
+    .onConflictDoUpdate({
+      target: wines.id,
+      set: buildConflictUpdateColumns(wines, keys),
+    });
+})();
+
+//? Helper function created with love by andrew sherman love u andrew sherman
+//? https://orm.drizzle.team/learn/guides/upsert#postgresql-and-sqlite
+function buildConflictUpdateColumns<
+  T extends PgTable,
+  Q extends keyof T["_"]["columns"],
+>(table: T, columns: Q[]) {
+  const cls = getTableColumns(table);
+  return columns.reduce(
+    (acc, column) => {
+      console.log(cls[column]!.name);
+      const colName = cls[column]!.name;
+      acc[column] = sql.raw(`excluded.${colName}`);
+      return acc;
+    },
+    {} as Record<Q, SQL>,
+  );
+}
