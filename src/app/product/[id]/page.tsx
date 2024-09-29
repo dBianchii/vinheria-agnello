@@ -1,10 +1,9 @@
-import { vinhos } from "data/vinhos";
 import { notFound } from "next/navigation";
 import { ProductPageComponent } from "~/components/product-page";
+import { getWineById, getWines } from "~/server/db/select";
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = vinhos.find((vinho) => vinho.id === params.id);
+export default async function ProductPage({ params }: { params: { id: number } }) {
+  const product = await getWineById(params.id)
   if (!product) return notFound();
-
-  return <ProductPageComponent product={product} />;
+  else return <ProductPageComponent product={product[0]} />;
 }

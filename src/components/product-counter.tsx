@@ -1,4 +1,4 @@
-import { type IProduto } from "data/vinhos";
+import { type IWine } from "data/vinhos";
 import { LucideLoader2, Minus, Plus } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useCart } from "~/context/cart-context";
@@ -19,7 +19,7 @@ export function ProductCounter({
   product,
   size = "default",
 }: {
-  product: IProduto;
+  product: IWine;
   size?: "small" | "default";
 }) {
   const { incrementItem, decrementItem } = useCart();

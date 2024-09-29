@@ -1,13 +1,13 @@
 "use client";
 
-import { type IProduto } from "data/vinhos";
+import { type IWine } from "data/vinhos";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import type { CartItem } from "~/lib/types";
 
 interface CartContextType {
   items: CartItem[];
-  incrementItem: (product: IProduto) => void;
+  incrementItem: (product: IWine) => void;
   decrementItem: (id: string) => void;
   removeItem: (id: string) => void;
   clearCart: () => void;
@@ -23,7 +23,7 @@ export const useCart = () => {
   return context;
 };
 
-const productToCartItem = (product: IProduto): CartItem => ({
+const productToCartItem = (product: IWine): CartItem => ({
   id: product.id,
   name: product.name,
   imgUrl: product.img,
@@ -45,7 +45,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("cartItems", JSON.stringify(items));
   }, [items]);
 
-  const incrementItem = (product: IProduto) => {
+  const incrementItem = (product: IWine) => {
     if (!items.find((item) => item.id === product.id))
       return setItems([...items, productToCartItem(product)]);
 

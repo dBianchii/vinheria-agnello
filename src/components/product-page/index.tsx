@@ -4,7 +4,7 @@
 "use client";
 
 import { getCountryImg } from "data/getCountryImg";
-import { type IProduto } from "data/vinhos";
+import { type IWine } from "data/vinhos";
 import { Archive, Wine } from "lucide-react";
 import Image from "next/image";
 import { formatPrice } from "~/lib/utils";
@@ -13,13 +13,13 @@ import { ProductCounter } from "../product-counter";
 import Stars from "../stars";
 import { useEffect } from "react";
 
-export function ProductPageComponent({ product }: { product: IProduto }) {
+export function ProductPageComponent({ product }: { product: IWine }) {
   const finalPrice = (price: number, discount: number) =>
     price - (price * discount) / 100;
 
-	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-	}, [])
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <div className="flex justify-center overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg">
@@ -29,9 +29,8 @@ export function ProductPageComponent({ product }: { product: IProduto }) {
             <Image
               src={product.img}
               alt={product.name}
-              width={300}
-              height={300}
-              className="w-full"
+              width={200}
+              height={600}
             />
           </div>
           <div className="flex w-1/2 flex-col justify-between">
@@ -59,7 +58,7 @@ export function ProductPageComponent({ product }: { product: IProduto }) {
               <div>
                 <span className="mb-2 flex items-center justify-start text-lg">
                   <Wine className="mr-3 w-7 text-rose-900" />
-                  <p className="text-neutral-500">{product.tipo_de_uva}</p>
+                  <p className="text-neutral-500">{product.uva}</p>
                 </span>
                 <span className="mb-2 flex items-center justify-start text-lg">
                   <img

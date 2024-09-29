@@ -1,11 +1,14 @@
 .zoom-img {
   overflow: hidden;
+  object-position: center;
+  background-color: rgb(250, 250, 250);
+  
 }
 
 .zoom-img img {
+  max-height: 800px;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  object-fit: scale-down;
   transition: all 0.3s ease;
 }
 

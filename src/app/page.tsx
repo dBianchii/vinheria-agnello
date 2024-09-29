@@ -3,5 +3,5 @@ import { getWines } from "~/server/db/select";
 
 export default async function HomePage() {
 	const wines = await getWines();
-  return <Homepage wines={wines}/>;
+  return <Homepage wines={Object.values(wines)}/>;
 }

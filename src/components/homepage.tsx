@@ -1,12 +1,15 @@
 "use client";
 
-import { vinhos } from "data/vinhos";
 import Image from "next/image";
 import CardWine from "./card-wine";
 import Stats from "./stats";
 import { Button } from "./ui/button";
+import { IWine } from "data/vinhos";
 
-export function Homepage() {
+const maxElementsPerRow = 4
+
+export function Homepage({ wines }: { wines: IWine[] }) {
+  console.log(wines);
   return (
     <>
       {/* Hero Section */}
@@ -45,17 +48,20 @@ export function Homepage() {
         <div className="container mx-auto px-4">
           <h2 className="mb-8 text-3xl font-bold">KITS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {vinhos.map((vinho) => (
-              <CardWine
-                key={vinho.name}
-                name={vinho.name}
-                stars={vinho.stars} // Coloque a avaliação que desejar
-                price={vinho.preco}
-                discount={vinho.desconto}
-                imgUrl={vinho.img}
-                id={vinho.id}
-              />
-            ))}
+            {wines.map((vinho) => {
+              if (vinho.categoria == "kit")
+                return (
+                  <CardWine
+                    key={vinho.name}
+                    name={vinho.name}
+                    stars={vinho.stars} // Coloque a avaliação que desejar
+                    price={vinho.preco}
+                    discount={vinho.desconto}
+                    imgUrl={vinho.img}
+                    id={vinho.id}
+                  />
+                );
+            })}
           </div>
           <div className="mt-8 text-center">
             <Button variant={"default"} size={"lg"}>
@@ -70,17 +76,20 @@ export function Homepage() {
         <div className="container mx-auto px-4">
           <h2 className="mb-8 text-3xl font-bold">MAIS VENDIDOS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {vinhos.map((vinho) => (
-              <CardWine
-                key={vinho.name}
-                name={vinho.name}
-                stars={vinho.stars} // Coloque a avaliação que desejar
-                price={vinho.preco}
-                discount={vinho.desconto}
-                imgUrl={vinho.img}
-                id={vinho.id}
-              />
-            ))}
+            {wines.map((vinho) => {
+              if (vinho.categoria == "singular")
+                return (
+                  <CardWine
+                    key={vinho.name}
+                    name={vinho.name}
+                    stars={vinho.stars} // Coloque a avaliação que desejar
+                    price={vinho.preco}
+                    discount={vinho.desconto}
+                    imgUrl={vinho.img}
+                    id={vinho.id}
+                  />
+                );
+            })}
           </div>
           <div className="mt-8 text-center">
             <Button variant={"default"} size={"lg"}>

@@ -11,7 +11,7 @@ interface CardWineProps {
   price: number;
   discount: number;
   imgUrl: string;
-  id: string;
+  id: number;
 }
 
 export default function CardWine({
