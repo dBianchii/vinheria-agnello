@@ -1,4 +1,3 @@
-import { type IWine } from "data/vinhos";
 import { LucideLoader2, Minus, Plus } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useCart } from "~/context/cart-context";
@@ -16,10 +15,10 @@ const CurrentProductCount = dynamic(
 );
 
 export function ProductCounter({
-  product,
+  id,
   size = "default",
 }: {
-  product: IWine;
+  id: number;
   size?: "small" | "default";
 }) {
   const { incrementItem, decrementItem } = useCart();
@@ -34,7 +33,7 @@ export function ProductCounter({
         variant="outline"
         size={"sm"}
         className="m-1 rounded-full shadow-none"
-        onClick={() => decrementItem(product.id)}
+        onClick={() => decrementItem(id)}
       >
         <Minus
           className={cn({
@@ -43,11 +42,11 @@ export function ProductCounter({
           })}
         />
       </Button>
-      <CurrentProductCount product={product} />
+      <CurrentProductCount id={id} />
       <Button
         size={"sm"}
         className="m-1 rounded-full shadow-none"
-        onClick={() => incrementItem(product)}
+        onClick={() => incrementItem(id)}
       >
         <Plus
           className={cn({

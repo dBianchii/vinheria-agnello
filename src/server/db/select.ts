@@ -1,12 +1,15 @@
 import { eq } from "drizzle-orm";
 import { db } from "./index";
 import { type SelectWine, wines } from "./schema";
-import { IWine } from "data/vinhos";
 
-export async function getWines(): Promise<IWine[]> {
+export async function getWines() {
   return db.select().from(wines);
 }
 
-export async function getWineById(id: SelectWine["id"]): Promise<IWine[]> {
-  return db.select().from(wines).where(eq(wines.id, id));
+export async function getWineById(id: SelectWine["id"]) {
+  return db
+    .select()
+    .from(wines)
+    .where(eq(wines.id, id))
+    .then((res) => res[0]);
 }

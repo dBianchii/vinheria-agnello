@@ -1,13 +1,12 @@
 "use client";
 
-import { type IWine } from "data/vinhos";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import type { CartItem } from "~/lib/types";
 
 interface CartContextType {
   items: CartItem[];
-  incrementItem: (product: IWine) => void;
+  incrementItem: (id: number) => void;
   decrementItem: (id: number) => void;
   removeItem: (id: number) => void;
   clearCart: () => void;
@@ -23,15 +22,6 @@ export const useCart = () => {
   return context;
 };
 
-const productToCartItem = (product: IWine): CartItem => ({
-  id: product.id,
-  name: product.name,
-  imgUrl: product.img,
-  price: product.preco,
-  discount: product.desconto,
-  quantity: 1,
-});
-
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>(() => {
     if (typeof window !== "undefined") {
@@ -45,17 +35,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("cartItems", JSON.stringify(items));
   }, [items]);
 
-  const incrementItem = (product: IWine) => {
-    if (!items.find((item) => item.id === product.id))
-      return setItems([...items, productToCartItem(product)]);
+  const incrementItem = (id: number) => {
+    if (!items.find((item) => item.id === id))
+      return setItems([...items, { id, quantity: 1 }]);
 
     setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+      const existingItem = prevItems.find((item) => item.id === id);
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item,
+          item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
         );
       }
       return prevItems;

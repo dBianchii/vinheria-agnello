@@ -1,10 +1,14 @@
 import { notFound } from "next/navigation";
 import { ProductPageComponent } from "~/components/product-page";
-import { getWineById, getWines } from "~/server/db/select";
+import { getWineById } from "~/server/db/select";
 
-export default async function ProductPage({ params }: { params: { id: number } }) {
-  const product = await getWineById(params.id);
-  if (!product || product.length === 0 || !product[0]) return notFound();
-  return <ProductPageComponent product={product[0]} />;
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: number };
+}) {
+  const wine = await getWineById(params.id);
+  if (!wine) return notFound();
+
+  return <ProductPageComponent wine={wine} />;
 }
-

@@ -1,27 +1,36 @@
 "use client";
 
-import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import CartCard from "./cart-card";
 
-import { formatPrice } from "~/lib/utils";
 import { useCart } from "~/context/cart-context";
+import { formatPrice } from "~/lib/utils";
+import { type getWines } from "~/server/db/select";
 
-export default function CartPageComponent() {
+export default function CartPageComponent({
+  wines,
+}: {
+  wines: Awaited<ReturnType<typeof getWines>>;
+}) {
   const { items } = useCart();
 
-  const priceWithDiscount = items.reduce(
-    (sum, item) =>
-      sum + (item.price - (item.discount * item.price) / 100) * item.quantity,
-    0,
-  );
+  const priceWithDiscount = items.reduce((sum, item) => {
+    const wine = wines.find((wine) => wine.id === item.id);
+    if (!wine) return sum;
+    return (
+      sum + (wine.preco - (wine.desconto * wine.preco) / 100) * item.quantity
+    );
+  }, 0);
 
-  const priceWithoutDiscount = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
+  const priceWithoutDiscount = items.reduce((sum, item) => {
+    const wine = wines.find((wine) => wine.id === item.id);
+    if (!wine) return sum;
+
+    return sum + wine.preco * item.quantity;
+  }, 0);
 
   const discount = priceWithoutDiscount - priceWithDiscount;
   const discountPercentage = (discount / priceWithoutDiscount) * 100;
@@ -36,17 +45,7 @@ export default function CartPageComponent() {
         {items.length > 0 ? (
           <>
             <div className="lg:w-2/3">
-              {items.map((item) => (
-                <CartCard
-                  id={item.id}
-                  key={item.id}
-                  name={item.name}
-                  imgUrl={item.imgUrl}
-                  price={item.price}
-                  discount={item.discount}
-                  quantity={item.quantity}
-                />
-              ))}
+              <WineCards wines={wines} />
             </div>
             <div className="lg:w-1/3">
               <div className="rounded-lg bg-gray-100 p-6">
@@ -105,4 +104,16 @@ export default function CartPageComponent() {
       </div>
     </div>
   );
+}
+
+function WineCards({ wines }: { wines: Awaited<ReturnType<typeof getWines>> }) {
+  const { items } = useCart();
+
+  return items.map((item) => (
+    <CartCard
+      key={item.id}
+      quantity={item.quantity}
+      wine={wines.find((wine) => wine.id === item.id)!}
+    />
+  ));
 }
