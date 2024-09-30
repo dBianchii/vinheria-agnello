@@ -17,8 +17,8 @@ import CardWine from "~/components/card-wine";
 import { sendPrompt } from "./actions";
 import { type getWines } from "~/server/db/select";
 
-
 export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<typeof getWines>> }) {
+
   const [priceRange, setPriceRange] = useState([0, 100]);
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -37,9 +37,9 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
       name: "Tipos",
       options: [
         "Vinho tinto",
-        "Vinho rose",
         "Vinho branco",
-        "Espumante fresco",
+        "Vinho rose",
+        "Espumante branco",
         "Espumante rose",
       ],
     },
@@ -61,7 +61,7 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
       name: "Harmonização",
       options: [
         "Carnes vermelhas",
-        "Carnes vermelhas",
+        "Massas ou pizzas",
         "Frutos do mar",
         "Queijos",
         "Saladas ou aperitivos",
@@ -83,7 +83,8 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
           </button>
           {showFilters && (
             <div className="mt-4">
-              <Accordion type="multiple" className="w-full">
+              
+							<Accordion type="multiple" className="w-full">
                 {filterCategories.map((category, index) => (
                   <AccordionItem value={`item-${index}`} key={index}>
                     <AccordionTrigger>{category.name}</AccordionTrigger>
@@ -130,7 +131,8 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
         {/* Sidebar para telas grandes */}
         <div className="hidden w-1/4 lg:block">
           <h2 className="mb-4 text-lg font-semibold">Filtros</h2>
-          <Accordion type="multiple" className="w-full">
+          
+					<Accordion type="multiple" className="w-full">
             {filterCategories.map((category, index) => (
               <AccordionItem value={`item-${index}`} key={index}>
                 <AccordionTrigger>{category.name}</AccordionTrigger>
@@ -140,7 +142,7 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
                       className="mb-1 flex items-center space-x-2"
                       key={optionIndex}
                     >
-                      <Checkbox id={`${category.name}-${optionIndex}`} />
+                      <Checkbox id={`${category.name}-${optionIndex}`}/>
                       <label
                         htmlFor={`${category.name}-${optionIndex}`}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -190,13 +192,14 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
               .filter((_, i) => i < 12)
               .map((vinho) => (
                 <CardWine
-                  key={`${vinho.name}`}
+                  key={`${vinho.id}`}
                   name={vinho.name}
                   stars={vinho.stars} // Coloque a avaliação que desejar
                   price={vinho.preco}
                   discount={vinho.desconto}
                   imgUrl={vinho.img}
                   id={vinho.id}
+									isPriority={true}
                 />
               ))}
           </div>
@@ -221,6 +224,7 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
           </div>
         </div>
       </div>
+
       {/* Ícone de Chat */}
       <div className="fixed bottom-4 right-4">
         <button

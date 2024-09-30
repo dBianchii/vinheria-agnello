@@ -12,6 +12,7 @@ interface CardWineProps {
   discount: number;
   imgUrl: string;
   id: number;
+	isPriority?: boolean;
 }
 
 export default function CardWine({
@@ -21,6 +22,7 @@ export default function CardWine({
   discount,
   imgUrl,
   id,
+	isPriority = false
 }: CardWineProps) {
   const finalPrice = calculatePriceAfterDiscount(price, discount);
 
@@ -35,7 +37,8 @@ export default function CardWine({
           alt={name}
           width={300}
           height={300}
-          className="h-full object-contain"
+          className="h-full w-auto object-contain"
+					priority={isPriority}
         />
       </div>
       <div className="p-4">
