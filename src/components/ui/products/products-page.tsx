@@ -1,7 +1,7 @@
 "use client";
 
 import { parseAsArrayOf, parseAsStringLiteral, useQueryState } from "nuqs";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { FiFilter, FiMessageCircle } from "react-icons/fi";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
@@ -48,7 +48,7 @@ export default function ProductsPage({
           </button>
           {showFilters && (
             <div className="mt-4">
-              <Filters />
+              <FiltersWithSuspense />
             </div>
           )}
         </div>
@@ -56,7 +56,7 @@ export default function ProductsPage({
         {/* Sidebar para telas grandes */}
         <div className="hidden w-1/4 lg:block">
           <h2 className="mb-4 text-lg font-semibold">Filtros</h2>
-          <Filters />
+          <FiltersWithSuspense />
         </div>
 
         {/* Main content */}
@@ -143,6 +143,14 @@ export default function ProductsPage({
         </Modal>
       )}
     </div>
+  );
+}
+
+function FiltersWithSuspense() {
+  return (
+    <Suspense>
+      <Filters />
+    </Suspense>
   );
 }
 

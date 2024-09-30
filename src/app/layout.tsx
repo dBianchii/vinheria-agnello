@@ -29,7 +29,7 @@ export default function RootLayout({
         <CartProvider>
           <Header />
           <div className="flex min-h-screen flex-col">
-						{/* sem o pt-20 abaixo, a página de produto e carrinho começam embaixo do header, que tem h-20 */}
+            {/* sem o pt-20 abaixo, a página de produto e carrinho começam embaixo do header, que tem h-20 */}
             <div className="flex-grow pt-20">{children}</div>
             <Newsletter />
             <Footer />
