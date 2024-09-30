@@ -2,11 +2,23 @@ export function getCountryImg(country: string): string {
   let link = "https://cdn-icons-png.flaticon.com/512/9746/9746676.png";
   switch (country.toLowerCase()) {
     case "brasil":
-      link =
-        "https://png.pngtree.com/png-vector/20221121/ourmid/pngtree-brazil-flag-glossy-circle-png-image_6474178.png";
+      link = "https://cdn-icons-png.flaticon.com/128/5372/5372653.png";
+      break;
     case "argentina":
-      link =
-        "https://static.vecteezy.com/system/resources/previews/015/272/195/original/argentina-3d-rounded-flag-with-no-background-free-png.png";
+      link = "https://cdn-icons-png.flaticon.com/128/197/197573.png";
+      break;
+    case "portugal":
+      link = "https://cdn-icons-png.flaticon.com/128/12364/12364368.png";
+      break;
+    case "espanha":
+      link = "https://cdn-icons-png.flaticon.com/128/197/197593.png";
+      break;
+    case "frança":
+      link = "https://cdn-icons-png.flaticon.com/128/197/197560.png";
+      break;
+    case "italia":
+      link = "https://cdn-icons-png.flaticon.com/128/197/197626.png";
+      break;
   }
   console.log(link);
   return link;
