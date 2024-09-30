@@ -1,25 +1,28 @@
 "use client";
 
+import { parseAsArrayOf, parseAsStringLiteral, useQueryState } from "nuqs";
 import { useState } from "react";
-import { Slider } from "~/components/ui/slider";
-import { Checkbox } from "~/components/ui/checkbox";
-import { Button } from "~/components/ui/button";
 import { FiFilter, FiMessageCircle } from "react-icons/fi";
+import { Button } from "~/components/ui/button";
+import { Checkbox } from "~/components/ui/checkbox";
 import Modal from "~/components/ui/modal";
+import { Slider } from "~/components/ui/slider";
 
+import CardWine from "~/components/card-wine";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import CardWine from "~/components/card-wine";
-import { sendPrompt } from "./actions";
 import { type getWines } from "~/server/db/select";
+import { sendPrompt } from "./actions";
 
-export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<typeof getWines>> }) {
-
-  const [priceRange, setPriceRange] = useState([0, 100]);
+export default function ProductsPage({
+  wines,
+}: {
+  wines: Awaited<ReturnType<typeof getWines>>;
+}) {
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [question, setQuestion] = useState("");
@@ -30,44 +33,6 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
     if (!response) return;
     setAnswer(response);
   };
-
-  const filterCategories = [
-    { name: "Categoria", options: ["Singular", "Kit"] },
-    {
-      name: "Tipos",
-      options: [
-        "Vinho tinto",
-        "Vinho branco",
-        "Vinho rose",
-        "Espumante branco",
-        "Espumante rose",
-      ],
-    },
-    {
-      name: "Países",
-      options: ["Espanha", "Chile", "Argentina", "Brasil", "Portugal"],
-    },
-    {
-      name: "Uvas",
-      options: [
-        "Tempranillo",
-        "Grenache",
-        "Merlot",
-        "Sauvignon Blanc",
-        "Verdejo",
-      ],
-    },
-    {
-      name: "Harmonização",
-      options: [
-        "Carnes vermelhas",
-        "Massas ou pizzas",
-        "Frutos do mar",
-        "Queijos",
-        "Saladas ou aperitivos",
-      ],
-    },
-  ];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -83,47 +48,7 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
           </button>
           {showFilters && (
             <div className="mt-4">
-              
-							<Accordion type="multiple" className="w-full">
-                {filterCategories.map((category, index) => (
-                  <AccordionItem value={`item-${index}`} key={index}>
-                    <AccordionTrigger>{category.name}</AccordionTrigger>
-                    <AccordionContent>
-                      {category.options.map((option, optionIndex) => (
-                        <div
-                          className="mb-1 flex items-center space-x-2"
-                          key={optionIndex}
-                        >
-                          <Checkbox id={`${category.name}-${optionIndex}`} />
-                          <label
-                            htmlFor={`${category.name}-${optionIndex}`}
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {option}
-                          </label>
-                        </div>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-                <AccordionItem value="price">
-                  <AccordionTrigger>Preço</AccordionTrigger>
-                  <AccordionContent>
-                    <Slider
-                      value={priceRange}
-                      onValueChange={setPriceRange}
-                      min={0}
-                      max={100}
-                      step={1}
-                      className="mt-2"
-                    />
-                    <div className="mt-2 flex justify-between">
-                      <span>R${priceRange[0]}</span>
-                      <span>R${priceRange[1]}</span>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+              <Filters />
             </div>
           )}
         </div>
@@ -131,47 +56,7 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
         {/* Sidebar para telas grandes */}
         <div className="hidden w-1/4 lg:block">
           <h2 className="mb-4 text-lg font-semibold">Filtros</h2>
-          
-					<Accordion type="multiple" className="w-full">
-            {filterCategories.map((category, index) => (
-              <AccordionItem value={`item-${index}`} key={index}>
-                <AccordionTrigger>{category.name}</AccordionTrigger>
-                <AccordionContent>
-                  {category.options.map((option, optionIndex) => (
-                    <div
-                      className="mb-1 flex items-center space-x-2"
-                      key={optionIndex}
-                    >
-                      <Checkbox id={`${category.name}-${optionIndex}`}/>
-                      <label
-                        htmlFor={`${category.name}-${optionIndex}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        {option}
-                      </label>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-            <AccordionItem value="price">
-              <AccordionTrigger>Preço</AccordionTrigger>
-              <AccordionContent>
-                <Slider
-                  value={priceRange}
-                  onValueChange={setPriceRange}
-                  min={0}
-                  max={100}
-                  step={1}
-                  className="mt-2"
-                />
-                <div className="mt-2 flex justify-between">
-                  <span>R${priceRange[0]}</span>
-                  <span>R${priceRange[1]}</span>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <Filters />
         </div>
 
         {/* Main content */}
@@ -199,7 +84,7 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
                   discount={vinho.desconto}
                   imgUrl={vinho.img}
                   id={vinho.id}
-									isPriority={true}
+                  isPriority={true}
                 />
               ))}
           </div>
@@ -258,5 +143,139 @@ export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<type
         </Modal>
       )}
     </div>
+  );
+}
+
+function Filters() {
+  const [priceRange, setPriceRange] = useState([0, 100]);
+
+  // List accepted values
+  const categoryOptions = ["singular", "kit"] as const;
+  const [categoria, setCategoria] = useQueryState(
+    "categoria",
+    parseAsArrayOf(parseAsStringLiteral(categoryOptions)),
+  );
+  const handleSetCategory = async (
+    category: (typeof categoryOptions)[number],
+    isActive: boolean,
+  ) => {
+    if (isActive) {
+      if (!categoria?.includes(category))
+        await setCategoria([...(categoria ?? []), category]);
+    } else
+      await setCategoria(categoria?.filter((item) => item !== category) ?? []);
+  };
+
+  const filterCategories = [
+    {
+      name: "Categoria",
+      options: [
+        {
+          name: "Singular",
+          value: "singular" as const,
+          active: categoria?.includes("singular"),
+        },
+        {
+          name: "Kit",
+          value: "kit" as const,
+          active: categoria?.includes("kit"),
+        },
+      ],
+      state: categoria,
+      setter: handleSetCategory,
+    },
+    //?Comentado temporariamente. Descomente para adicionar filtros adicionais integrado com nuqs :)
+    // {
+    //   name: "Tipos",
+    //   options: [
+    //     "Vinho tinto",
+    //     "Vinho branco",
+    //     "Vinho rose",
+    //     "Espumante branco",
+    //     "Espumante rose",
+    //   ],
+    // },
+    // {
+    //   name: "Países",
+    //   options: ["Espanha", "Chile", "Argentina", "Brasil", "Portugal"],
+    // },
+    // {
+    //   name: "Uvas",
+    //   options: [
+    //     "Tempranillo",
+    //     "Grenache",
+    //     "Merlot",
+    //     "Sauvignon Blanc",
+    //     "Verdejo",
+    //   ],
+    // },
+    // {
+    //   name: "Harmonização",
+    //   options: [
+    //     "Carnes vermelhas",
+    //     "Massas ou pizzas",
+    //     "Frutos do mar",
+    //     "Queijos",
+    //     "Saladas ou aperitivos",
+    //   ],
+    // },
+  ];
+
+  const defaultOpenedAccordion = filterCategories
+    .filter((category) => category.options.some((option) => option.active))
+    .map((c) => `item-${c.name}`); //this shite will make the accordion open the categories that have active options
+
+  return (
+    <Accordion
+      type="multiple"
+      className="w-full"
+      defaultValue={defaultOpenedAccordion}
+    >
+      {filterCategories.map((category, index) => (
+        <AccordionItem value={`item-${category.name}`} key={index}>
+          <AccordionTrigger>{category.name}</AccordionTrigger>
+          <AccordionContent>
+            {category.options.map((option, optionIndex) => (
+              <div
+                className="mb-1 flex items-center space-x-2"
+                key={optionIndex}
+              >
+                <Checkbox
+                  id={`${category.name}-${optionIndex}`}
+                  onCheckedChange={(checked) => {
+                    if (typeof checked !== "boolean") return;
+                    void category.setter(option.value, checked);
+                  }}
+                  checked={option.active}
+                />
+                <label
+                  htmlFor={`${category.name}-${optionIndex}`}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {option.name}
+                </label>
+              </div>
+            ))}
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+      <AccordionItem value="price">
+        <AccordionTrigger>Preço</AccordionTrigger>
+        <AccordionContent>
+          <Slider
+            value={priceRange}
+            onValueChange={setPriceRange}
+            min={0}
+            max={100}
+            step={1}
+            className="mt-2"
+          />
+          <div className="mt-2 flex justify-between">
+            <span>R${priceRange[0]}</span>
+            <span>R${priceRange[1]}</span>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }
