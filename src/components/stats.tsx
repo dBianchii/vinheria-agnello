@@ -45,6 +45,7 @@ export default function Stats() {
     const interval = setInterval(updateCounters, calculateInterval());
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counterViniculas, counterRotulos, counterClientes]);
 
   return (

@@ -4,12 +4,16 @@ import Image from "next/image";
 import CardWine from "./card-wine";
 import Stats from "./stats";
 import { Button } from "./ui/button";
-import { IWine } from "data/vinhos";
+import { type getWines } from "~/server/db/select";
 
-const maxElementsPerRow = 4
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const maxElementsPerRow = 4;
 
-export function Homepage({ wines }: { wines: IWine[] }) {
-  console.log(wines);
+export function Homepage({
+  wines,
+}: {
+  wines: Awaited<ReturnType<typeof getWines>>;
+}) {
   return (
     <>
       {/* Hero Section */}

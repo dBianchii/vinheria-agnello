@@ -18,7 +18,6 @@ import { sendPrompt } from "./actions";
 import { type SelectWine } from "~/server/db/schema";
 
 export default function ProductsPage({ wines }: { wines: SelectWine[] }) {
-
   const [priceRange, setPriceRange] = useState([0, 100]);
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -196,7 +195,7 @@ export default function ProductsPage({ wines }: { wines: SelectWine[] }) {
                   price={vinho.preco}
                   discount={vinho.desconto}
                   imgUrl={vinho.img}
-                  id={String(vinho.id)}
+                  id={vinho.id}
                 />
               ))}
           </div>
