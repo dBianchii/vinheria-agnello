@@ -15,9 +15,10 @@ import {
 } from "~/components/ui/accordion";
 import CardWine from "~/components/card-wine";
 import { sendPrompt } from "./actions";
-import { type SelectWine } from "~/server/db/schema";
+import { type getWines } from "~/server/db/select";
 
-export default function ProductsPage({ wines }: { wines: SelectWine[] }) {
+
+export default function ProductsPage({ wines }: { wines: Awaited<ReturnType<typeof getWines>> }) {
   const [priceRange, setPriceRange] = useState([0, 100]);
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
