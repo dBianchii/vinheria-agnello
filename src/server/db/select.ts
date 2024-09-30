@@ -4,10 +4,10 @@ import { db, type DrizzleWhere } from "./index";
 import { type SelectWine, wines } from "./schema";
 
 export async function getWines(
-  input: Awaited<ReturnType<typeof searchParamsCache.parse>>,
+  input?: Awaited<ReturnType<typeof searchParamsCache.parse>>,
 ) {
   const filterExpressions: (SQL<unknown> | undefined)[] = [
-    input.categoria
+    input?.categoria
       ? or(...input.categoria.map((cat) => eq(wines.categoria, cat)))
       : undefined,
   ];
