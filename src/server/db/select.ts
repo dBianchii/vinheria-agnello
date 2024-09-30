@@ -1,5 +1,5 @@
 import { and, eq, or, type SQL } from "drizzle-orm";
-import { type searchParamsCache } from "~/app/products/_components/shared";
+import { type searchParamsCache } from "~/app/products/_components/nuqs-parsers";
 import { db, type DrizzleWhere } from "./index";
 import { type SelectWine, wines } from "./schema";
 

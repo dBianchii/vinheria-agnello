@@ -6,6 +6,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Suspense } from "react";
 import HeaderFooterRemover from "./header-footer-remover";
+import { serialize } from "~/app/products/_components/nuqs-parsers";
 
 const ShoppingCartBadge = dynamic(() => import("./shopping-cart-badge"), {
   ssr: false,
@@ -34,7 +35,7 @@ export default function Header() {
                 Vinhos
               </Link>
               <Link
-                href="/products?categoria=kit"
+                href={`/products${serialize({ categoria: ["kit"] })}`}
                 className="text-gray-600 hover:text-gray-900"
               >
                 Kits

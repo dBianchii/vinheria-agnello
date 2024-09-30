@@ -17,7 +17,7 @@ import {
 } from "~/components/ui/accordion";
 import { type getWines } from "~/server/db/select";
 import { sendPrompt } from "./actions";
-import { type categoryOptions, categoryParser } from "./shared";
+import { type categoryOptions, searchParamsToParsersMap } from "./nuqs-parsers";
 
 export default function ProductsPage({
   wines,
@@ -158,12 +158,13 @@ function FiltersWithSuspense() {
 function Filters() {
   const [priceRange, setPriceRange] = useState([0, 100]);
 
-  // List accepted values
-
   const [categoria, setCategoria] = useQueryState("categoria", {
-    ...categoryParser,
-    shallow: false,
+    ...searchParamsToParsersMap.categoria,
+    clearOnDefault: true,
+    throttleMs: 500, //Delay between state changes and URL updates.
+    shallow: false, //URL state changes will trigger a browser network request.
   });
+
   const handleSetCategory = async (
     category: (typeof categoryOptions)[number],
     isActive: boolean,
