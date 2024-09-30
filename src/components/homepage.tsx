@@ -50,10 +50,12 @@ export function Homepage({
       {/* Kits Section */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-3xl font-bold">KITS</h2>
+          <h2 className="mb-8 text-3xl font-bold text-center">KITS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {wines.map((vinho) => {
-              if (vinho.categoria == "kit")
+            {wines
+              .filter((vinho) => vinho.categoria === "kit")
+              .splice(0, 4)
+              .map((vinho) => {
                 return (
                   <CardWine
                     key={vinho.name}
@@ -65,7 +67,7 @@ export function Homepage({
                     id={vinho.id}
                   />
                 );
-            })}
+              })}
           </div>
           <div className="mt-8 text-center">
             <Button variant={"default"} size={"lg"}>
@@ -78,10 +80,12 @@ export function Homepage({
       {/* Best Sellers Section */}
       <section className="bg-white py-12">
         <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-3xl font-bold">MAIS VENDIDOS</h2>
+          <h2 className="mb-8 text-3xl font-bold text-center">MAIS VENDIDOS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {wines.map((vinho) => {
-              if (vinho.categoria == "singular")
+					{wines
+              .filter((vinho) => vinho.categoria === "singular")
+              .splice(0, 4)
+              .map((vinho) => {
                 return (
                   <CardWine
                     key={vinho.name}
@@ -93,7 +97,7 @@ export function Homepage({
                     id={vinho.id}
                   />
                 );
-            })}
+              })}
           </div>
           <div className="mt-8 text-center">
             <Button variant={"default"} size={"lg"}>
