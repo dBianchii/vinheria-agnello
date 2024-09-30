@@ -1,6 +1,15 @@
-import ProductsPage from "~/components/ui/products/products-page";
 import { getWines } from "~/server/db/select";
-export default async function CartPage() {
-  const wines = await getWines();
+
+import ProductsPage from "./_components/products-page";
+import { searchParamsCache } from "./_components/shared";
+
+export default async function CartPage({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
+  const { categoria } = searchParamsCache.parse(searchParams);
+
+  const wines = await getWines({ categoria });
   return <ProductsPage wines={wines} />;
 }

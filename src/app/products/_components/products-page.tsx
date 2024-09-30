@@ -1,6 +1,6 @@
 "use client";
 
-import { parseAsArrayOf, parseAsStringLiteral, useQueryState } from "nuqs";
+import { useQueryState } from "nuqs";
 import { Suspense, useState } from "react";
 import { FiFilter, FiMessageCircle } from "react-icons/fi";
 import { Button } from "~/components/ui/button";
@@ -17,6 +17,7 @@ import {
 } from "~/components/ui/accordion";
 import { type getWines } from "~/server/db/select";
 import { sendPrompt } from "./actions";
+import { type categoryOptions, categoryParser } from "./shared";
 
 export default function ProductsPage({
   wines,
@@ -158,11 +159,11 @@ function Filters() {
   const [priceRange, setPriceRange] = useState([0, 100]);
 
   // List accepted values
-  const categoryOptions = ["singular", "kit"] as const;
-  const [categoria, setCategoria] = useQueryState(
-    "categoria",
-    parseAsArrayOf(parseAsStringLiteral(categoryOptions)),
-  );
+
+  const [categoria, setCategoria] = useQueryState("categoria", {
+    ...categoryParser,
+    shallow: false,
+  });
   const handleSetCategory = async (
     category: (typeof categoryOptions)[number],
     isActive: boolean,
@@ -228,6 +229,15 @@ function Filters() {
     //   ],
     // },
   ];
+
+  // const debouncedSearchableColumnFilters = JSON.parse(
+  //   useDebounce(
+  //     JSON.stringify({
+  //       categoria,
+  //     }),
+  //     500,
+  //   ),
+  // );
 
   const defaultOpenedAccordion = filterCategories
     .filter((category) => category.options.some((option) => option.active))
