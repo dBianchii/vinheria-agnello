@@ -5,6 +5,8 @@ import CardWine from "./card-wine";
 import Stats from "./stats";
 import { Button } from "./ui/button";
 import { type getWines } from "~/server/db/select";
+import Link from "next/link";
+import { serialize } from "~/app/products/_components/nuqs-parsers";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const maxElementsPerRow = 4;
@@ -27,9 +29,11 @@ export function Homepage({
               Descubra nossa seleção de vinhos premium e encontre o sabor ideal
               para cada ocasião.
             </p>
-            <Button variant={"default"} size={"lg"}>
-              Comprar Agora
-            </Button>
+            <Link href="/products">
+              <Button variant={"default"} size={"lg"}>
+                Comprar Agora
+              </Button>
+            </Link>
           </div>
           <div className="flex justify-end md:w-1/2">
             <Image
@@ -50,7 +54,7 @@ export function Homepage({
       {/* Kits Section */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-3xl font-bold text-center">KITS</h2>
+          <h2 className="mb-8 text-center text-3xl font-bold">KITS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {wines
               .filter((vinho) => vinho.categoria === "kit")
@@ -70,9 +74,11 @@ export function Homepage({
               })}
           </div>
           <div className="mt-8 text-center">
-            <Button variant={"default"} size={"lg"}>
-              Ver Todos
-            </Button>
+            <Link href={`/products${serialize({ categoria: ["kit"] })}`}>
+              <Button variant={"default"} size={"lg"}>
+                Ver Todos
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -80,9 +86,9 @@ export function Homepage({
       {/* Best Sellers Section */}
       <section className="bg-white py-12">
         <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-3xl font-bold text-center">MAIS VENDIDOS</h2>
+          <h2 className="mb-8 text-center text-3xl font-bold">MAIS VENDIDOS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-					{wines
+            {wines
               .filter((vinho) => vinho.categoria === "singular")
               .splice(0, 4)
               .map((vinho) => {
@@ -100,9 +106,11 @@ export function Homepage({
               })}
           </div>
           <div className="mt-8 text-center">
-            <Button variant={"default"} size={"lg"}>
-              Ver Todos
-            </Button>
+            <Link href={`/products${serialize({ categoria: ["singular"] })}`}>
+              <Button variant={"default"} size={"lg"}>
+                Ver Todos
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

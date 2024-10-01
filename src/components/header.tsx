@@ -29,7 +29,7 @@ export default function Header() {
             </Link>
             <nav className="hidden space-x-4 md:flex">
               <Link
-                href="/products"
+                href={`/products${serialize({ categoria: ["singular"] })}`}
                 className="text-gray-600 hover:text-gray-900"
               >
                 Vinhos
