@@ -20,7 +20,7 @@ const _wines = [
     stars: 4.5,
     unidades: 1,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2021,
     teoralcoolico: 12.5,
     temperaturaservico: "17ºC",
@@ -48,7 +48,7 @@ const _wines = [
     stars: 4.5,
     unidades: 1,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2024,
     teoralcoolico: 12,
     temperaturaservico: "16ºC",
@@ -75,7 +75,7 @@ const _wines = [
     stars: 4.2,
     unidades: 1,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2024,
     teoralcoolico: 13,
     temperaturaservico: "18ºC",
@@ -102,7 +102,7 @@ const _wines = [
     stars: 4.3,
     unidades: 1,
 
-    tipo: "vinho branco",
+    tipo: "Vinho branco",
     safra: 2024,
     teoralcoolico: 11,
     temperaturaservico: "16ºC",
@@ -129,7 +129,7 @@ const _wines = [
     stars: 4.0,
     unidades: 1,
 
-    tipo: "espumante rosé",
+    tipo: "Espumante rose",
     safra: 2023,
     teoralcoolico: 11,
     temperaturaservico: "9ºC",
@@ -156,7 +156,7 @@ const _wines = [
     stars: 4.5,
     unidades: 1,
 
-    tipo: "espumante",
+    tipo: "Espumante branco",
     safra: 2024,
     teoralcoolico: 7.5,
     temperaturaservico: "9ºC",
@@ -183,7 +183,7 @@ const _wines = [
     stars: 4.6,
     unidades: 3,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2021,
     teoralcoolico: 12.5,
     temperaturaservico: "17ºC",
@@ -210,7 +210,7 @@ const _wines = [
     stars: 4.4,
     unidades: 6,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2024,
     teoralcoolico: 12.5,
     temperaturaservico: "16-18ºC",
@@ -237,7 +237,7 @@ const _wines = [
     stars: 4.8,
     unidades: 1,
 
-    tipo: "vinho branco",
+    tipo: "Vinho branco",
     safra: 2018,
     teoralcoolico: 13,
     temperaturaservico: "9ºC",
@@ -265,7 +265,7 @@ const _wines = [
     stars: 4.4,
     unidades: 1,
 
-    tipo: "espumante",
+    tipo: "Espumante branco",
     safra: 2024,
     teoralcoolico: 12,
     temperaturaservico: "8ºC",
@@ -292,7 +292,7 @@ const _wines = [
     stars: 4.7,
     unidades: 1,
 
-    tipo: "vinho rosé",
+    tipo: "Vinho rose",
     safra: 2019,
     teoralcoolico: 13,
     temperaturaservico: "9ºC",
@@ -319,7 +319,7 @@ const _wines = [
     stars: 4.0,
     unidades: 1,
 
-    tipo: "espumante rosé",
+    tipo: "Espumante rose",
     safra: 2023,
     teoralcoolico: 11,
     temperaturaservico: "9ºC",
@@ -346,7 +346,7 @@ const _wines = [
     stars: 4.5,
     unidades: 1,
 
-    tipo: "espumante rosé",
+    tipo: "Espumante rose",
     safra: 2024,
     teoralcoolico: 12,
     temperaturaservico: "9ºC",
@@ -373,7 +373,7 @@ const _wines = [
     stars: 4.5,
     unidades: 1,
 
-    tipo: "espumante branco",
+    tipo: "Espumante branco",
     safra: 2024,
     teoralcoolico: 7.5,
     temperaturaservico: "9ºC",
@@ -400,7 +400,7 @@ const _wines = [
     stars: 4.4,
     unidades: 1,
 
-    tipo: "espumante branco",
+    tipo: "Espumante branco",
     safra: 2024,
     teoralcoolico: 12,
     temperaturaservico: "8ºC",
@@ -427,7 +427,7 @@ const _wines = [
     stars: 4.7,
     unidades: 4,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2022,
     teoralcoolico: 14.5,
     temperaturaservico: "16ºC",
@@ -454,7 +454,7 @@ const _wines = [
     stars: 4.8,
     unidades: 3,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2020,
     teoralcoolico: 14,
     temperaturaservico: "17ºC",
@@ -481,7 +481,7 @@ const _wines = [
     stars: 4.3,
     unidades: 6,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2024,
     teoralcoolico: 13,
     temperaturaservico: "15ºC",
@@ -508,7 +508,7 @@ const _wines = [
     stars: 4.5,
     unidades: 10,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2024,
     teoralcoolico: 13.5,
     temperaturaservico: "16-18ºC",
@@ -535,7 +535,7 @@ const _wines = [
     stars: 4.8,
     unidades: 6,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2022,
     teoralcoolico: 14,
     temperaturaservico: "16ºC",
@@ -562,7 +562,7 @@ const _wines = [
     stars: 4.3,
     unidades: 10,
 
-    tipo: "diversos",
+    tipo: "Diversos",
     safra: 2024,
     teoralcoolico: 12,
     temperaturaservico: "8-10ºC",
@@ -589,7 +589,7 @@ const _wines = [
     stars: 4.4,
     unidades: 6,
 
-    tipo: "vinho tinto",
+    tipo: "Vinho tinto",
     safra: 2024,
     teoralcoolico: 12.5,
     temperaturaservico: "16ºC",

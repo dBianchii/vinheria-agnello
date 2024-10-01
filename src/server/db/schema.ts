@@ -114,6 +114,14 @@ const percentageColumn = (columnName: string) =>
   numeric(columnName, { precision: 5, scale: 2 }).$type<number>(); //E.G. -> 123.00 (p=5, s=2)
 
 export const categoriaEnum = pgEnum("categoria", ["kit", "singular"]);
+export const tipoEnum = pgEnum("tipo", [
+  "Vinho tinto",
+  "Vinho branco",
+  "Vinho rose",
+  "Espumante branco",
+  "Espumante rose",
+  "Diversos",
+]);
 
 export const wines = createTable(
   "wine",
@@ -125,12 +133,14 @@ export const wines = createTable(
     preco: numeric("preco").$type<number>().notNull(),
     desconto: percentageColumn("desconto").notNull(),
     descricao: text("descricao").notNull(),
-    categoria: categoriaEnum("categoria"),
+    categoria: categoriaEnum("categoria").notNull(),
     uva: varchar("uva", { length: 256 }).notNull(),
     pais: varchar("pais", { length: 256 }).notNull(),
-    stars: numeric("stars", { precision: 2, scale: 1 }).$type<number>().notNull(), // Changed to numeric with precision and scale
+    stars: numeric("stars", { precision: 2, scale: 1 })
+      .$type<number>()
+      .notNull(), // Changed to numeric with precision and scale
     unidades: integer("unidades").notNull(),
-    tipo: varchar("tipo", { length: 256 }),
+    tipo: tipoEnum("tipo").notNull(),
     safra: integer("safra"),
     teoralcoolico: percentageColumn("teoralcoolico").notNull(), //?lowercase bc... https://github.com/drizzle-team/drizzle-orm/issues/3024
     temperaturaservico: varchar("temperaturaservico", { length: 256 }),
@@ -178,6 +188,5 @@ export const ordersRelations = relations(orders, ({ one }) => ({
   user: one(users, { fields: [orders.userId], references: [users.id] }),
   wine: one(wines, { fields: [orders.wineId], references: [wines.id] }),
 }));
-
 
 export type SelectWine = typeof wines.$inferSelect;

@@ -10,9 +10,11 @@ export async function getWines(
     input?.categoria
       ? or(...input.categoria.map((cat) => eq(wines.categoria, cat)))
       : undefined,
-  ];
 
-  console.log(input);
+    input?.tipo ? or(...input.tipo.map((t) => eq(wines.tipo, t))) : undefined,
+
+    input?.pais ? or(...input.pais.map((p) => eq(wines.pais, p))) : undefined,
+  ];
 
   const where: DrizzleWhere<typeof wines.$inferSelect> = and(
     ...filterExpressions,

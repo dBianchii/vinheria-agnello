@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
 
 import { useQueryState } from "nuqs";
@@ -17,7 +19,12 @@ import {
 } from "~/components/ui/accordion";
 import { type getWines } from "~/server/db/select";
 import { sendPrompt } from "./actions";
-import { type categoryOptions, searchParamsToParsersMap } from "./nuqs-parsers";
+import {
+  paisesOptions,
+  searchParamsToParsersMap,
+  tipoOptions,
+} from "./nuqs-parsers";
+import { handleCheckboxChange } from "./ugly-handleCheckboxChange";
 
 export default function ProductsPage({
   wines,
@@ -165,20 +172,25 @@ function Filters() {
     shallow: false, //URL state changes will trigger a browser network request.
   });
 
-  const handleSetCategory = async (
-    category: (typeof categoryOptions)[number],
-    isActive: boolean,
-  ) => {
-    if (isActive) {
-      if (!categoria?.includes(category))
-        await setCategoria([...(categoria ?? []), category]);
-    } else
-      await setCategoria(categoria?.filter((item) => item !== category) ?? []);
-  };
+  const [tipo, setTipo] = useQueryState("tipo", {
+    ...searchParamsToParsersMap.tipo,
+    clearOnDefault: true,
+    throttleMs: 500, //Delay between state changes and URL updates.
+    shallow: false, //URL state changes will trigger a browser network request.
+  });
+
+  const [pais, setPais] = useQueryState("pais", {
+    ...searchParamsToParsersMap.pais,
+    clearOnDefault: true,
+    throttleMs: 500, //Delay between state changes and URL updates.
+    shallow: false, //URL state changes will trigger a browser network request.
+  });
 
   const filterCategories = [
     {
       name: "Categoria",
+      state: categoria,
+      setter: setCategoria,
       options: [
         {
           name: "Singular",
@@ -191,24 +203,29 @@ function Filters() {
           active: categoria?.includes("kit"),
         },
       ],
-      state: categoria,
-      setter: handleSetCategory,
+    },
+    {
+      name: "Tipos",
+      state: tipo,
+      setter: setTipo,
+      options: tipoOptions.map((t) => ({
+        name: t,
+        value: t,
+        active: tipo?.includes(t),
+      })),
+    },
+    {
+      name: "Países",
+      state: pais,
+      setter: setPais,
+      options: paisesOptions.map((p) => ({
+        name: p,
+        value: p,
+        active: pais?.includes(p),
+      })),
     },
     //?Comentado temporariamente. Descomente para adicionar filtros adicionais integrado com nuqs :)
-    // {
-    //   name: "Tipos",
-    //   options: [
-    //     "Vinho tinto",
-    //     "Vinho branco",
-    //     "Vinho rose",
-    //     "Espumante branco",
-    //     "Espumante rose",
-    //   ],
-    // },
-    // {
-    //   name: "Países",
-    //   options: ["Espanha", "Chile", "Argentina", "Brasil", "Portugal"],
-    // },
+
     // {
     //   name: "Uvas",
     //   options: [
@@ -261,9 +278,9 @@ function Filters() {
               >
                 <Checkbox
                   id={`${category.name}-${optionIndex}`}
-                  onCheckedChange={(checked) => {
+                  onCheckedChange={async (checked) => {
                     if (typeof checked !== "boolean") return;
-                    void category.setter(option.value, checked);
+                    handleCheckboxChange(category, option, checked);
                   }}
                   checked={option.active}
                 />

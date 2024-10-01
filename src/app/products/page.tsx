@@ -8,8 +8,8 @@ export default async function CartPage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const { categoria } = searchParamsCache.parse(searchParams);
+  const { categoria, tipo, pais } = searchParamsCache.parse(searchParams);
 
-  const wines = await getWines({ categoria });
+  const wines = await getWines({ categoria, tipo, pais });
   return <ProductsPage wines={wines} />;
 }
