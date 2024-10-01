@@ -28,8 +28,10 @@ import { handleCheckboxChange } from "./ugly-handleCheckboxChange";
 
 export default function ProductsPage({
   wines,
+	maxPrice
 }: {
   wines: Awaited<ReturnType<typeof getWines>>;
+	maxPrice: number;
 }) {
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -56,7 +58,7 @@ export default function ProductsPage({
           </button>
           {showFilters && (
             <div className="mt-4">
-              <FiltersWithSuspense />
+              <FiltersWithSuspense maxPrice={maxPrice}/>
             </div>
           )}
         </div>
@@ -64,7 +66,7 @@ export default function ProductsPage({
         {/* Sidebar para telas grandes */}
         <div className="hidden w-1/4 lg:block">
           <h2 className="mb-4 text-lg font-semibold">Filtros</h2>
-          <FiltersWithSuspense />
+          <FiltersWithSuspense maxPrice={maxPrice}/>
         </div>
 
         {/* Main content */}
@@ -154,16 +156,16 @@ export default function ProductsPage({
   );
 }
 
-function FiltersWithSuspense() {
+function FiltersWithSuspense({maxPrice}: {maxPrice: number}) {
   return (
     <Suspense>
-      <Filters />
+      <Filters maxPrice={maxPrice}/>
     </Suspense>
   );
 }
 
-function Filters() {
-  const [priceRange, setPriceRange] = useState([0, 100]);
+function Filters({maxPrice}: {maxPrice: number}) {
+  const [priceRange, setPriceRange] = useState([0, maxPrice]);
 
   const [categoria, setCategoria] = useQueryState("categoria", {
     ...searchParamsToParsersMap.categoria,
@@ -301,9 +303,9 @@ function Filters() {
           <Slider
             value={priceRange}
             onValueChange={setPriceRange}
-            min={0}
-            max={100}
-            step={1}
+            min={0.00}
+            max={Number(maxPrice)}
+            step={2}
             className="mt-2"
           />
           <div className="mt-2 flex justify-between">

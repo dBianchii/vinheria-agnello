@@ -1,9 +1,9 @@
-import { getWines } from "~/server/db/select";
+import { getMaxPrice, getWines } from "~/server/db/select";
 
 import ProductsPage from "./_components/products-page";
 import { searchParamsCache } from "./_components/nuqs-parsers";
 
-export default async function CartPage({
+export default async function Page({
   searchParams,
 }: {
   searchParams: Record<string, string | string[] | undefined>;
@@ -11,5 +11,6 @@ export default async function CartPage({
   const { categoria, tipo, pais } = searchParamsCache.parse(searchParams);
 
   const wines = await getWines({ categoria, tipo, pais });
-  return <ProductsPage wines={wines} />;
+	const maxPrice = await getMaxPrice() ?? 0;
+  return <ProductsPage wines={wines} maxPrice={maxPrice}/>;
 }
