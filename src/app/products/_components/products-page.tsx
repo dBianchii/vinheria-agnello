@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
+import autoAnimate from "@formkit/auto-animate";
 
 import { useQueryState } from "nuqs";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { FiFilter, FiMessageCircle } from "react-icons/fi";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
@@ -37,6 +38,11 @@ export default function ProductsPage({
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
 
+  const parent = useRef(null);
+  useEffect(() => {
+    if (parent.current) autoAnimate(parent.current);
+  }, [parent]);
+
   const handleSend = async () => {
     const response = await sendPrompt(question);
     if (!response) return;
@@ -47,7 +53,7 @@ export default function ProductsPage({
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Filtros para telas menores */}
-        <div className="mb-4 lg:hidden">
+        <div className="mb-4 lg:hidden" ref={parent}>
           <button
             className="flex items-center space-x-2 text-lg font-semibold"
             onClick={() => setShowFilters(!showFilters)}
@@ -74,7 +80,7 @@ export default function ProductsPage({
             <span className="mb-2 text-sm text-gray-600 sm:mb-0">
               Mostrando 1-12 de 100 Produtos
             </span>
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <span>Ordenado por:</span>
               <select className="rounded border p-2 text-sm">
                 <option>Melhor Avaliação</option>
