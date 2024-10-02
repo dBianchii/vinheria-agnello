@@ -8,7 +8,7 @@ import { FiFilter, FiMessageCircle } from "react-icons/fi";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import Modal from "~/components/ui/modal";
-import { Slider } from "~/components/ui/slider";
+// import { Slider } from "~/components/ui/slider";
 
 import CardWine from "~/components/card-wine";
 import {
@@ -29,10 +29,8 @@ import { handleCheckboxChange } from "./ugly-handleCheckboxChange";
 
 export default function ProductsPage({
   wines,
-  maxPrice,
 }: {
   wines: Awaited<ReturnType<typeof getWines>>;
-  maxPrice: number;
 }) {
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -59,7 +57,7 @@ export default function ProductsPage({
           </button>
           {showFilters && (
             <div className="mt-4">
-              <FiltersWithSuspense maxPrice={maxPrice} />
+              <FiltersWithSuspense />
             </div>
           )}
         </div>
@@ -67,7 +65,7 @@ export default function ProductsPage({
         {/* Sidebar para telas grandes */}
         <div className="hidden w-1/4 lg:block">
           <h2 className="mb-4 text-lg font-semibold">Filtros</h2>
-          <FiltersWithSuspense maxPrice={maxPrice} />
+          <FiltersWithSuspense />
         </div>
 
         {/* Main content */}
@@ -76,12 +74,15 @@ export default function ProductsPage({
             <span className="mb-2 text-sm text-gray-600 sm:mb-0">
               Mostrando 1-12 de 100 Produtos
             </span>
-            <select className="rounded border p-2 text-sm">
-              <option>Ordenado por: Mais Popular</option>
-              <option>Preço: Menor para Maior</option>
-              <option>Preço: Maior para Menor</option>
-              <option>Avaliações</option>
-            </select>
+            <div className="flex gap-3 items-center">
+              <span>Ordenado por:</span>
+              <select className="rounded border p-2 text-sm">
+                <option>Melhor Avaliação</option>
+                <option>Menor Preço</option>
+                <option>Maior Preço</option>
+                <option>Maior desconto</option>
+              </select>
+            </div>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {wines
@@ -157,16 +158,16 @@ export default function ProductsPage({
   );
 }
 
-function FiltersWithSuspense({ maxPrice }: { maxPrice: number }) {
+function FiltersWithSuspense() {
   return (
     <Suspense>
-      <Filters maxPrice={maxPrice} />
+      <Filters />
     </Suspense>
   );
 }
 
-function Filters({ maxPrice }: { maxPrice: number }) {
-  const [priceRange, setPriceRange] = useState([0, maxPrice]);
+function Filters() {
+  // const [priceRange, setPriceRange] = useState([0, Math.floor(maxPrice)]);
 
   const [categoria, setCategoria] = useQueryState("categoria", {
     ...searchParamsToParsersMap.categoria,
@@ -307,23 +308,23 @@ function Filters({ maxPrice }: { maxPrice: number }) {
           </AccordionContent>
         </AccordionItem>
       ))}
-      <AccordionItem value="price">
+      {/* <AccordionItem value="price">
         <AccordionTrigger>Preço</AccordionTrigger>
         <AccordionContent>
           <Slider
             value={priceRange}
             onValueChange={setPriceRange}
-            min={0.0}
-            max={Number(maxPrice)}
+            min={0.00}
+            max={Math.floor(maxPrice)}
             step={2}
             className="mt-2"
           />
           <div className="mt-2 flex justify-between">
-            <span>R${priceRange[0]}</span>
-            <span>R${priceRange[1]}</span>
+            <span>R${priceRange[0]},00</span>
+            <span>R${priceRange[1]},00</span>
           </div>
         </AccordionContent>
-      </AccordionItem>
+      </AccordionItem> */}
     </Accordion>
   );
 }

@@ -1,5 +1,6 @@
-import { createSerializer, parseAsArrayOf, parseAsStringLiteral } from "nuqs";
+import { createSerializer, parseAsArrayOf, parseAsStringLiteral, parseAsString } from "nuqs";
 import { createSearchParamsCache } from "nuqs/server";
+
 import {
   allCategorias,
   allGrapes,
@@ -26,6 +27,7 @@ export const searchParamsToParsersMap = {
   tipo: parseAsArrayOf(parseAsStringLiteral(tipoOptions)).withDefault([]),
   pais: parseAsArrayOf(parseAsStringLiteral(paisesOptions)).withDefault([]),
   uva: parseAsArrayOf(parseAsStringLiteral(uvaOptions)).withDefault([]),
+	preco: parseAsString,
 };
 
 //Export the searchParamsCache, so we can get server-side typed search params. This is a wrapper around react's 'cache()'
