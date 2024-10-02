@@ -15,7 +15,7 @@ const ShoppingCartBadge = dynamic(() => import("./shopping-cart-badge"), {
 export default function Header() {
   return (
     <HeaderFooterRemover>
-      <header className="fixed w-full bg-background/20 shadow backdrop-blur">
+      <header className="fixed z-10 w-full bg-background/20 shadow backdrop-blur">
         <div className="container mx-auto flex h-20 items-center justify-between px-4 py-4 md:flex-row">
           <div className="flex items-center md:mb-0">
             <Link href="/">

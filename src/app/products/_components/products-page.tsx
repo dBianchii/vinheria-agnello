@@ -53,7 +53,7 @@ export default function ProductsPage({
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Filtros para telas menores */}
-        <div className="mb-4 lg:hidden" ref={parent}>
+        <div className="z-0 mb-4 lg:hidden" ref={parent}>
           <button
             className="flex items-center space-x-2 text-lg font-semibold"
             onClick={() => setShowFilters(!showFilters)}
