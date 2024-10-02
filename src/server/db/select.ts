@@ -1,4 +1,4 @@
-import { and, eq, inArray, max, or } from "drizzle-orm";
+import { and, eq, inArray, max, or, lte, gte, sql } from "drizzle-orm";
 import { type searchParamsCache } from "~/app/products/_components/nuqs-parsers";
 import { db, type DrizzleWhere } from "./index";
 import { grapes, type SelectWine, wines, winesToGrapes } from "./schema";
@@ -27,6 +27,12 @@ export async function getWines(
               .where(inArray(grapes.name, input.uva)),
           ),
         )
+      : undefined,
+    input?.preco
+      ? and(
+				gte(wines.preco, 0), 
+				lte(sql`${wines.preco} * (1 - ${wines.desconto} / 100)`, Number(input.preco))
+			)
       : undefined,
   );
   const query = db
@@ -57,10 +63,10 @@ export async function getWineById(id: SelectWine["id"]) {
     .then((res) => res[0]);
 }
 
-export async function getMaxPrice() {
-  const result = await db
-    .select({ maxPrice: max(wines.preco) })
-    .from(wines)
-    .then((res) => res[0]?.maxPrice);
-  return result;
-}
+// export async function getMaxPrice() {
+//   const result = await db
+//     .select({ maxPrice: max(wines.preco) })
+//     .from(wines)
+//     .then((res) => res[0]?.maxPrice);
+//   return result;
+// }
