@@ -74,12 +74,15 @@ export default function ProductsPage({
             <span className="mb-2 text-sm text-gray-600 sm:mb-0">
               Mostrando 1-12 de 100 Produtos
             </span>
-            <select className="rounded border p-2 text-sm">
-              <option>Ordenado por: Mais Popular</option>
-              <option>Preço: Menor para Maior</option>
-              <option>Preço: Maior para Menor</option>
-              <option>Avaliações</option>
-            </select>
+            <div className="flex gap-3 items-center">
+              <span>Ordenado por:</span>
+              <select className="rounded border p-2 text-sm">
+                <option>Melhor Avaliação</option>
+                <option>Menor Preço</option>
+                <option>Maior Preço</option>
+                <option>Maior desconto</option>
+              </select>
+            </div>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {wines
