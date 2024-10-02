@@ -51,10 +51,11 @@ export function ProductPageComponent({
               {wine.descricao}
             </div>
             <div>
-              <span className="mb-2 flex items-center justify-start text-lg">
+							{/* comentando para conseguir buildar */}
+              {/* <span className="mb-2 flex items-center justify-start text-lg">
                 <Wine className="mr-3 w-7 text-rose-900" />
                 <p className="text-neutral-500">{wine.uva}</p>
-              </span>
+              </span> */}
               <span className="mb-2 flex items-center justify-start text-lg">
                 <img
                   alt="country flag"
