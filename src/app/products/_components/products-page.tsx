@@ -8,7 +8,7 @@ import { FiFilter, FiMessageCircle } from "react-icons/fi";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import Modal from "~/components/ui/modal";
-import { Slider } from "~/components/ui/slider";
+// import { Slider } from "~/components/ui/slider";
 
 import CardWine from "~/components/card-wine";
 import {
@@ -29,10 +29,8 @@ import { handleCheckboxChange } from "./ugly-handleCheckboxChange";
 
 export default function ProductsPage({
   wines,
-  maxPrice,
 }: {
   wines: Awaited<ReturnType<typeof getWines>>;
-  maxPrice: number;
 }) {
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -59,7 +57,7 @@ export default function ProductsPage({
           </button>
           {showFilters && (
             <div className="mt-4">
-              <FiltersWithSuspense maxPrice={maxPrice} />
+              <FiltersWithSuspense />
             </div>
           )}
         </div>
@@ -67,7 +65,7 @@ export default function ProductsPage({
         {/* Sidebar para telas grandes */}
         <div className="hidden w-1/4 lg:block">
           <h2 className="mb-4 text-lg font-semibold">Filtros</h2>
-          <FiltersWithSuspense maxPrice={maxPrice} />
+          <FiltersWithSuspense />
         </div>
 
         {/* Main content */}
@@ -157,16 +155,16 @@ export default function ProductsPage({
   );
 }
 
-function FiltersWithSuspense({ maxPrice }: { maxPrice: number }) {
+function FiltersWithSuspense() {
   return (
     <Suspense>
-      <Filters maxPrice={maxPrice} />
+      <Filters />
     </Suspense>
   );
 }
 
-function Filters({ maxPrice }: { maxPrice: number }) {
-  const [priceRange, setPriceRange] = useState([0, Math.floor(maxPrice)]);
+function Filters() {
+  // const [priceRange, setPriceRange] = useState([0, Math.floor(maxPrice)]);
 
   const [categoria, setCategoria] = useQueryState("categoria", {
     ...searchParamsToParsersMap.categoria,
@@ -307,7 +305,7 @@ function Filters({ maxPrice }: { maxPrice: number }) {
           </AccordionContent>
         </AccordionItem>
       ))}
-      <AccordionItem value="price">
+      {/* <AccordionItem value="price">
         <AccordionTrigger>Preço</AccordionTrigger>
         <AccordionContent>
           <Slider
@@ -323,7 +321,7 @@ function Filters({ maxPrice }: { maxPrice: number }) {
             <span>R${priceRange[1]},00</span>
           </div>
         </AccordionContent>
-      </AccordionItem>
+      </AccordionItem> */}
     </Accordion>
   );
 }
