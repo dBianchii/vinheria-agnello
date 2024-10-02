@@ -53,7 +53,9 @@ export function ProductPageComponent({
             <div>
               <span className="mb-2 flex items-center justify-start text-lg">
                 <Wine className="mr-3 w-7 text-rose-900" />
-                <p className="text-neutral-500">{wine.uva}</p>
+                <p className="text-neutral-500">
+                  {wine.winesToGrapes.map((wG) => wG.grape.name).join(", ")}
+                </p>
               </span>
               <span className="mb-2 flex items-center justify-start text-lg">
                 <img
@@ -102,6 +104,5 @@ function getCountryImg(country: string): string {
       link = "https://cdn-icons-png.flaticon.com/128/197/197626.png";
       break;
   }
-  console.log(link);
   return link;
 }

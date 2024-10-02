@@ -50,11 +50,16 @@ export async function getWines(
 }
 
 export async function getWineById(id: SelectWine["id"]) {
-  return db
-    .select()
-    .from(wines)
-    .where(eq(wines.id, id))
-    .then((res) => res[0]);
+  return await db.query.wines.findFirst({
+    where: (wines, { eq }) => eq(wines.id, id),
+    with: {
+      winesToGrapes: {
+        with: {
+          grape: true,
+        },
+      },
+    },
+  });
 }
 
 export async function getMaxPrice() {
