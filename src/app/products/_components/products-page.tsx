@@ -166,7 +166,7 @@ function FiltersWithSuspense({ maxPrice }: { maxPrice: number }) {
 }
 
 function Filters({ maxPrice }: { maxPrice: number }) {
-  const [priceRange, setPriceRange] = useState([0, maxPrice]);
+  const [priceRange, setPriceRange] = useState([0, Math.floor(maxPrice)]);
 
   const [categoria, setCategoria] = useQueryState("categoria", {
     ...searchParamsToParsersMap.categoria,
@@ -313,14 +313,14 @@ function Filters({ maxPrice }: { maxPrice: number }) {
           <Slider
             value={priceRange}
             onValueChange={setPriceRange}
-            min={0.0}
-            max={Number(maxPrice)}
+            min={0.00}
+            max={Math.floor(maxPrice)}
             step={2}
             className="mt-2"
           />
           <div className="mt-2 flex justify-between">
-            <span>R${priceRange[0]}</span>
-            <span>R${priceRange[1]}</span>
+            <span>R${priceRange[0]},00</span>
+            <span>R${priceRange[1]},00</span>
           </div>
         </AccordionContent>
       </AccordionItem>
