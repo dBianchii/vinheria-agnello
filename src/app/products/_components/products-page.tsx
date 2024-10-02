@@ -27,6 +27,7 @@ import {
   uvaOptions,
 } from "./nuqs-parsers";
 import { handleCheckboxChange } from "./ugly-handleCheckboxChange";
+import { cn } from "~/lib/utils";
 
 export default function ProductsPage({
   wines,
@@ -54,13 +55,14 @@ export default function ProductsPage({
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Filtros para telas menores */}
         <div className="z-0 mb-4 lg:hidden" ref={parent}>
-          <button
-            className="flex items-center space-x-2 text-lg font-semibold"
+          <Button
+            variant={showFilters ? "secondary" : "outline"}
+            className="flex items-center space-x-2 font-semibold"
             onClick={() => setShowFilters(!showFilters)}
           >
             <FiFilter /> {/* Ícone de filtro */}
             <span>Filtros</span>
-          </button>
+          </Button>
           {showFilters && (
             <div className="mt-4">
               <FiltersWithSuspense />
