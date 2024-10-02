@@ -88,7 +88,7 @@ export default function ProductsPage({
               .filter((_, i) => i < 12)
               .map((vinho) => (
                 <CardWine
-                  key={`${vinho.id}`}
+                  key={`${vinho.id}-${vinho.name}`}
                   name={vinho.name}
                   stars={vinho.stars} // Coloque a avaliação que desejar
                   price={vinho.preco}
@@ -107,7 +107,7 @@ export default function ProductsPage({
             </Button>
             {[1, 2, 3, "...", 10].map((page, index) => (
               <Button
-                key={index}
+                key={index + "buttone"}
                 variant={page === 1 ? "default" : "outline"}
                 className="mx-1 w-8"
               >
@@ -276,17 +276,20 @@ function Filters({ maxPrice }: { maxPrice: number }) {
       className="w-full"
       defaultValue={defaultOpenedAccordion}
     >
-      {filterCategories.map((category, index) => (
-        <AccordionItem value={`item-${category.name}`} key={index}>
+      {filterCategories.map((category) => (
+        <AccordionItem
+          value={`item-${category.name}`}
+          key={`${category.name}accordion`}
+        >
           <AccordionTrigger>{category.name}</AccordionTrigger>
           <AccordionContent>
-            {category.options.map((option, optionIndex) => (
+            {category.options.map((option) => (
               <div
                 className="mb-1 flex items-center space-x-2"
-                key={optionIndex}
+                key={`${category.name}-${option.value}-checkbox`}
               >
                 <Checkbox
-                  id={`${category.name}-${optionIndex}`}
+                  id={`${category.name}-${option.name}`}
                   onCheckedChange={async (checked) => {
                     if (typeof checked !== "boolean") return;
                     handleCheckboxChange(category, option, checked);
@@ -294,7 +297,7 @@ function Filters({ maxPrice }: { maxPrice: number }) {
                   checked={option.active}
                 />
                 <label
-                  htmlFor={`${category.name}-${optionIndex}`}
+                  htmlFor={`${category.name}-${option.name}`}
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {option.name}

@@ -1,18 +1,11 @@
-import { and, eq, or, type SQL, max, inArray } from "drizzle-orm";
+import { and, eq, inArray, max, or } from "drizzle-orm";
 import { type searchParamsCache } from "~/app/products/_components/nuqs-parsers";
 import { db, type DrizzleWhere } from "./index";
-import {
-  grapes,
-  type SelectWine,
-  wines,
-  winesToGrapes,
-  winesToHarmonizations,
-} from "./schema";
+import { grapes, type SelectWine, wines, winesToGrapes } from "./schema";
 
 export async function getWines(
   input?: Awaited<ReturnType<typeof searchParamsCache.parse>>,
 ) {
-  console.log(input);
   const where: DrizzleWhere<typeof wines.$inferSelect> = and(
     input?.categoria.length
       ? or(...input.categoria.map((cat) => eq(wines.categoria, cat)))
@@ -36,7 +29,6 @@ export async function getWines(
         )
       : undefined,
   );
-
   const query = db
     .select({
       wines: wines,
@@ -50,7 +42,11 @@ export async function getWines(
   }
   const result = await query;
 
-  return result.map((res) => res.wines);
+  const uniqueWines = Array.from(
+    new Set(result.map((res) => res.wines.id)),
+  ).map((id) => result.find((res) => res.wines.id === id)!.wines);
+
+  return uniqueWines;
 }
 
 export async function getWineById(id: SelectWine["id"]) {
