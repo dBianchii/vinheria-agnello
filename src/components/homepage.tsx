@@ -122,14 +122,17 @@ export function Homepage({
             ENCONTRE SEU VINHO IDEAL
           </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {["R$29,90", "R$49,90", "R$99,90"].map((price) => (
-              <div
-                key={price}
+            {["29,90", "49,90", "99,90"].map((price) => (
+              <Link 
+								key={price}
+								href={`/products?preco=${price.replace(",", ".")}`}>
+							<div
                 className="cursor-pointer rounded-lg bg-primary p-8 text-center text-white hover:bg-primary/90"
               >
                 <h3 className="mb-2 text-2xl">VINHOS ATÉ</h3>
-                <p className="text-4xl font-bold">{price}</p>
+                <p className="text-4xl font-bold">R${price}</p>
               </div>
+							</Link>
             ))}
           </div>
         </div>
