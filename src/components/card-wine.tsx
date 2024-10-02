@@ -49,7 +49,7 @@ export default function CardWine({
           {discount > 0 && (
             <div className="flex items-center">
               <p className="text-sm text-gray-500 line-through">
-                {formatPrice(price)}
+                {formatPrice(Number(price))}
               </p>
               <DiscountBadge classname="ml-2 text-xs" discount={discount} />
             </div>
