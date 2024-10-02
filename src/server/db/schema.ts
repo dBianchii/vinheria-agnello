@@ -114,7 +114,7 @@ const percentageColumn = (columnName: string) =>
   numeric(columnName, { precision: 5, scale: 2 }).$type<number>(); //E.G. -> 123.00 (p=5, s=2)
 
 export const allCategorias = ["kit", "singular"] as const;
-const categoriaEnum = pgEnum("categoria", allCategorias);
+export const categoriaEnum = pgEnum("categoria", allCategorias);
 
 export const allTipos = [
   "Vinho tinto",
