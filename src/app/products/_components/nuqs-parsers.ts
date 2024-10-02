@@ -1,20 +1,15 @@
 import { createSerializer, parseAsArrayOf, parseAsStringLiteral } from "nuqs";
 import { createSearchParamsCache } from "nuqs/server";
-import { type wines } from "~/server/db/schema";
+import {
+  allCategorias,
+  allGrapes,
+  allTipos,
+  type wines,
+} from "~/server/db/schema";
 
 //Define our parsers.
-export const categoryOptions: (typeof wines.$inferSelect.categoria)[] = [
-  "singular",
-  "kit",
-];
-export const tipoOptions: (typeof wines.$inferSelect.tipo)[] = [
-  "Diversos",
-  "Espumante branco",
-  "Espumante rose",
-  "Vinho branco",
-  "Vinho rose",
-  "Vinho tinto",
-];
+export const categoryOptions = allCategorias;
+export const tipoOptions = allTipos;
 export const paisesOptions: (typeof wines.$inferSelect.pais)[] = [
   "Espanha",
   "Chile",
@@ -22,6 +17,7 @@ export const paisesOptions: (typeof wines.$inferSelect.pais)[] = [
   "Brasil",
   "Portugal",
 ];
+export const uvaOptions = allGrapes;
 
 export const searchParamsToParsersMap = {
   categoria: parseAsArrayOf(parseAsStringLiteral(categoryOptions)).withDefault(
@@ -29,6 +25,7 @@ export const searchParamsToParsersMap = {
   ),
   tipo: parseAsArrayOf(parseAsStringLiteral(tipoOptions)).withDefault([]),
   pais: parseAsArrayOf(parseAsStringLiteral(paisesOptions)).withDefault([]),
+  uva: parseAsArrayOf(parseAsStringLiteral(uvaOptions)).withDefault([]),
 };
 
 //Export the searchParamsCache, so we can get server-side typed search params. This is a wrapper around react's 'cache()'

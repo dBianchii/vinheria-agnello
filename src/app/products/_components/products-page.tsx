@@ -23,15 +23,16 @@ import {
   paisesOptions,
   searchParamsToParsersMap,
   tipoOptions,
+  uvaOptions,
 } from "./nuqs-parsers";
 import { handleCheckboxChange } from "./ugly-handleCheckboxChange";
 
 export default function ProductsPage({
   wines,
-	maxPrice
+  maxPrice,
 }: {
   wines: Awaited<ReturnType<typeof getWines>>;
-	maxPrice: number;
+  maxPrice: number;
 }) {
   const [showFilters, setShowFilters] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -58,7 +59,7 @@ export default function ProductsPage({
           </button>
           {showFilters && (
             <div className="mt-4">
-              <FiltersWithSuspense maxPrice={maxPrice}/>
+              <FiltersWithSuspense maxPrice={maxPrice} />
             </div>
           )}
         </div>
@@ -66,7 +67,7 @@ export default function ProductsPage({
         {/* Sidebar para telas grandes */}
         <div className="hidden w-1/4 lg:block">
           <h2 className="mb-4 text-lg font-semibold">Filtros</h2>
-          <FiltersWithSuspense maxPrice={maxPrice}/>
+          <FiltersWithSuspense maxPrice={maxPrice} />
         </div>
 
         {/* Main content */}
@@ -156,15 +157,15 @@ export default function ProductsPage({
   );
 }
 
-function FiltersWithSuspense({maxPrice}: {maxPrice: number}) {
+function FiltersWithSuspense({ maxPrice }: { maxPrice: number }) {
   return (
     <Suspense>
-      <Filters maxPrice={maxPrice}/>
+      <Filters maxPrice={maxPrice} />
     </Suspense>
   );
 }
 
-function Filters({maxPrice}: {maxPrice: number}) {
+function Filters({ maxPrice }: { maxPrice: number }) {
   const [priceRange, setPriceRange] = useState([0, maxPrice]);
 
   const [categoria, setCategoria] = useQueryState("categoria", {
@@ -183,6 +184,13 @@ function Filters({maxPrice}: {maxPrice: number}) {
 
   const [pais, setPais] = useQueryState("pais", {
     ...searchParamsToParsersMap.pais,
+    clearOnDefault: true,
+    throttleMs: 500, //Delay between state changes and URL updates.
+    shallow: false, //URL state changes will trigger a browser network request.
+  });
+
+  const [uva, setUva] = useQueryState("uva", {
+    ...searchParamsToParsersMap.uva,
     clearOnDefault: true,
     throttleMs: 500, //Delay between state changes and URL updates.
     shallow: false, //URL state changes will trigger a browser network request.
@@ -226,18 +234,17 @@ function Filters({maxPrice}: {maxPrice: number}) {
         active: pais?.includes(p),
       })),
     },
+    {
+      name: "Uvas",
+      state: uva,
+      setter: setUva,
+      options: uvaOptions.map((p) => ({
+        name: p,
+        value: p,
+        active: uva?.includes(p),
+      })),
+    },
     //?Comentado temporariamente. Descomente para adicionar filtros adicionais integrado com nuqs :)
-
-    // {
-    //   name: "Uvas",
-    //   options: [
-    //     "Tempranillo",
-    //     "Grenache",
-    //     "Merlot",
-    //     "Sauvignon Blanc",
-    //     "Verdejo",
-    //   ],
-    // },
     // {
     //   name: "Harmonização",
     //   options: [
@@ -303,7 +310,7 @@ function Filters({maxPrice}: {maxPrice: number}) {
           <Slider
             value={priceRange}
             onValueChange={setPriceRange}
-            min={0.00}
+            min={0.0}
             max={Number(maxPrice)}
             step={2}
             className="mt-2"

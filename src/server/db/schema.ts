@@ -113,15 +113,18 @@ export const verificationTokens = createTable(
 const percentageColumn = (columnName: string) =>
   numeric(columnName, { precision: 5, scale: 2 }).$type<number>(); //E.G. -> 123.00 (p=5, s=2)
 
-export const categoriaEnum = pgEnum("categoria", ["kit", "singular"]);
-export const tipoEnum = pgEnum("tipo", [
+export const allCategorias = ["kit", "singular"] as const;
+const categoriaEnum = pgEnum("categoria", allCategorias);
+
+export const allTipos = [
   "Vinho tinto",
   "Vinho branco",
   "Vinho rose",
   "Espumante branco",
   "Espumante rose",
   "Diversos",
-]);
+] as const;
+export const tipoEnum = pgEnum("tipo", allTipos);
 
 export const wines = createTable(
   "wine",
@@ -134,7 +137,6 @@ export const wines = createTable(
     desconto: percentageColumn("desconto").notNull(),
     descricao: text("descricao").notNull(),
     categoria: categoriaEnum("categoria").notNull(),
-    uva: varchar("uva", { length: 256 }).notNull(),
     pais: varchar("pais", { length: 256 }).notNull(),
     stars: numeric("stars", { precision: 2, scale: 1 })
       .$type<number>()
@@ -149,16 +151,139 @@ export const wines = createTable(
     cor: varchar("cor", { length: 256 }),
     aroma: varchar("aroma", { length: 256 }),
     sabor: varchar("sabor", { length: 256 }),
-    harmonizacao: varchar("harmonizacao", { length: 256 }),
   },
   (wine) => ({
     nameIndex: index("name_idx").on(wine.name),
   }),
 );
-
 export const winesRelations = relations(wines, ({ many }) => ({
   orders: many(orders),
+  winesToHarmonizations: many(winesToHarmonizations),
+  winesToGrapes: many(winesToGrapes),
 }));
+export const allGrapes = [
+  "Tempranillo",
+  "Grenache",
+  "Merlot",
+  "Sauvignon Blanc",
+  "Verdejo",
+  "Uvas variadas",
+  "Moscatel",
+  "Pinot Noir",
+  "Airén",
+  "Chardonnay",
+  "Syrah",
+  "Carménère",
+  "Primitivo",
+  "Malbec",
+  "Nebbiolo",
+  "Cabernet Sauvignon",
+  "Antão Vaz",
+  "Verdelho",
+  "Arinto",
+  "Alicante Branco",
+  "Tamarez",
+  "Chenin Blanc",
+  "Cinsault",
+  "Tibouren",
+] as const;
+export const grapeEnum = pgEnum("grape", allGrapes);
+export const grapes = createTable(
+  "grapes",
+  {
+    id: serial("id").primaryKey().notNull(),
+    name: grapeEnum("name").notNull(),
+  },
+  (grapes) => ({
+    nameIndex: index("grape_name_idx").on(grapes.name),
+  }),
+);
+export const grapesRelations = relations(grapes, ({ many }) => ({
+  grapeToWines: many(winesToGrapes),
+}));
+
+export const winesToGrapes = createTable(
+  "wineToGrape",
+  {
+    wineId: integer("wineId")
+      .notNull()
+      .references(() => wines.id),
+    grapeId: integer("grapeId")
+      .notNull()
+      .references(() => grapes.id),
+  },
+  (grapeWine) => ({
+    compoundKey: primaryKey({
+      columns: [grapeWine.grapeId, grapeWine.wineId],
+    }),
+  }),
+);
+export const grapesToWinesRelations = relations(winesToGrapes, ({ one }) => ({
+  grape: one(grapes, {
+    fields: [winesToGrapes.grapeId],
+    references: [grapes.id],
+  }),
+  wine: one(wines, { fields: [winesToGrapes.wineId], references: [wines.id] }),
+}));
+
+export const winesToHarmonizations = createTable(
+  "wineToHarmonization",
+  {
+    wineId: integer("wineId")
+      .notNull()
+      .references(() => wines.id),
+    harmonizationId: integer("harmonizationId")
+      .notNull()
+      .references(() => harmonizations.id),
+  },
+  (wineHarmonization) => ({
+    compoundKey: primaryKey({
+      columns: [wineHarmonization.wineId, wineHarmonization.harmonizationId],
+    }),
+  }),
+);
+export const winesToHarmonizationsRelations = relations(
+  winesToHarmonizations,
+  ({ one }) => ({
+    wine: one(wines, {
+      fields: [winesToHarmonizations.wineId],
+      references: [wines.id],
+    }),
+    harmonization: one(harmonizations, {
+      fields: [winesToHarmonizations.harmonizationId],
+      references: [harmonizations.id],
+    }),
+  }),
+);
+
+export const allHarmonizations = [
+  "Carnes vermelhas",
+  "Carnes brancas",
+  "Massas ou pizzas",
+  "Frutos do mar",
+  "Queijos",
+  "Saladas ou aperitivos",
+  "Sobremesas",
+  "Carnes de caça",
+  "Risotos",
+] as const;
+export const harmonizacaoEnum = pgEnum("harmonizacao", allHarmonizations);
+export const harmonizations = createTable(
+  "harmonization",
+  {
+    id: serial("id").primaryKey().notNull(),
+    name: harmonizacaoEnum("name").notNull(),
+  },
+  (harmonization) => ({
+    nameIndex: index("harmonization_name_idx").on(harmonization.name),
+  }),
+);
+export const harmonizationsRelations = relations(
+  harmonizations,
+  ({ many }) => ({
+    winesToHarmonizations: many(winesToHarmonizations),
+  }),
+);
 
 export const orders = createTable(
   "order",

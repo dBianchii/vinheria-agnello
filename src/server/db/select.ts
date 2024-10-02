@@ -1,25 +1,56 @@
-import { and, eq, or, type SQL, max } from "drizzle-orm";
+import { and, eq, or, type SQL, max, inArray } from "drizzle-orm";
 import { type searchParamsCache } from "~/app/products/_components/nuqs-parsers";
 import { db, type DrizzleWhere } from "./index";
-import { type SelectWine, wines } from "./schema";
+import {
+  grapes,
+  type SelectWine,
+  wines,
+  winesToGrapes,
+  winesToHarmonizations,
+} from "./schema";
 
 export async function getWines(
   input?: Awaited<ReturnType<typeof searchParamsCache.parse>>,
 ) {
-  const filterExpressions: (SQL<unknown> | undefined)[] = [
-    input?.categoria
+  console.log(input);
+  const where: DrizzleWhere<typeof wines.$inferSelect> = and(
+    input?.categoria.length
       ? or(...input.categoria.map((cat) => eq(wines.categoria, cat)))
       : undefined,
 
-    input?.tipo ? or(...input.tipo.map((t) => eq(wines.tipo, t))) : undefined,
-
-    input?.pais ? or(...input.pais.map((p) => eq(wines.pais, p))) : undefined,
-  ];
-
-  const where: DrizzleWhere<typeof wines.$inferSelect> = and(
-    ...filterExpressions,
+    input?.tipo.length
+      ? or(...input.tipo.map((t) => eq(wines.tipo, t)))
+      : undefined,
+    input?.pais.length
+      ? or(...input.pais.map((p) => eq(wines.pais, p)))
+      : undefined,
+    input?.uva.length
+      ? and(
+          inArray(
+            winesToGrapes.grapeId,
+            db
+              .select({ id: grapes.id })
+              .from(grapes)
+              .where(inArray(grapes.name, input.uva)),
+          ),
+        )
+      : undefined,
   );
-  return db.select().from(wines).where(where);
+
+  const query = db
+    .select({
+      wines: wines,
+    })
+    .from(wines)
+    .where(where)
+    .$dynamic();
+
+  if (input?.uva) {
+    query.innerJoin(winesToGrapes, eq(wines.id, winesToGrapes.wineId));
+  }
+  const result = await query;
+
+  return result.map((res) => res.wines);
 }
 
 export async function getWineById(id: SelectWine["id"]) {

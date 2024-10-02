@@ -8,9 +8,9 @@ export default async function Page({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const { categoria, tipo, pais } = searchParamsCache.parse(searchParams);
+  const { categoria, tipo, pais, uva } = searchParamsCache.parse(searchParams);
+  const wines = await getWines({ categoria, tipo, pais, uva });
 
-  const wines = await getWines({ categoria, tipo, pais });
-	const maxPrice = await getMaxPrice() ?? 0;
-  return <ProductsPage wines={wines} maxPrice={maxPrice}/>;
+  const maxPrice = (await getMaxPrice()) ?? 0;
+  return <ProductsPage wines={wines} maxPrice={maxPrice} />;
 }
