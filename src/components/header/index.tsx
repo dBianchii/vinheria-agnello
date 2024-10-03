@@ -7,6 +7,7 @@ import { serialize } from "~/app/products/_components/nuqs-parsers";
 import { getServerAuthSession } from "~/server/auth";
 import HeaderFooterRemover from "../header-footer-remover";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import logo from "../../../public/logo2.png"
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -28,7 +29,7 @@ export default function Header() {
           <div className="flex items-center md:mb-0">
             <Link href="/">
               <Image
-                src="https://placehold.co/150x50"
+                src={logo}
                 alt="Agnello Logo"
                 width={150}
                 height={50}
