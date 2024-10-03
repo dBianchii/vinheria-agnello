@@ -27,7 +27,6 @@ import {
   uvaOptions,
 } from "./nuqs-parsers";
 import { handleCheckboxChange } from "./ugly-handleCheckboxChange";
-import { cn } from "~/lib/utils";
 
 export default function ProductsPage({
   wines,
@@ -92,10 +91,9 @@ export default function ProductsPage({
   );
 
   // variáveis para exibição de página
-  let start = (currentPage - 1) * itemsPerPage + 1;
-  let end = Math.min(currentPage * itemsPerPage, sortedWines.length);
-  let total = sortedWines.length;
-
+  const start = (currentPage - 1) * itemsPerPage + 1;
+  const end = Math.min(currentPage * itemsPerPage, sortedWines.length);
+  const total = sortedWines.length;
 
   return (
     <div className="container mx-auto px-4 py-8">

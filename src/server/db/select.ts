@@ -1,4 +1,4 @@
-import { and, eq, inArray, max, or, lte, gte, sql } from "drizzle-orm";
+import { and, eq, gte, inArray, lte, or, sql } from "drizzle-orm";
 import { type searchParamsCache } from "~/app/products/_components/nuqs-parsers";
 import { db, type DrizzleWhere } from "./index";
 import { grapes, type SelectWine, wines, winesToGrapes } from "./schema";
@@ -30,9 +30,12 @@ export async function getWines(
       : undefined,
     input?.preco
       ? and(
-				gte(wines.preco, 0), 
-				lte(sql`${wines.preco} * (1 - ${wines.desconto} / 100)`, Number(input.preco))
-			)
+          gte(wines.preco, 0),
+          lte(
+            sql`${wines.preco} * (1 - ${wines.desconto} / 100)`,
+            Number(input.preco),
+          ),
+        )
       : undefined,
   );
   const query = db
