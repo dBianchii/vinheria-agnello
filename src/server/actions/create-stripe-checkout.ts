@@ -1,16 +1,12 @@
 "use server";
 
+import type Stripe from "stripe";
 import { getBaseUrl } from "~/lib/utils";
 import { stripe } from "../stripe";
-import { getServerAuthSession } from "../auth";
-import type Stripe from "stripe";
 
 export const createStripeCheckout = async (
   line_items: Stripe.Checkout.SessionCreateParams.LineItem[],
 ) => {
-  const authed = await getServerAuthSession();
-  if (!authed) throw new Error("Unauthorized");
-
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     payment_method_types: ["card"],
