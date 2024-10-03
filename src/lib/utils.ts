@@ -19,8 +19,17 @@ export function calculatePriceAfterDiscount(
   return price - (price * discount) / 100;
 }
 
+const VERCEL_PROJECT_NAME = "vinheria-agnello";
+const PRODUCTION_URL = `https://vinheria-agnello.vercel.app/`;
 export const getBaseUrl = () => {
   if (typeof window !== "undefined") return window.location.origin;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  if (process.env.VERCEL_URL) {
+    if (
+      process.env.VERCEL_URL.includes(`${VERCEL_PROJECT_NAME}-`) &&
+      process.env.VERCEL_ENV === "production"
+    )
+      return PRODUCTION_URL;
+    return `https://${process.env.VERCEL_URL}`;
+  }
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
