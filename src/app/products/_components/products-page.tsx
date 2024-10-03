@@ -38,6 +38,8 @@ export default function ProductsPage({
   const [showChat, setShowChat] = useState(false);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [sortOption, setSortOption] = useState<'melhor_avaliacao' | 'menor_preco' | 'maior_preco' | 'maior_desconto'>('melhor_avaliacao');
+
 
   const parent = useRef(null);
   useEffect(() => {
@@ -49,6 +51,26 @@ export default function ProductsPage({
     if (!response) return;
     setAnswer(response);
   };
+
+  const sortedWines = [...wines].sort((a, b) => {
+    switch (sortOption) {
+      case 'melhor_avaliacao':
+        return b.stars - a.stars;
+      case 'menor_preco':
+        return a.preco - b.preco;
+      case 'maior_preco':
+        return b.preco - a.preco;
+      case 'maior_desconto':
+        return b.desconto - a.desconto;
+      default:
+        return 0;
+    }
+  });
+  
+  const triggerFilter = (filter: 'melhor_avaliacao' | 'menor_preco' | 'maior_preco' | 'maior_desconto') => {
+    setSortOption(filter);
+  };
+  
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -84,16 +106,16 @@ export default function ProductsPage({
             </span>
             <div className="flex items-center gap-3">
               <span>Ordenado por:</span>
-              <select className="rounded border p-2 text-sm">
-                <option>Melhor Avaliação</option>
-                <option>Menor Preço</option>
-                <option>Maior Preço</option>
-                <option>Maior desconto</option>
+              <select onChange={e => triggerFilter(e.target.value as 'melhor_avaliacao' | 'menor_preco' | 'maior_preco' | 'maior_desconto')} className="rounded border p-2 text-sm">
+                <option value={'melhor_avaliacao'}>Melhor Avaliação</option>
+                <option value={'menor_preco'}>Menor Preço</option>
+                <option value={'maior_preco'}>Maior Preço</option>
+                <option value={'maior_desconto'}>Maior desconto</option>
               </select>
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {wines
+            {sortedWines
               .filter((_, i) => i < 12)
               .map((vinho) => (
                 <CardWine
