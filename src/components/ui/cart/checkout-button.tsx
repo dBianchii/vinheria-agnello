@@ -7,7 +7,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { env } from "~/env";
 import { Loader2, ShoppingCart } from "lucide-react";
 import { useState } from "react";
-const stripePromise = loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 export function CheckoutButton({
   items,
@@ -36,7 +35,7 @@ export function CheckoutButton({
         });
 
         const sessionId = await createStripeCheckout(line_items);
-        const stripe = await stripePromise;
+        const stripe = await loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
         if (!stripe)
           return toast.error("Erro ao carregar o Stripe", {
             description: "Tente novamente mais tarde",
