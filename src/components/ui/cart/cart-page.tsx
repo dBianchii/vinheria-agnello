@@ -9,6 +9,7 @@ import CartCard from "./cart-card";
 import { useCart } from "~/context/cart-context";
 import { formatPrice } from "~/lib/utils";
 import { type getWines } from "~/server/db/select";
+import { CheckoutButton } from "./checkout-button";
 
 export default function CartPageComponent({
   wines,
@@ -75,10 +76,7 @@ export default function CartPageComponent({
                     Aplicar
                   </Button>
                 </div>
-                <Button className="mt-4 w-full bg-black text-white hover:bg-gray-800">
-                  Ir para o Pagamento
-                  <ShoppingCart className="ml-2 h-4 w-4" />
-                </Button>
+                <CheckoutButton items={items} wines={wines} />
               </div>
             </div>
           </>

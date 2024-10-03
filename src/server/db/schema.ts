@@ -151,6 +151,7 @@ export const wines = createTable(
     cor: varchar("cor", { length: 256 }),
     aroma: varchar("aroma", { length: 256 }),
     sabor: varchar("sabor", { length: 256 }),
+    stripePriceId: varchar("stripePriceId", { length: 256 }),
   },
   (wine) => ({
     nameIndex: index("name_idx").on(wine.name),

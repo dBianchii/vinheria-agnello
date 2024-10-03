@@ -12,6 +12,7 @@
     "db:seed": "pnpm with-env tsx ./scripts/seed.ts",
     "db:drop": "pnpm with-env tsx ./scripts/drop.ts",
     "stripe:createProdcuts": "pnpm with-env tsx ./scripts/stripe-create-products.ts",
+    "stripe:createShippingRate": "pnpm with-env tsx ./scripts/stripe-create-shippingRate.ts",
     "dev": "next dev",
     "lint": "next lint",
     "format": "prettier --write .",

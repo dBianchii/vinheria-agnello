@@ -1,17 +1,22 @@
+import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
+import { applyDiscount } from "~/lib/utils";
 import { db } from "~/server/db";
+import { wines } from "~/server/db/schema";
 import { stripe } from "~/server/stripe";
 
 (async () => {
-  const wines = await db.query.wines.findMany();
+  const _wines = await db.query.wines.findMany();
   const stripeProducts = await stripe.products.list({
-    limit: wines.length,
+    limit: _wines.length,
   });
 
-  for (const wine of wines) {
+  for (const wine of _wines) {
     const existingStripeProuct = stripeProducts.data.find(
       (product) => product.id === String(wine.id),
     );
+
+    const finalPrice = applyDiscount(wine.preco, wine.desconto);
 
     const wineUpsertParams = {
       name: wine.name,
@@ -22,7 +27,7 @@ import { stripe } from "~/server/stripe";
 
     const priceCreateParams = {
       product: String(wine.id),
-      unit_amount_decimal: String(Math.round(wine.preco * 100)),
+      unit_amount_decimal: String(Math.round(finalPrice * 100)),
       currency: "brl",
     } satisfies Stripe.PriceCreateParams;
 
@@ -44,7 +49,8 @@ import { stripe } from "~/server/stripe";
             active: false,
           });
 
-        await stripe.prices.create(priceCreateParams);
+        const latestPrice = await stripe.prices.create(priceCreateParams);
+        await updateWinePriceId(wine.id, latestPrice.id);
       }
 
       console.log("updated wine", wine.name);
@@ -55,16 +61,25 @@ import { stripe } from "~/server/stripe";
       id: String(wine.id),
       ...wineUpsertParams,
     });
-    await stripe.prices.create(priceCreateParams);
-
+    const latestPrice = await stripe.prices.create(priceCreateParams);
+    await updateWinePriceId(wine.id, latestPrice.id);
     console.log("inserted wine", wine.name);
   }
 })()
   .then(() => {
-    console.log("Products created successfully");
+    console.log("Products created/updated successfully");
     process.exit(0);
   })
   .catch((e) => {
     console.error(e);
     process.exit(1);
   });
+
+async function updateWinePriceId(wineId: number, stripePriceId: string) {
+  await db
+    .update(wines)
+    .set({
+      stripePriceId,
+    })
+    .where(eq(wines.id, wineId));
+}

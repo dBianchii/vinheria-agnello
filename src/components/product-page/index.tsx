@@ -4,7 +4,7 @@
 import { Archive, Wine } from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";
-import { formatPrice } from "~/lib/utils";
+import { applyDiscount, formatPrice } from "~/lib/utils";
 import "~/lib/zoom.css";
 import { type getWineById } from "~/server/db/select";
 import { ProductCounter } from "../product-counter";
@@ -15,9 +15,6 @@ export function ProductPageComponent({
 }: {
   wine: NonNullable<Awaited<ReturnType<typeof getWineById>>>;
 }) {
-  const finalPrice = (price: number, discount: number) =>
-    price - (price * discount) / 100;
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -34,7 +31,7 @@ export function ProductPageComponent({
             <Stars stars={wine.stars} />
             <div className="mt-4 flex items-center">
               <p className="text-3xl font-bold">
-                {formatPrice(finalPrice(wine.preco, wine.desconto))}
+                {formatPrice(applyDiscount(wine.preco, wine.desconto))}
               </p>
               {wine.desconto > 0 && (
                 <>
