@@ -38,8 +38,11 @@ export default function ProductsPage({
   const [showChat, setShowChat] = useState(false);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const [sortOption, setSortOption] = useState<'melhor_avaliacao' | 'menor_preco' | 'maior_preco' | 'maior_desconto'>('melhor_avaliacao');
-
+  const [sortOption, setSortOption] = useState<
+    "melhor_avaliacao" | "menor_preco" | "maior_preco" | "maior_desconto"
+  >("melhor_avaliacao");
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [currentPage, setCurrentPage] = useState(1); // New state for current page
 
   const parent = useRef(null);
   useEffect(() => {
@@ -54,23 +57,39 @@ export default function ProductsPage({
 
   const sortedWines = [...wines].sort((a, b) => {
     switch (sortOption) {
-      case 'melhor_avaliacao':
+      case "melhor_avaliacao":
         return b.stars - a.stars;
-      case 'menor_preco':
+      case "menor_preco":
         return a.preco - b.preco;
-      case 'maior_preco':
+      case "maior_preco":
         return b.preco - a.preco;
-      case 'maior_desconto':
+      case "maior_desconto":
         return b.desconto - a.desconto;
       default:
         return 0;
     }
   });
-  
-  const triggerFilter = (filter: 'melhor_avaliacao' | 'menor_preco' | 'maior_preco' | 'maior_desconto') => {
+
+  const triggerFilter = (
+    filter:
+      | "melhor_avaliacao"
+      | "menor_preco"
+      | "maior_preco"
+      | "maior_desconto",
+  ) => {
     setSortOption(filter);
+    setCurrentPage(1);
   };
-  
+
+  const triggerItemsPerPage = (items: number) => {
+    setItemsPerPage(items);
+  };
+
+  const totalPages = Math.ceil(sortedWines.length / itemsPerPage);
+  const paginatedWines = sortedWines.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -104,48 +123,85 @@ export default function ProductsPage({
             <span className="mb-2 text-sm text-gray-600 sm:mb-0">
               Mostrando 1-12 de 100 Produtos
             </span>
-            <div className="flex items-center gap-3">
-              <span>Ordenado por:</span>
-              <select onChange={e => triggerFilter(e.target.value as 'melhor_avaliacao' | 'menor_preco' | 'maior_preco' | 'maior_desconto')} className="rounded border p-2 text-sm">
-                <option value={'melhor_avaliacao'}>Melhor Avaliação</option>
-                <option value={'menor_preco'}>Menor Preço</option>
-                <option value={'maior_preco'}>Maior Preço</option>
-                <option value={'maior_desconto'}>Maior desconto</option>
-              </select>
+            <div className="flex flex-row-reverse gap-4">
+              <div className="flex items-center gap-3">
+                <span>Ordenado por:</span>
+                <select
+                  onChange={(e) =>
+                    triggerFilter(
+                      e.target.value as
+                        | "melhor_avaliacao"
+                        | "menor_preco"
+                        | "maior_preco"
+                        | "maior_desconto",
+                    )
+                  }
+                  className="rounded border p-2 text-sm"
+                >
+                  <option value={"melhor_avaliacao"}>Melhor Avaliação</option>
+                  <option value={"menor_preco"}>Menor Preço</option>
+                  <option value={"maior_preco"}>Maior Preço</option>
+                  <option value={"maior_desconto"}>Maior desconto</option>
+                </select>
+              </div>
+              <div className="flex items-center gap-3">
+                <span>Items por página:</span>
+                <select
+                  onChange={(e) => triggerItemsPerPage(Number(e.target.value))}
+                  className="rounded border p-2 text-sm"
+                >
+                  <option value={4}>4</option>
+                  <option value={8}>8</option>
+                  <option value={12}>12</option>
+                  <option value={24}>24</option>
+                </select>
+              </div>
             </div>
           </div>
+
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {sortedWines
-              .filter((_, i) => i < 12)
-              .map((vinho) => (
-                <CardWine
-                  key={`${vinho.id}-${vinho.name}`}
-                  name={vinho.name}
-                  stars={vinho.stars} // Coloque a avaliação que desejar
-                  price={vinho.preco}
-                  discount={vinho.desconto}
-                  imgUrl={vinho.img}
-                  id={vinho.id}
-                  isPriority={true}
-                />
-              ))}
+            {paginatedWines.map((vinho) => (
+              <CardWine
+                key={`${vinho.id}-${vinho.name}`}
+                name={vinho.name}
+                stars={vinho.stars} // Coloque a avaliação que desejar
+                price={vinho.preco}
+                discount={vinho.desconto}
+                imgUrl={vinho.img}
+                id={vinho.id}
+                isPriority={true}
+              />
+            ))}
           </div>
 
           {/* Pagination */}
           <div className="mt-10 flex justify-center">
-            <Button variant="outline" className="mx-1">
+            <Button
+              variant="outline"
+              className="mx-1"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
               Anterior
             </Button>
-            {[1, 2, 3, "...", 10].map((page, index) => (
+            {[...Array(totalPages).keys()].map((page) => (
               <Button
-                key={index + "buttone"}
-                variant={page === 1 ? "default" : "outline"}
+                key={page}
+                variant={currentPage === page + 1 ? "default" : "outline"}
                 className="mx-1 w-8"
+                onClick={() => setCurrentPage(page + 1)}
               >
-                {page}
+                {page + 1}
               </Button>
             ))}
-            <Button variant="outline" className="mx-1">
+            <Button
+              variant="outline"
+              className="mx-1"
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
               Próxima
             </Button>
           </div>
