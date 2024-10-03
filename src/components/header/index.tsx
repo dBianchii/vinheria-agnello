@@ -2,13 +2,21 @@ import { ShoppingCart as IconShoppingCart, Search, User } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { getServerAuthSession } from "~/server/auth";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Suspense } from "react";
-import HeaderFooterRemover from "./header-footer-remover";
 import { serialize } from "~/app/products/_components/nuqs-parsers";
+import { getServerAuthSession } from "~/server/auth";
+import HeaderFooterRemover from "../header-footer-remover";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { LogOutMenuItem } from "./log-out-button";
 
-const ShoppingCartBadge = dynamic(() => import("./shopping-cart-badge"), {
+const ShoppingCartBadge = dynamic(() => import("../shopping-cart-badge"), {
   ssr: false,
 });
 
@@ -82,10 +90,29 @@ async function UserProfile() {
 
   if (!session) return <NotLoggedInUserProfile />;
   return (
-    <Avatar>
-      <AvatarImage src={session.user.image ?? ""} alt="@shadcn" />
-      <AvatarFallback>{session.user.name}</AvatarFallback>
-    </Avatar>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="hover:">
+            <AvatarImage src={session.user.image ?? ""} alt="@shadcn" />
+            <AvatarFallback>{session.user.name}</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">
+              {session.user.name}
+            </p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {session.user.email}
+            </p>
+          </div>
+        </DropdownMenuLabel>
+        <LogOutMenuItem />
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
