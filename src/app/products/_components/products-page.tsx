@@ -91,6 +91,12 @@ export default function ProductsPage({
     currentPage * itemsPerPage,
   );
 
+  // variáveis para exibição de página
+  let start = (currentPage - 1) * itemsPerPage + 1;
+  let end = Math.min(currentPage * itemsPerPage, sortedWines.length);
+  let total = sortedWines.length;
+
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col gap-8 lg:flex-row">
@@ -121,7 +127,7 @@ export default function ProductsPage({
         <div className="w-full lg:w-3/4">
           <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
             <span className="mb-2 text-sm text-gray-600 sm:mb-0">
-              Mostrando 1-12 de 100 Produtos
+              Mostrando {start} - {end} de {total} Produtos
             </span>
             <div className="flex flex-row-reverse gap-4">
               <div className="flex items-center gap-3">
