@@ -40,7 +40,7 @@ export default function ProductsPage({
   const [sortOption, setSortOption] = useState<
     "melhor_avaliacao" | "menor_preco" | "maior_preco" | "maior_desconto"
   >("melhor_avaliacao");
-  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(1); // New state for current page
 
   const parent = useRef(null);
@@ -154,8 +154,7 @@ export default function ProductsPage({
                   onChange={(e) => triggerItemsPerPage(Number(e.target.value))}
                   className="rounded border p-2 text-sm"
                 >
-                  <option value={4}>4</option>
-                  <option value={8}>8</option>
+                  <option value={6}>6</option>
                   <option value={12}>12</option>
                   <option value={24}>24</option>
                 </select>
