@@ -1,5 +1,3 @@
-"use client";
-
 import { LoginWithGoogleButton } from "./_components/login-with-google-button";
 
 export default function SignInPage() {
