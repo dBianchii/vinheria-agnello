@@ -7,7 +7,7 @@ import { serialize } from "~/app/products/_components/nuqs-parsers";
 import { getServerAuthSession } from "~/server/auth";
 import HeaderFooterRemover from "../header-footer-remover";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import logo from "../../../public/logo2.png"
+import logo from "/public/logo.png"
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
