@@ -25,13 +25,13 @@ export default function CartCard({
   return (
     <div className="flex items-center gap-4 border-b py-4">
       <Link href={`/product/${wine.id}`}>
-        <div className="rounded-lg border p-1">
+        <div className="w-24 h-24 overflow-hidden flex items-center justify-center">
           <Image
             src={wine.img}
             alt={wine.name}
             width={80}
             height={80}
-            className="h-24 w-24 object-cover"
+            className="h-full w-auto object-contain"
           />
         </div>
       </Link>
