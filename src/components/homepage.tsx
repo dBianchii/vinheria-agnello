@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { type getWines } from "~/server/db/select";
 import Link from "next/link";
 import { serialize } from "~/app/products/_components/nuqs-parsers";
+import banner from "/public/bannervinheriaagnello.jpeg"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const maxElementsPerRow = 4;
@@ -37,7 +38,7 @@ export function Homepage({
           </div>
           <div className="flex justify-end md:w-1/2">
             <Image
-              src="https://placehold.co/500x300"
+              src={banner}
               alt="Wine Selection"
               width={500}
               height={300}
