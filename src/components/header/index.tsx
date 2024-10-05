@@ -39,32 +39,21 @@ export default function Header() {
             <nav className="hidden space-x-4 md:flex">
               <Link
                 href={`/products${serialize({ categoria: ["singular"] })}`}
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-primary hover:underline"
               >
                 Vinhos
               </Link>
               <Link
                 href={`/products${serialize({ categoria: ["kit"] })}`}
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-primary hover:underline"
               >
                 Kits
               </Link>
-              <Link
-                href="/products"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                Mais Vendidos
-              </Link>
-              <Link
-                href="/products"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                Promoções
-              </Link>
+              
             </nav>
           </div>
-          <div className="flex items-center space-x-4">
-            <Search className="text-gray-600" />
+          <div className="flex items-center space-x-6">
+            
             <Link href="/cart">
               <ShoppingCart />
             </Link>
