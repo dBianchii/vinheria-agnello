@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Archive, Wine } from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";
 import { applyDiscount, formatPrice } from "~/lib/utils";
@@ -20,62 +19,130 @@ export function ProductPageComponent({
   }, []);
 
   return (
-    <div className="flex justify-center overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg">
-      <div className="container flex w-4/5 gap-4 p-4">
-        <div className="zoom-img w-1/2 rounded border">
-          <Image src={wine.img} alt={wine.name} width={200} height={600} />
-        </div>
-        <div className="flex w-1/2 flex-col justify-between">
-          <div>
-            <h3 className="mb-4 text-4xl font-bold">{wine.name}</h3>
-            <Stars stars={wine.stars} />
-            <div className="mt-4 flex items-center">
-              <p className="text-3xl font-bold">
+    <>
+      <div className="container mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="zoom-img flex h-96 w-full items-center justify-center overflow-hidden">
+            <Image
+              src={wine.img}
+              alt={wine.name}
+              width={384}
+              height={384}
+              className="h-[80%] w-auto object-contain"
+            />
+          </div>
+
+          <div className="flex flex-col justify-between">
+            <div>
+              <h1 className="text-2xl font-bold">{wine.name}</h1>
+              <div className="flex items-center">
+                <Stars stars={wine.stars} />
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="text-3xl font-bold">
                 {formatPrice(applyDiscount(wine.preco, wine.desconto))}
-              </p>
+              </span>
               {wine.desconto > 0 && (
                 <>
                   <p className="ml-4 text-3xl font-bold text-gray-400 line-through">
-                    {formatPrice(wine.preco)}
+                    {formatPrice(Number(wine.preco))}
                   </p>
                   <p className="ml-6 select-none rounded-xl bg-red-100 px-3 py-1 font-semibold text-red-500">
-                    -{wine.desconto}%
+                    -{Number(wine.desconto).toFixed(0)}%
                   </p>
                 </>
               )}
             </div>
-            <div className="py-8 text-lg font-light text-neutral-500">
-              {wine.descricao}
-            </div>
-            <div>
-              <span className="mb-2 flex items-center justify-start text-lg">
-                <Wine className="mr-3 w-7 text-rose-900" />
-                <p className="text-neutral-500">
-                  {wine.winesToGrapes.map((wG) => wG.grape.name).join(", ")}
-                </p>
+            <p className="my-6 text-base text-gray-600">{wine.descricao}</p>
+            <div className="mb-4 flex flex-col items-start space-y-2 text-sm text-gray-600">
+              <span>
+                🍷 {wine.winesToGrapes.map((wG) => wG.grape.name).join(", ")}
               </span>
-              <span className="mb-2 flex items-center justify-start text-lg">
+              <span className="flex items-center">
                 <img
                   alt="country flag"
-                  className="mr-3 h-7 w-7 object-cover"
+                  className="mr-1 h-5 w-5 object-cover"
                   src={getCountryImg(wine.pais)}
                 />
                 <p className="text-neutral-500">{wine.pais}</p>
               </span>
-              <span className="mb-2 flex items-center justify-start text-lg">
-                <Archive className="mr-3 w-7" />
-                <p className="text-neutral-500">
-                  {wine.unidades} unidade{wine.unidades != 1 ? "s" : ""}
-                </p>
+              <span>
+                📦{" "}
+                {wine.unidades === 1
+                  ? "1 unidade"
+                  : `${wine.unidades} unidades`}
               </span>
             </div>
+
+            <div className="flex items-center space-x-4">
+              <ProductCounter id={wine.id} />
+            </div>
           </div>
-          <div className="w-44">
-            <ProductCounter id={wine.id} />
+        </div>
+
+        <div className="mt-8 space-y-6">
+          {/* saiba mais */}
+          <section>
+            <h2 className="mb-2 text-xl font-semibold">
+              Saiba mais sobre o produto
+            </h2>
+            <p className="text-gray-600">{wine.descricao}</p>
+          </section>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {/* como degustar */}
+            <section>
+              <h2 className="mb-2 text-xl font-semibold">Como degustar</h2>
+              <div className="space-y-2">
+                <div>
+                  <h3 className="font-semibold">Observe a cor</h3>
+                  <p className="text-gray-600">{wine.cor}</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Sinta os aromas</h3>
+                  <p className="text-gray-600">{wine.aroma}</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Em boca</h3>
+                  <p className="text-gray-600">{wine.sabor}</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Harmonize com</h3>
+                  <p className="text-red-600">{`harmonizacao???`}</p>
+                </div>
+              </div>
+            </section>
+            {/* ficha técnica */}
+            <section>
+              <h2 className="mb-2 text-xl font-semibold">Ficha Técnica</h2>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <h3 className="font-semibold">Volume</h3>
+                  <p>{wine.volume}</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Safra</h3>
+                  <p>{wine.safra}</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Teor Alcoólico</h3>
+                  <p>{wine.teoralcoolico}%</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Temperatura de serviço</h3>
+                  <p>{wine.temperaturaservico}</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Tipo de fechamento</h3>
+                  <p>{wine.tipofechamento}</p>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
