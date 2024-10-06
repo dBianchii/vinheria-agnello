@@ -1,20 +1,23 @@
 import { Button } from "~/components/ui/button";
 import { LoginWithGoogleButton } from "./_components/login-with-google-button";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "/public/logo.png";
 
 export default function SignInPage() {
   return (
     <div className="flex min-h-screen bg-[#f5f0e8] text-[#6d071a]">
-      <div className="m-auto w-full max-w-md rounded-3xl bg-[#f9f6f1] p-8 shadow-lg">
+      <div className="m-auto w-full max-w-md rounded-3xl bg-[#FEFEFE] p-8 shadow-lg">
         <div className="space-y-6">
           <div className="flex items-center justify-center text-center">
             <Link href="/">
-              <h1 className="font-serif text-4xl">
-                <span className="block text-sm uppercase tracking-wide">
-                  Vinheria
-                </span>
-                Agnello
-              </h1>
+              <Image
+                src={logo}
+                alt="Agnello Logo"
+                width={200}
+                height={100}
+                className="mr-4"
+              />
             </Link>
           </div>
           <form>
