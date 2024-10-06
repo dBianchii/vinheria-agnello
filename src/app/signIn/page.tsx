@@ -1,3 +1,4 @@
+import { Button } from "~/components/ui/button";
 import { LoginWithGoogleButton } from "./_components/login-with-google-button";
 
 export default function SignInPage() {
@@ -13,6 +14,21 @@ export default function SignInPage() {
               Agnello
             </h1>
           </div>
+          <form>
+            <div className="mb-6">
+              <label htmlFor="email" className="block mb-2 text-sm font-medium text-[#6d071a]">Email</label>
+                <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-[#6d071a] text-sm rounded-lg focus:ring-[#6d071a] focus:border-[#6d071a] block w-full p-2.5 " placeholder="fulano@email.com" required />
+            </div> 
+            <div className="mb-6">
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-[#6d071a] ">Senha</label>
+                <input type="password" id="password" className="bg-gray-50 border border-gray-300 text-[#6d071a] text-sm rounded-lg focus:ring-[#6d071a] focus:border-[#6d071a] block w-full p-2.5  " placeholder="•••••••••" required />
+            </div> 
+            <Button variant={"default"} size={"lg"} className="w-full">
+                Entrar
+            </Button>
+            <p className="mt-4 items-center justify-center text-center">ou</p>
+          </form>
+
           <div className="space-y-4">
             <LoginWithGoogleButton />
           </div>
