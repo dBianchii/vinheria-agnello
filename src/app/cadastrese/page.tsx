@@ -21,15 +21,15 @@ export default function CadastresePage() {
           <form>
             <div className="mb-6">
               <label htmlFor="name" className="block mb-2 text-sm font-medium text-[#6d071a]">Nome</label>
-              <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-[#6d071a] text-sm rounded-lg focus:ring-[#6d071a] focus:border-[#6d071a] block w-full p-2.5 " placeholder="Fulano da Silva Gomes" required />
+              <input disabled type="text" id="name" className="bg-gray-50 border border-gray-300 text-[#6d071a] text-sm rounded-lg focus:ring-[#6d071a] focus:border-[#6d071a] block w-full p-2.5 " placeholder="Fulano da Silva Gomes" required />
             </div>
             <div className="mb-6">
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-[#6d071a]">Email</label>
-                <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-[#6d071a] text-sm rounded-lg focus:ring-[#6d071a] focus:border-[#6d071a] block w-full p-2.5 " placeholder="fulano@email.com" required />
+                <input disabled type="email" id="email" className="bg-gray-50 border border-gray-300 text-[#6d071a] text-sm rounded-lg focus:ring-[#6d071a] focus:border-[#6d071a] block w-full p-2.5 " placeholder="fulano@email.com" required />
             </div> 
             <div className="mb-6">
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-[#6d071a] ">Senha</label>
-                <input type="password" id="password" className="bg-gray-50 border border-gray-300 text-[#6d071a] text-sm rounded-lg focus:ring-[#6d071a] focus:border-[#6d071a] block w-full p-2.5  " placeholder="•••••••••" required />
+                <input disabled type="password" id="password" className="bg-gray-50 border border-gray-300 text-[#6d071a] text-sm rounded-lg focus:ring-[#6d071a] focus:border-[#6d071a] block w-full p-2.5  " placeholder="•••••••••" required />
             </div> 
             <Button variant={"default"} size={"lg"} className="w-full">
                 Criar minha conta
