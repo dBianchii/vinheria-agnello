@@ -109,7 +109,11 @@ export function ProductPageComponent({
                 </div>
                 <div>
                   <h3 className="font-semibold">Harmonize com</h3>
-                  <p className="text-red-600">{`harmonizacao???`}</p>
+                  <p className="text-gray-600">
+                    {wine.winesToGrapes
+                      .map((wG) => getHarmonizacao(wG.grape.name))
+                      .join(", ")}.
+                  </p>
                 </div>
               </div>
             </section>
@@ -144,6 +148,61 @@ export function ProductPageComponent({
       </div>
     </>
   );
+}
+
+function getHarmonizacao(uva: string) {
+  switch (uva.toLowerCase()) {
+    case "tempranillo":
+      return "Carnes vermelhas, presuntos curados e queijos curados";
+    case "grenache":
+      return "Pratos mediterrâneos, cordeiro e queijos suaves";
+    case "merlot":
+      return "Massas com molho vermelho, aves e queijos semi-curados";
+    case "sauvignon blanc":
+      return "Frutos do mar, saladas frescas e queijos de cabra";
+    case "verdejo":
+      return "Tapas, pratos leves e frutos do mar";
+    case "uvas variadas":
+      return "Pratos variados conforme a combinação das uvas utilizadas";
+    case "moscatel":
+      return "Sobremesas, queijos azuis e frutas frescas";
+    case "pinot noir":
+      return "Peixes gordos como salmão, pato e cogumelos";
+    case "airén":
+      return "Pratos leves, saladas e peixes grelhados";
+    case "chardonnay":
+      return "Frutos do mar, aves e queijos cremosos";
+    case "syrah":
+      return "Carnes grelhadas, embutidos e queijos fortes";
+    case "carménère":
+      return "Pratos picantes, carnes de caça e queijos curados";
+    case "primitivo":
+      return "Massas com molho robusto, carnes vermelhas e queijos intensos";
+    case "malbec":
+      return "Carnes vermelhas, churrasco e queijos curados";
+    case "nebbiolo":
+      return "Pratos italianos, trufas e queijos envelhecidos";
+    case "cabernet sauvignon":
+      return "Carnes vermelhas, costelas de porco e queijos fortes";
+    case "antão vaz":
+      return "Frutos do mar, saladas e queijos suaves";
+    case "verdelho":
+      return "Pratos asiáticos, frutos do mar e queijos leves";
+    case "arinto":
+      return "Peixes, mariscos e pratos com sabores cítricos";
+    case "alicante branco":
+      return "Aves, peixes e pratos com ervas frescas";
+    case "tamarez":
+      return "Sobremesas doces, queijos azuis e frutas secas";
+    case "chenin blanc":
+      return "Frutos do mar, aves e queijos suaves";
+    case "cinsault":
+      return "Saladas, pratos leves e queijos macios";
+    case "tibouren":
+      return "Pratos mediterrâneos, frutos do mar e queijos frescos";
+    default:
+      return "Harmonização não disponível para esta uva";
+  }
 }
 
 function getCountryImg(country: string): string {
