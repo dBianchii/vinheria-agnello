@@ -16,7 +16,6 @@ export default function SignInPage() {
                 alt="Agnello Logo"
                 width={200}
                 height={100}
-                className="mr-4"
               />
             </Link>
           </div>
