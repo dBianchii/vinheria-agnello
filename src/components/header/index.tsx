@@ -1,4 +1,4 @@
-import { ShoppingCart as IconShoppingCart, Search, User } from "lucide-react";
+import { ShoppingCart as IconShoppingCart, User } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";

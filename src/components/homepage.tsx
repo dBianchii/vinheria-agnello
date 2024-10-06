@@ -54,8 +54,8 @@ export function Homepage({
 
       {/* Kits Section */}
       <section className="py-12">
-        <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-center text-3xl font-bold">KITS</h2>
+        <div className="container mx-auto px-4 py-4">
+          <h2 className="mb-8 text-center text-3xl font-bold pb-6">KITS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {wines
               .filter((vinho) => vinho.categoria === "kit")
@@ -74,7 +74,7 @@ export function Homepage({
                 );
               })}
           </div>
-          <div className="mt-8 text-center">
+          <div className="mt-8 text-center py-4">
             <Link href={`/products${serialize({ categoria: ["kit"] })}`}>
               <Button variant={"default"} size={"lg"}>
                 Ver Todos
@@ -85,9 +85,9 @@ export function Homepage({
       </section>
 
       {/* Best Sellers Section */}
-      <section className="bg-white py-12">
+      <section className="bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-center text-3xl font-bold">MAIS VENDIDOS</h2>
+          <h2 className="mb-8 text-center text-3xl font-bold pb-6">MAIS VENDIDOS</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {wines
               .filter((vinho) => vinho.categoria === "singular")
@@ -106,7 +106,7 @@ export function Homepage({
                 );
               })}
           </div>
-          <div className="mt-8 text-center">
+          <div className="mt-8 text-center py-4">
             <Link href={`/products${serialize({ categoria: ["singular"] })}`}>
               <Button variant={"default"} size={"lg"}>
                 Ver Todos
@@ -118,8 +118,8 @@ export function Homepage({
 
       {/* Find Your Ideal Wine */}
       <section className="py-12">
-        <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-center text-3xl font-bold">
+        <div className="container mx-auto px-4 pb-6">
+          <h2 className="mb-8 text-center text-3xl font-bold pb-6">
             ENCONTRE SEU VINHO IDEAL
           </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
