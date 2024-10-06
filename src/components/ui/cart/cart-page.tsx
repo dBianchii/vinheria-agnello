@@ -39,7 +39,7 @@ export default function CartPageComponent({
   const total = priceWithDiscount + shippingFee;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="pt-32 container mx-auto px-4 py-8">
       <h1 className="mb-6 text-2xl font-bold">Seu Carrinho</h1>
 
       <div className="flex flex-col gap-8 lg:flex-row">

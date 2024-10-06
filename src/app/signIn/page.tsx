@@ -60,7 +60,7 @@ export default function SignInPage() {
             <LoginWithGoogleButton />
           </div>
           <p className="items-center justify-center text-center text-sm font-light text-gray-500 dark:text-gray-400">
-            Tem uma conta?{" "}
+            Não tem uma conta?{" "}
             <Link
               href="/cadastrese"
               className="text-primary-600 dark:text-primary-500 font-medium hover:text-[#6d071a] hover:underline"

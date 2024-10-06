@@ -18,7 +18,7 @@ export function Homepage({
   wines: Awaited<ReturnType<typeof getWines>>;
 }) {
   return (
-    <>
+    <div className="pt-20">
       {/* Hero Section */}
       <section className="bg-card-foreground/10 py-12 md:py-24">
         <div className="container mx-auto flex flex-col items-center px-4 md:flex-row">
@@ -138,6 +138,6 @@ export function Homepage({
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

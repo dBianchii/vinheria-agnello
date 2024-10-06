@@ -13,7 +13,7 @@ export default async function ProductPage({
   const wines = await getWines();
 
   return (
-    <>
+    <div className="pt-20">
       <ProductPageComponent wine={wine} />;
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 py-4">
@@ -37,6 +37,6 @@ export default async function ProductPage({
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

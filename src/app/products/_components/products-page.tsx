@@ -96,7 +96,7 @@ export default function ProductsPage({
   const total = sortedWines.length;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="pt-32 container mx-auto px-4 py-8">
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Filtros para telas menores */}
         <div className="z-0 mb-4 lg:hidden" ref={parent}>
