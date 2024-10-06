@@ -48,7 +48,7 @@ export function Homepage({
         </div>
       </section>
 
-      <section className="bg-white py-12">
+      <section className="bg-white">
         <Stats />
       </section>
 

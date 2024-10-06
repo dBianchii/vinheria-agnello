@@ -49,18 +49,18 @@ export default function Stats() {
   }, [counterViniculas, counterRotulos, counterClientes]);
 
   return (
-    <div className="container mx-auto flex justify-center space-x-8 px-4 md:space-x-16">
+    <div className="bg-slate-900 mx-auto flex justify-center space-x-8 px-4 md:space-x-16 h-44 items-center">
       <div className="text-center">
-        <h3 className="text-3xl font-bold">{counterViniculas}+</h3>
-        <p className="text-gray-600">Vinícolas Selecionadas</p>
+        <h3 className="text-3xl font-bold text-white">{counterViniculas}<span className="text-[#FDBA74]">+</span></h3>
+        <p className="text-gray-200">Vinícolas Selecionadas</p>
       </div>
       <div className="text-center">
-        <h3 className="text-3xl font-bold">{counterRotulos}+</h3>
-        <p className="text-gray-600">Rótulos exclusivos</p>
+        <h3 className="text-3xl font-bold text-white">{counterRotulos}<span className="text-[#FDBA74]">+</span></h3>
+        <p className="text-gray-200">Rótulos exclusivos</p>
       </div>
       <div className="text-center">
-        <h3 className="text-3xl font-bold">{counterClientes}+</h3>
-        <p className="text-gray-600">Clientes Satisfeitos</p>
+        <h3 className="text-3xl font-bold text-white">{counterClientes}<span className="text-[#FDBA74]">+</span></h3>
+        <p className="text-gray-200">Clientes Satisfeitos</p>
       </div>
     </div>
   );
